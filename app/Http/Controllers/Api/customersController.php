@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\CrystalCustomer;
-use App\Helpers\CrystalEditCustomer;
-use App\Helpers\Customer;
-use App\Helpers\EditCustomer;
 use Carbon\Carbon;
 use App\Models\Area;
 use App\Models\Cart;
@@ -13,8 +9,7 @@ use App\Models\Orders;
 use App\Models\Region;
 use App\Models\Routes;
 use App\Helpers\Helper;
-use App\Helpers\MKOCustomer;
-use App\Helpers\MKOEditCustomer;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Delivery;
 use App\Models\Subregion;
 use App\Models\Order_items;
@@ -77,41 +72,105 @@ class customersController extends Controller
    }
    public function add_customer(Request $request)
    {
-      $route_code = $request->user()->route_code;
-      info("route_code=" . $route_code);
-      switch ($route_code) {
-         case 2:
-            $customerModel = MKOCustomer::class;
-            break;
-         case 1:
-            $customerModel = CrystalCustomer::class;
-            break;
-         default:
-            $customerModel = Customer::class;
-            break;
+      //   $user_code = $request->user()->user_code;
+      $validator           =  Validator::make($request->all(), [
+         "customer_name"   => "required|unique:customers",
+         "contact_person"  => "required",
+         "business_code"   => "required",
+         "created_by"      => "required",
+         "phone_number"    => "required|unique:customers",
+         "latitude"        => "required",
+         "longitude"       => "required",
+         "image" => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+      ]);
+
+      if ($validator->fails()) {
+         return response()->json(
+            [
+               "status" => 401,
+               "message" =>
+               "validation_error",
+               "errors" => $validator->errors()
+            ],
+            403
+         );
       }
-      $respond = $customerModel::addCustomer($request);
-      return response()->json([$respond], $respond['status']);
+      $image_path = $request->file('image')->store('image', 'public');
+      $emailData = $request->email == null ? null : $request->email;
+
+
+      $customer = new customers;
+      $customer->customer_name = $request->customer_name;
+      $customer->contact_person = $request->contact_person;
+      $customer->phone_number = $request->phone_number;
+      $customer->email = $emailData;
+      $customer->address = $request->address;
+      $customer->latitude = $request->latitude;
+      $customer->longitude = $request->longitude;
+      $customer->business_code = $request->business_code;
+      $customer->created_by = $request->user()->user_code;
+      $customer->route_code = $request->route_code;
+      $customer->customer_group = $request->outlet;
+      $customer->region_id = $request->route_code;
+      $customer->unit_id = $request->route_code;
+      $customer->image = $image_path;
+      $customer->save();
+
+      DB::table('leads_targets')
+         ->where('user_code', $request->user()->user_code)
+         ->increment('AchievedLeadsTarget');
+
+      return response()->json([
+         "success" => true,
+         "status" => 200,
+         "message" => "Customer added successfully",
+      ]);
    }
 
    public function editCustomer(Request $request)
    {
-      $route_code = $request->user()->route_code;
+      $customer = customers::whereId($request->id)->first();
 
-      switch ($route_code) {
-         case 2:
-            $customerModel = MKOEditCustomer::class;
-            break;
-         case 1:
-            $customerModel = CrystalEditCustomer::class;
-            break;
-         default:
-            $customerModel = EditCustomer::class;
-            break;
-      }
+      $edited = customers::whereId($request->id)->update(
+         [
+            "customer_name" => $request->customer_name ?? $customer->customer_name,
+            "account" => $request->account ?? $customer->account,
+            "address" => $request->address ?? $customer->address,
+            "latitude" => $request->latitude ?? $customer->latitude,
+            "longitude" => $request->longitude ?? $customer->longitude,
+            "contact_person" => $request->contact_person ?? $customer->contact_person,
+            "customer_group" => $request->customer_group ?? $customer->customer_group,
+            "price_group" => $request->price_group ?? $customer->price_group,
+            "route" => $request->route ?? $customer->route,
+            "region_id" => $request->route ?? $customer->route,
+            "unit_id" => $request->route ?? $customer->route,
+            "approval" => 'Approved' ?? $customer->approval,
+            "status" => 'Active' ?? $customer->status,
+            "telephone" => $request->telephone ?? $customer->telephone,
+            "manufacturer_number" => $request->manufacturer_number ?? $customer->manufacturer_number,
+            "vat_number" => $request->vat_number ?? $customer->vat_number,
+            "delivery_time" => $request->delivery_time ?? $customer->delivery_time,
+            "city" => $request->city ?? $customer->city,
+            "province" => $request->province ?? $customer->province,
+            "postal_code" => $request->postal_code ?? $customer->postal_code,
+            "country" => $request->country ?? $customer->country,
+            "customer_secondary_group" => $request->customer_secondary_group ?? $customer->customer_secondary_group,
+            "branch" => $request->branch ?? $customer->branch,
+            "email" => $request->email ?? $customer->email,
+            "phone_number" => $request->phone_number ?? $customer->phone_number,
+            "business_code" => $request->user()->business_code ?? $customer->business_code,
+            "created_by" => $request->user()->id ?? $customer->id
+         ]
+      );
 
-      $respond = $customerModel::EditCustomer($request);
-      return response()->json([$respond]);
+
+
+      return response()->json([
+         "success" => true,
+         "status" => 200,
+         "message" => "Customer editted successfully",
+         "customer" => $edited
+      ]);
    }
    public function calculate_distance(Request $request)
    {
