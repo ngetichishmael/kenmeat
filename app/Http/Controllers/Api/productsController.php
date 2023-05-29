@@ -25,10 +25,8 @@ class productsController extends Controller
    public function index(Request $request, $businessCode)
    {
       $route_code = $request->user()->route_code;
-      $region_id = Region::whereId($route_code)->first();
       $products = product_information::join('product_inventory', 'product_inventory.productID', '=', 'product_information.id')
          ->join('product_price', 'product_price.productID', '=', 'product_information.id')
-         ->where('product_price.branch_id', $region_id->id)
          ->select(
             'product_price.branch_id as region',
             'product_information.id as productID',
