@@ -11,11 +11,11 @@ class Dashboard extends Component
    public string $typeMap = 'roadmap';
    public function render()
    {
+      $initialMarkers = [];
       $information = CurrentDeviceInformation::orderBy('id', 'ASC')->get();
       $data = $information->groupBy('user_code');
       foreach ($data as $value) {
          // dd($value);
-         $initialMarkers = [];
          foreach ($value as $info) {
             $myArray = explode(',', $info['current_gps']);
             $array = [
