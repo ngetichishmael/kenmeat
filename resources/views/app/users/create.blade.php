@@ -40,13 +40,6 @@
                                         <div class="row">
                                             <div class="mb-2 col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label for="first-name-column">Employee Code</label>
-                                                    <input type="text" id="first-name-column" class="form-control"
-                                                        placeholder="Employee Code" name="employee_code" required />
-                                                </div>
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-12">
-                                                <div class="form-group">
                                                     <label for="first-name-column">Name</label>
                                                     <input type="text" id="first-name-column" class="form-control"
                                                         placeholder="name" name="name" required />

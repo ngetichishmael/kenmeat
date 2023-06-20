@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\app;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use App\Models\AppPermission;
-use App\Models\Region;
 use Exception;
+use App\Models\User;
+use App\Models\Region;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\AppPermission;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class usersController extends Controller
@@ -75,22 +76,23 @@ class usersController extends Controller
          'name' => 'required',
          'phone_number' => 'required',
          'account_type' => 'required',
-         'employee_code' => 'required',
          'route' => 'required',
       ]);
-
-      $user_code = $request->employee_code;
+      $user_code = Str::uuid();
 
       // Save user
       User::updateOrCreate(
-         ["user_code" => $user_code],
+         [
+            "user_code" => $user_code
+
+         ],
          [
             "email" => $request->email,
             "phone_number" => $request->phone_number,
             "name" => $request->name,
             "account_type" => $request->account_type,
             "email_verified_at" => now(),
-            "route_code" => $request->route,
+            "route_code" => '1',
             "status" => 'Active',
             "password" => $request->password === null ? Hash::make('password') : Hash::make($request->password),
             "business_code" => FacadesAuth::user()->business_code,
