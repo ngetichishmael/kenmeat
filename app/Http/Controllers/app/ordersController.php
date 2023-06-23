@@ -24,6 +24,18 @@ class ordersController extends Controller
    {
       return view('app.orders.index');
    }
+   public function pendingdeliveries()
+   {
+      return view('app.orders.pendingdeliveries');
+   }
+   public function distributororders()
+   {
+      return view('app.orders.distributororders');
+   }
+   public function pendingorders()
+   {
+      return view('app.orders.pendingorders');
+   }
 
    public function makeOrder($id)
    {

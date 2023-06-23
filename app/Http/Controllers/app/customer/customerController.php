@@ -29,6 +29,14 @@ class customerController extends Controller
    {
       return view('app.customers.index');
    }
+   public function creditor()
+   {
+      return view('app.creditors.index');
+   }
+   public function approveCreditors()
+   {
+      return view('app.creditors.approve');
+   }
 
    public function create()
    {
