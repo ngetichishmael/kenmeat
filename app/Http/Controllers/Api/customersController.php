@@ -74,7 +74,7 @@ class customersController extends Controller
    {
       //   $user_code = $request->user()->user_code;
       $validator           =  Validator::make($request->all(), [
-         "customer_name"   => "required|unique:customers",
+         "customer_name"   => "required",
          "contact_person"  => "required",
          "business_code"   => "required",
          "created_by"      => "required",
