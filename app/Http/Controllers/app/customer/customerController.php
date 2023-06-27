@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\customer\customers;
 use App\Models\country;
+use App\Models\customer_group;
 use App\Models\customer\groups;
 use App\Models\suppliers\supplier_address;
 use File;
@@ -129,6 +130,22 @@ class customerController extends Controller
       Session::flash('success', 'Customer updated successfully');
 
       return redirect()->route('customer');
+   }
+
+   public function customergroups()
+   {
+      return view('livewire.customer-group.customergroup');
+   }
+   public function groupstore(Request $request)
+   {
+      $customer = new customer_group;
+      $customer->group_name = $request->group_name;
+      $customer->business_code = $request->business_code;
+      $customer->save();
+
+      Session::flash('success', 'Customer Group Added');
+      return redirect()->route('groupings');
+
    }
 
 

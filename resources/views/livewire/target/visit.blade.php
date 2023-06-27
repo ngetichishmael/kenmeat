@@ -6,7 +6,7 @@
             <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search ...">
             <!-- Button trigger modal -->
             <div class="mt-1">
-                <a href="{{ route('visit.target.create') }}" type="button" class="btn btn-primary">
+                <a href="{{ route('visit.target.create') }}" type="button" class="btn" style="background-color: #B6121B;color:white">
                     New Target
                 </a>
             </div>
@@ -32,6 +32,7 @@
                         <th>Achieved</th>
                         <th>Dead Line</th>
                         <th>Count Down</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +70,7 @@
                                     </button>
                                 @endif
                             </td>
+                            <td><a href="{{ route('visitstarget.edit',$visit->user_code) }}" class="btn btn-outline-info btn-sm">Edit</a></td>
                         </tr>
                     @empty
                         <tr>

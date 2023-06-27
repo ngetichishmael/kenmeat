@@ -2,19 +2,49 @@
 
 namespace App\Http\Controllers\app;
 
-use Exception;
-use App\Models\User;
-use App\Models\Region;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\AppPermission;
 use App\Http\Controllers\Controller;
+use App\Models\activity_log;
+use App\Models\Area;
+use App\Models\suppliers\suppliers;
+use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\AppPermission;
+use App\Models\Region;
+use Exception;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Str;
 
 class usersController extends Controller
 {
+   public function getUsers(Request $request)
+   {
+      $accountType = $request->input('account_type');
+      $users = User::where('account_type', $accountType)->get();
+
+      return response()->json(['users' => $users]);
+   }
+   public function getDistributors(Request $request)
+   {
+      $distributors = suppliers::whereNotIn('name', ['Sokoflow', 'Sokoflow'])->orWhereNull('name')->orWhere('name', '')
+         ->whereIn('status', ['Active', 'active'])
+         ->orWhereNull('status')
+         ->orWhere('status', '')
+         ->get();
+
+      return response()->json(['users' => $distributors]);
+   }
    //list
+   public function list()
+   {
+      $lists = User::whereIn('account_type', ['Admin', 'Manager'])
+         ->distinct('account_type')
+         ->whereNotIn('account_type', ['Customer'])
+         ->groupBy('account_type')
+         ->pluck('account_type');
+      $count = 1;
+      return view('app.users.list', compact('lists', 'count'));
+   }
    public function index()
    {
       return view('app.users.index');
@@ -24,66 +54,45 @@ class usersController extends Controller
       return view('app.users.import');
    }
 
+
+
    //create
    public function create()
    {
       // $routes = array_merge($regions, $subregions, $zones);
-      $routes = Region::all();
+      $regions = Region::all();
+      $routes = Area::all();
       return view('app.users.create', [
-         "routes" => $routes
+         "routes" => $routes,
+         "regions" => $regions
       ]);
    }
-   public function sendOTP($number, $code)
+   public function creatensm()
    {
-
-      try {
-         $curl = curl_init();
-
-         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://prsp.jambopay.co.ke/api/api/org/disburseSingleSms/',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{
-                "number" : "' . $number . '",
-                "sms" : ' . $code . ',
-                "callBack" : "https://....",
-                "senderName" : "PASANDA"
-          }
-          ',
-            CURLOPT_HTTPHEADER => array(
-               'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ5MzEwNzcxfQ.4y5XYFbC5la28h0HfU6FYFP5a_6s0KFIf3nhr3CFT2I',
-               'Content-Type: application/json'
-            ),
-         ));
-
-         $response = curl_exec($curl);
-
-         curl_close($curl);
-      } catch (Exception $e) {
-      }
+      // $routes = array_merge($regions, $subregions, $zones);
+      $regions = Region::all();
+      $routes = Area::all();
+      return view('app.users.creatensm', [
+         "routes" => $routes,
+         "regions" => $regions
+      ]);
    }
-
    //store
    public function store(Request $request)
    {
       $this->validate($request, [
-         'email' => 'required|unique:users,email',
+         'email' => 'required',
          'name' => 'required',
          'phone_number' => 'required',
          'account_type' => 'required',
-         'route' => 'required',
+         'region' => 'required',
       ]);
-      $user_code = Str::uuid();
-
-      // Save user
+      $user_code = rand(100000, 999999);
+      //save user
+      $code = rand(100000, 999999);
       User::updateOrCreate(
          [
-            "user_code" => $user_code
+            "user_code" => $user_code,
 
          ],
          [
@@ -92,77 +101,76 @@ class usersController extends Controller
             "name" => $request->name,
             "account_type" => $request->account_type,
             "email_verified_at" => now(),
-            "route_code" => '1',
+            "route_code" => $request->region,
+            "region_id" => $request->region,
             "status" => 'Active',
-            "password" => $request->password === null ? Hash::make('password') : Hash::make($request->password),
+            "password" => Hash::make($request->phone_number),
             "business_code" => FacadesAuth::user()->business_code,
+
          ]
       );
-
-      // Update or create app permissions
       $van_sales = $request->van_sales == null ? "NO" : "YES";
       $new_sales = $request->new_sales == null ? "NO" : "YES";
       $deliveries = $request->deliveries == null ? "NO" : "YES";
       $schedule_visits = $request->schedule_visits == null ? "NO" : "YES";
-      $merchandizing = $request->merchandizing == null ? "NO" : "YES";
-
+      $merchanizing = $request->merchanizing == null ? "NO" : "YES";
       AppPermission::updateOrCreate(
-         ["user_code" => $user_code],
+         [
+            "user_code" => $user_code,
+
+         ],
          [
             "van_sales" => $van_sales,
             "new_sales" => $new_sales,
             "schedule_visits" => $schedule_visits,
             "deliveries" => $deliveries,
-            "merchandizing" => $merchandizing,
+            "merchanizing" => $merchanizing,
          ]
       );
-
-      session()->flash('success', 'User Created Successfully');
-      return redirect()->route('users.index');
+      Session()->flash('success', 'User Created Successfully, Default Password is Phone_number');
+      return redirect()->back();
    }
 
-   public function edit($id)
+   //edit
+   public function edit($user_code)
    {
-      $permissions = array();
-      $edit = User::whereId($id)->first();
-      $permissions = AppPermission::where('user_code', $edit->user_code)->first();
-      if ($permissions == null) {
-         $permissions = AppPermission::Create(
-            [
-               "user_code" => $edit->user_code,
-               "van_sales" => "NO",
-               "new_sales" => "NO",
-               "schedule_visits" => "NO",
-               "deliveries" => "NO",
-               "merchanizing" => "NO",
-            ]
-         );
-      }
-      $routes = Region::all();
+      $edit = User::where('user_code', $user_code)
+         ->where('business_code', FacadesAuth::user()->business_code)
+         ->first();
+      $permissions = AppPermission::where('user_code', $user_code)->firstOrFail();
+
+      $regions = Region::all();
+
       return view('app.users.edit', [
          'edit' => $edit,
-         'user_code' => $edit->user_code,
+         'user_code' => $user_code,
          'permissions' => $permissions,
-         "routes" => $routes
+         'regions' => $regions,
       ]);
    }
 
    //update
    public function update(Request $request, $user_code)
    {
-      $user = User::where('user_code', '=', $user_code)->first();
+      $this->validate($request, [
+         'email' => 'required',
+         'name' => 'required',
+         'phone_number' => 'required',
+         'account_type' => 'required',
+      ]);
+
       User::updateOrCreate(
          [
             "user_code" => $user_code,
+            "business_code" => FacadesAuth::user()->business_code,
          ],
          [
-            "email" => $request->email ?? $user->email,
-            "phone_number" => $request->phone_number ?? $user->phone_number,
-            "route_code" => $request->route ?? $user->route_code ?? 1,
-            "name" => $request->name ?? $user->name,
-            "account_type" => $request->account_type ?? $user->account_type,
+            "email" => $request->email,
+            "phone_number" => $request->phone_number,
+            "name" => $request->name,
+            "account_type" => $request->account_type,
             "status" => 'Active',
-            "password" => $request->password === null ? $user->password : Hash::make($request->password),
+            "region_id" => $request->region,
 
          ]
       );
@@ -185,14 +193,15 @@ class usersController extends Controller
       );
 
       Session()->flash('success', 'User updated Successfully');
-      return redirect()->route('users.index');
+
+      return redirect()->back();
    }
-   public function destroy($id)
-   {
-      User::where('id', $id)->delete();
-      Session()->flash('success', 'User deleted Successfully');
-      return redirect()->route('users.index');
-   }
+   //   public function destroy($id)
+   //   {
+   //      User::where('id', $id)->delete();
+   //      Session()->flash('success', 'User deleted Successfully');
+   //      return redirect()->route('users.index');
+   //   }
    public function import()
    {
       abort(403, "This action is Limited to Admin Only");

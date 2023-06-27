@@ -112,19 +112,7 @@
                </a>
                <ul class="menu-content">
  <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('users.nsm') !!}">
-  <span class="menu-item text-truncate">NSM</span></a>
- </li>
- <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('rsm') !!}">
-  <span class="menu-item text-truncate">RSM</span></a>
- </li>
- <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('tsr') !!}">
-  <span class="menu-item text-truncate">TSR</span></a>
- </li>
- <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('shop-attendee') !!}">
-  <span class="menu-item text-truncate">Shop Attendee</span></a>
- </li>
- <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('td') !!}">
-  <span class="menu-item text-truncate">TD</span></a>
+  <span class="menu-item text-truncate">Admin</span></a>
  </li>
  </ul>
  

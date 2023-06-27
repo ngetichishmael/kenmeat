@@ -5,7 +5,7 @@
             <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search ...">
             <!-- Button trigger modal -->
             <div class="mt-1">
-                <a href="{{ route('leads.target.create') }}" type="button" class="btn btn-primary">
+                <a href="{{ route('leads.target.create') }}" type="button" class="btn" style="background-color: #B6121B;color:white">
                     New Target
                 </a>
             </div>
@@ -26,11 +26,12 @@
                 <thead>
                     <tr>
                         <th width="1%">#</th>
-                        <th>Sales Person</th>
+                        <th>User Category</th>
                         <th>Target</th>
                         <th>Achieved</th>
                         <th>Dead Line</th>
                         <th>Count Down</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +69,7 @@
                              </button>
                           @endif
                             </td>
+                            <td><a href="{{ route('leadstarget.edit',$lead->user_code) }}" class="btn btn-outline-info btn-sm">Edit</a></td>
                         </tr>
                     @empty
                         <tr>
