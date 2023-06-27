@@ -1,19 +1,15 @@
 <?php
 
 use App\Http\Controllers\Api\TestingController;
+use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Chat\SocketsController;
+use App\Http\Controllers\SupportTicketController;
+use BeyondCode\LaravelWebSockets\Apps\AppProvider;
+use BeyondCode\LaravelWebSockets\Dashboard\DashboardLogger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Events\SendMessage;
+use Illuminate\Http\Request;
 
 require __DIR__ . '/admin.php';
 require __DIR__ . '/others.php';
@@ -162,8 +158,8 @@ Route::group(['middleware' => ['verified']], function () {
    // Route::get('supplier/{id}/edit', ['uses' => 'app\supplier\supplierController@edit', 'as' => 'supplier.edit']);
    // Route::post('supplier/{id}/update', ['uses' => 'app\supplier\supplierController@update', 'as' => 'supplier.update']);
    // Route::get('supplier/{id}/show', ['uses' => 'app\supplier\supplierController@show', 'as' => 'supplier.show']);
-    Route::get('supplier/{id}/archive', ['uses' => 'app\supplier\supplierController@archive', 'as' => 'supplier.archive']);
-    Route::get('supplier/{id}/activate', ['uses' => 'app\supplier\supplierController@activate', 'as' => 'supplier.activate']);
+   Route::get('supplier/{id}/archive', ['uses' => 'app\supplier\supplierController@archive', 'as' => 'supplier.archive']);
+   Route::get('supplier/{id}/activate', ['uses' => 'app\supplier\supplierController@activate', 'as' => 'supplier.activate']);
    Route::get('supplier/archive/view', ['uses' => 'app\supplier\supplierController@archiveView', 'as' => 'supplier.archive.view']);
 
    // Route::get('delete-supplier-person/{id}', ['uses' => 'app\supplier\supplierController@delete_contact_person', 'as' => 'supplier.vendor.person']);
@@ -205,13 +201,14 @@ Route::group(['middleware' => ['verified']], function () {
    //import product
    Route::get('products/import', ['uses' => 'app\products\ImportController@index', 'as' => 'products.import']);
    Route::post('products/post/import', ['uses' => 'app\products\ImportController@import', 'as' => 'products.post.import']);
+   Route::post('products/post/imports', ['uses' => 'app\products\productController@importProducts', 'as' => 'products.post.imports']);
 
    //import users
    Route::get('users/all/import', ['uses' => 'app\usersController@indexUser', 'as' => 'users.all.import']);
    Route::post('users/post/import', ['uses' => 'app\usersController@import', 'as' => 'users.post.import']);
 
    Route::get('/get-users', 'app\usersController@getUsers')->name('get.users');
-   Route::get('/get-distributors', 'App\UsersController@getDistributors')->name('get.distributors');
+   Route::get('/get-distributors', 'app\usersController@getDistributors')->name('get.distributors');
 
    //export products
    Route::get('products/export/{type}', ['uses' => 'app\products\ImportController@export', 'as' => 'products.export']);
@@ -291,23 +288,27 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('rsm', ['uses' => 'app\usersController@rsm', 'as' => 'rsm']);
    Route::get('td', ['uses' => 'app\usersController@td', 'as' => 'td']);
    //   Route::get('rider', ['uses' => 'app\usersController@technical', 'as' => 'rider']);
+   // Routes for reports
+   Route::middleware('web')->group(function () {
+      Route::get('reports', 'app\ReportsController@reports')->name('users.reports');
+      Route::get('reports/pre-oders', 'app\ReportsController@reports')->name('preorders.reports');
+      Route::get('reports/Van-sales', 'app\ReportsController@reports')->name('vansales.reports');
+      Route::get('reports/delivery', 'app\ReportsController@reports')->name('delivery.reports');
+      Route::get('reports/sidai-users', 'app\ReportsController@reports')->name('sidai.reports');
+      Route::get('reports/warehouse-Report', 'app\ReportsController@reports')->name('warehouse.reports');
+      Route::get('reports/supplier-report', 'app\ReportsController@reports')->name('supplier.reports');
+      Route::get('reports/visitation-report', 'app\ReportsController@reports')->name('visitation.reports');
+      Route::get('reports/targets-report', 'app\ReportsController@reports')->name('target.reports');
+      Route::get('reports/payments-report', 'app\ReportsController@reports')->name('payments.reports');
+      Route::get('reports/distributors', 'app\ReportsController@reports')->name('distributor.reports');
+      Route::get('reports/region-report', 'app\ReportsController@reports')->name('regional.reports');
+      Route::get('reports/customers-report', 'app\ReportsController@reports')->name('clients.reports');
+      Route::get('reports/inventory-report', 'app\ReportsController@reports')->name('inventory.reports');
+   });
 
    //Routes for reports
-   Route::get('reports', ['uses' => 'app\usersController@reports', 'as' => 'users.reports']);
-   Route::get('reports/pre-oders', ['uses' => 'app\ReportsController@preorders', 'as' => 'preorders.reports']);
-   Route::get('reports/Van-sales', ['uses' => 'app\ReportsController@vansales', 'as' => 'vansales.reports']);
-   Route::get('reports/delivery', ['uses' => 'app\ReportsController@delivery', 'as' => 'delivery.reports']);
-   Route::get('reports/sidai-users', ['uses' => 'app\ReportsController@users', 'as' => 'sidai.reports']);
-   Route::get('reports/warehouse-Report', ['uses' => 'app\ReportsController@warehouse', 'as' => 'warehouse.reports']);
-   Route::get('reports/supplier-report', ['uses' => 'app\ReportsController@supplier', 'as' => 'supplier.reports']);
-   Route::get('reports/visitation-report', ['uses' => 'app\ReportsController@visitations', 'as' => 'visitation.reports']);
-   Route::get('reports/targets-report', ['uses' => 'app\ReportsController@target', 'as' => 'target.reports']);
-   Route::get('reports/payments-report', ['uses' => 'app\ReportsController@payments', 'as' => 'payments.reports']);
+   Route::get('reports/supplier-report/{id}', ['uses' => 'app\ReportsController@supplierDetails', 'as' => 'supplierDetailed.reports']);
    Route::get('reports/payments-report/{id}', ['uses' => 'app\ReportsController@paymentsDetails', 'as' => 'paymentsdetails.reports']);
-   Route::get('reports/distributors', ['uses' => 'app\ReportsController@distributor', 'as' => 'distributor.reports']);
-   Route::get('reports/region-report', ['uses' => 'app\ReportsController@regional', 'as' => 'regional.reports']);
-   Route::get('reports/customers-report', ['uses' => 'app\ReportsController@clients', 'as' => 'clients.reports']);
-   Route::get('reports/inventory-report', ['uses' => 'app\ReportsController@inventory', 'as' => 'inventory.reports']);
    Route::get('reports/subregion-report/{id}', ['uses' => 'app\ReportsController@subregions', 'as' => 'subregion.reports']);
    Route::get('reports/{id}/routes-report', ['uses' => 'app\ReportsController@routes', 'as' => 'routes.reports']);
    Route::get('reports/customers/{id}', ['uses' => 'app\ReportsController@customers', 'as' => 'customers.reports']);
@@ -316,7 +317,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('orders/items/{order_code}', ['uses' => 'app\ReportsController@preorderitems', 'as' => 'product.items']);
    Route::get('orders/vansaleitems/{order_code}', ['uses' => 'app\ReportsController@vansaleitems', 'as' => 'vansale.items']);
    Route::get('orders/deliveryitems/{order_code}', ['uses' => 'app\ReportsController@deliveryitems', 'as' => 'delivery.items']);
-   Route::get('reports/tsr/details', ['uses' => 'app\ReportsController@tsr', 'as' => 'tsr.details']);
+   Route::get('reports/admins/details', ['uses' => 'app\ReportsController@admins', 'as' => 'admins.details']);
    Route::get('reports/rsm/details', ['uses' => 'app\ReportsController@rsm', 'as' => 'rsm.details']);
    Route::get('reports/shop-attendee/details', ['uses' => 'app\ReportsController@shopattendee', 'as' => 'attendee.details']);
    Route::get('reports/nsm/details', ['uses' => 'app\ReportsController@nsm', 'as' => 'nsm.details']);
@@ -364,6 +365,7 @@ Route::group(['middleware' => ['verified']], function () {
    /* ===  inventory === */
 
    //stock allocation
+   Route::post('warehousing/approve', ['uses' => 'app\inventoryController@handleApproval', 'as' => 'inventory.handleApproval']);
    Route::get('warehousing/approve/{id}', ['uses' => 'app\inventoryController@approve', 'as' => 'inventory.approve']);
    Route::get('warehousing/inventory/allocated', ['uses' => 'app\inventoryController@allocated', 'as' => 'inventory.allocated']);
    Route::post('inventory/allocate/user', ['uses' => 'app\inventoryController@allocate_user', 'as' => 'inventory.allocate.user']);
@@ -383,7 +385,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::post('settings/account/{id}/update', ['uses' => 'app\settingsController@update_account', 'as' => 'settings.account.update']);
 
    //activity lo
-   Route::get('settings/activity-log', ['uses' => 'app\settingsController@activity_log', 'as' => 'settings.activity.log']);
+   Route::get('settings/activity-log', ['uses' => 'app\settingsController@activity_log', 'as' => 'settings.activity_log']);
 
    //Territories
    Route::get('territories', ['uses' => 'app\territoriesController@index', 'as' => 'territories.index']);
@@ -436,4 +438,51 @@ Route::group(['middleware' => ['verified']], function () {
    //activity logs
    Route::get('activity', ['uses' => 'ActivityController@index', 'as' => 'activity.index']);
    Route::get('activity/show/{id}', ['uses' => 'ActivityController@show', 'as' => 'activity.show']);
+
+   //chats endpoints
+   Route::get('socket/index', [SocketsController::class, 'index'])->name('socket.index');
+   Route::get('chats/{chat}', 'ChatController@show');
+   Route::get('/chats/index', [ChatController::class, 'index'])->name('chats.index');
+   Route::post('chats/{chat}/messages', 'MessageController@store');
+   Route::get('/messages/{receiverId}', [ChatController::class, 'messagesIndex'])->name('messages.index');
+
+   // Route::get('socket/index', function (AppProvider $appProvider) {
+   //    return view('app/chat/index', [
+   //       "port" => env("LARAVEL_WEBSOCKETS_PORT"),
+   //       "host" => env("LARAVEL_WEBSOCKETS_HOST"),
+   //       "authEndpoint" => "/api/socket/connect",
+   //       "logChannel" => DashboardLogger::LOG_CHANNEL_PREFIX,
+   //       "apps" => $appProvider->all()
+   //    ]);
+   // })->name('socket.index');
+
+
+
+   //   Route::get('/', function (AppProvider $appProvider) {
+   //      return view('chat-app-example', [
+   //         "port" => "6001",
+   //         "host" => "127.0.0.1",
+   //         "authEndpoint" => "/api/sockets/connect",
+   //         "logChannel" => DashboardLogger::LOG_CHANNEL_PREFIX,
+   //         "apps" => $appProvider->all()
+   //      ]);
+   //   });
+
+   // Route::post("/chat/send", function (Request $request) {
+   //    $message = $request->input("message", null);
+   //    $name = $request->input("name", "Anonymous");
+   //    $time = (new DateTime(now()))->format(DateTime::ATOM);
+   //    if ($name == null) {
+   //       $name = "Anonymous";
+   //    }
+   //    SendMessage::dispatch($name, $message, $time);
+   // });
+
+   //support
+   Route::get('support', ['uses' => 'SupportTicketController@index', 'as' => 'support.index'])->middleware('auth:sanctum');
+   Route::get('support/{id}', ['uses' => 'SupportTicketController@show', 'as' => 'support.show'])->middleware('auth:sanctum');
+   Route::get('support/update/{id}', ['uses' => 'SupportTicketController@update', 'as' => 'support.update'])->middleware('auth:sanctum');
+   Route::post('/support/{ticketId}/messages/{messageId}/reply', [SupportTicketController::class, 'replyToMessage'])->name('support.reply');
+   Route::get('support/{ticket_id}/messages', ['uses' => 'SupportTicketController@getMessages', 'as' => 'support.getMessages'])->middleware('auth:sanctum');
+
 });

@@ -136,13 +136,8 @@
  </ul>
  </li>
  <li class="nav-item {!! Nav::isResource('reports') !!}">
- <a class="d-flex align-items-center" href="#"><i data-feather='file-text'></i><span
-    class="menu-title text-truncate" data-i18n="Invoice"> Reports</span></a>
- <ul class="menu-content">
- <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('users.reports') !!}">
-  <span class="menu-item text-truncate">All Reports</span></a>
- </li>
- </ul>
+ <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i data-feather='file-text'></i><span
+    class="menu-title text-truncate" data-i18n="Invoice">All Reports</span></a>
  </li>
  <li class="nav-item {!! Nav::isResource('regions') !!}">
  <a class="d-flex align-items-center" href="#"><i data-feather="map-pin"></i><span

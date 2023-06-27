@@ -21,12 +21,9 @@
                     <tr>
                         <th width="1%">#</th>
                         <th>Route Name</th>
-                        <th>Sales Agent</th>
+                        <th>Sales Person</th>
                         <th>Status</th>
-                        <th>Type</th>
-                        <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,10 +33,7 @@
                             <td>{!! $route->name !!}</td>
                             <td>{!! $route->User->name ?? "" !!}</td>
                             <td>{!! $route->status !!}</td>
-                            <td>{!! $route->Type !!}</td>
-                            <td>{!! $route->start_date !!}</td>
                             <td>{!! $route->end_date !!}</td>
-                            <td><a href="" class="btn btn-outline-success btn-sm">Edit</a></td>
                         </tr>
                     @endforeach
                 </tbody>

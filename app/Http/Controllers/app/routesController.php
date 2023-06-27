@@ -28,20 +28,25 @@ class routesController extends Controller
    {
       return view('app.routes.index');
    }
+   public function individual()
+   {
+      return view('app.routes.individual');
+   }
 
    /**
     * Show the form for creating a new resource.
     *
     * @return \Illuminate\Http\Response
     */
-   public function create()
-   {
-      $customers = customers::where('business_code', Auth::user()->business_code)->pluck('customer_name', 'id');
-      $salesPeople = User::where('business_code', Auth::user()->business_code)->pluck('name', 'id');
-      $zones = Relationship::where('has_children', '0')->pluck('name', 'name');
-
-      return view('app.routes.create', compact('customers', 'salesPeople', 'zones'));
-   }
+    public function create()
+    {
+       $account_types = User::whereNotIn('account_type', ['Customer', 'Admin'])->groupBy('account_type')->get();
+       $customers = customers::where('business_code', Auth::user()->business_code)->pluck('customer_name', 'id');
+       $salesPeople = User::where('business_code', Auth::user()->business_code)->where('account_type', 'RSM')->pluck('name', 'id');
+ 
+ 
+       return view('app.routes.create', ['customers' => $customers, 'salesPeople' => $salesPeople, 'account_types'=>$account_types]);
+    }
 
    /**
     * Store a newly created resource in storage.
