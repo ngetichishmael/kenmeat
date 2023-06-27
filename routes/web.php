@@ -147,12 +147,12 @@ Route::group(['middleware' => ['verified']], function () {
       'index' => 'supplier',
       'show' => 'supplier.show',
       'edit' => 'supplier.edit',
-      'destroy' => 'supplier.destroy',
+      'destroy' => 'supplier.delete',
       'create' => 'supplier.create',
       'store' => 'supplier.store',
    ]);
 
-   // Route::get('supplier', ['uses' => 'app\supplier\supplierController@index', 'as' => 'supplier.index']);
+    Route::get('supplier/{id}/delete', ['uses' => 'app\supplier\supplierController@delete', 'as' => 'supplier.destroy']);
    // Route::get('supplier/create', ['uses' => 'app\supplier\supplierController@create', 'as' => 'supplier.create']);
    Route::post('warehousing/update/{id}', ['uses' => 'app\supplier\supplierController@update', 'as' => 'supplier.update']);
    // Route::get('supplier/{id}/edit', ['uses' => 'app\supplier\supplierController@edit', 'as' => 'supplier.edit']);
