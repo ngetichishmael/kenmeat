@@ -111,7 +111,7 @@
                   <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo"> Users</span>
                </a>
                <ul class="menu-content">
- <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('users.nsm') !!}">
+ <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('users.admins') !!}">
   <span class="menu-item text-truncate">Admin</span></a>
  </li>
  </ul>

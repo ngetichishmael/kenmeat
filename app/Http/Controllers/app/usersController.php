@@ -53,6 +53,11 @@ class usersController extends Controller
    {
       return view('app.users.import');
    }
+   public function admins()
+   {
+      $admins = User::where('account_type', 'Admin');
+      return view('app.users.admin', compact('admins'));
+   }
 
 
 

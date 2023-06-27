@@ -72,6 +72,7 @@
   'territory.unit.dashboard' => 'App\\Http\\Livewire\\Territory\\Unit\\Dashboard',
   'territory.zone.dashboard' => 'App\\Http\\Livewire\\Territory\\Zone\\Dashboard',
   'territory.index' => 'App\\Http\\Livewire\\Territory\\index',
+  'users.admin' => 'App\\Http\\Livewire\\Users\\Admin',
   'users.index' => 'App\\Http\\Livewire\\Users\\index',
   'visits.customer.dashboard' => 'App\\Http\\Livewire\\Visits\\Customer\\Dashboard',
   'visits.targets' => 'App\\Http\\Livewire\\Visits\\Targets',
