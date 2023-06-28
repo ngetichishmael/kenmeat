@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\app\supplier;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\suppliers\suppliers;
-use App\Models\expense\expense;
-use App\Models\suppliers\contact_persons;
-use App\Models\products\product_information;
-use App\Models\suppliers\comments;
-use App\Models\suppliers\supplier_address;
-use App\Models\suppliers\category;
-use App\Models\suppliers\suppliers_categories;
+use File;
+use Wingu;
+use Helper;
 use App\Models\country;
 use App\Models\lpo\lpo;
+use Illuminate\Http\Request;
+use App\Models\expense\expense;
 use App\Models\invoice\invoices;
-use File;
-use Helper;
-use Session;
-use Wingu;
-use Auth;
+use App\Models\suppliers\category;
+use App\Models\suppliers\comments;
+use App\Models\suppliers\suppliers;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Models\suppliers\contact_persons;
+use App\Models\suppliers\supplier_address;
+use App\Models\products\product_information;
+use App\Models\suppliers\suppliers_categories;
 
 class supplierController extends Controller
 {
@@ -63,7 +63,7 @@ class supplierController extends Controller
 
       Session::flash('success', 'Supplier has been successfully Added');
 
-      return redirect()->route('supplier.index');
+      return redirect()->route('supplier');
    }
 
    public function edit($id)
@@ -96,11 +96,15 @@ class supplierController extends Controller
 
       Session::flash('success', 'Supplier has been successfully updated');
 
-      return redirect()->back();
+      return redirect()->route('supplier');
    }
 
    //delete permanently
    public function delete($id)
    {
+      suppliers::where('id',$id)->delete();
+      Session::flash('success', 'Supplier has been successfully Deleted');
+       
+      return redirect()->route('supplier');
    }
 }

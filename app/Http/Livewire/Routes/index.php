@@ -15,7 +15,7 @@ class Index extends Component
    public $search = '';
    public function render()
    {
-      $routes = Routes::paginate($this->perPage);
+      $routes = Routes::where('Type','Assigned')->paginate($this->perPage);
 
       return view('livewire.routes.index', compact('routes'));
    }

@@ -216,7 +216,7 @@
                     <div class="order-2 mt-3 col-md-6 order-md-1 mt-md-0">
                         <p class="mb-0 card-text">
                             <span class="font-weight-bold"><strong>Salesperson:</strong></span> <span class="ml-75">
-                                {{ $deliver->User->name }}</span>
+                                {{ $deliver->User->name??'' }}</span>
                         </p>
                     </div>
                     <div class="order-2 col-md-6 d-flex justify-content-end col-md-2">

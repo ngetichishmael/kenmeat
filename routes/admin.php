@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\app\Map\MapsController;
 use Illuminate\Support\Facades\Route;
+use Knuckles\Scribe\Annotations as Scribe;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ Route::middleware(['auth'])->group(function () {
       'index' => 'sales.target',
       'show' => 'sales.target.show',
       'edit' => 'sales.target.edit',
-      'update' => 'sales.target.update',
+      'update/{code}' => 'sales.target.update',
       'destroy' => 'sales.target.destroy',
       'create' => 'sales.target.create',
       'store' => 'sales.target.store',
@@ -33,7 +34,6 @@ Route::middleware(['auth'])->group(function () {
       'create' => 'visit.target.create',
       'store' => 'visit.target.store',
    ]);
-   Route::get('picking-sheet', PickingSheetController::class)->name('picking-sheet');
    Route::resource('target/leads', app\Target\LeadsController::class)->names([
       'index' => 'leads.target',
       'show' => 'leads.target.show',
@@ -69,6 +69,15 @@ Route::middleware(['auth'])->group(function () {
       'destroy' => 'SurveryResponses.destroy',
       'create' => 'SurveryResponses.create',
       'store' => 'SurveryResponses.store',
+   ]);
+   Route::resource('customer/pricing', PriceGroupController::class)->names([
+      'index' => 'pricing',
+      'show' => 'pricing.show',
+      'edit' => 'pricing.edit',
+      'update' => 'pricing.update',
+      'destroy' => 'pricing.destroy',
+      'create' => 'pricing.create',
+      'store' => 'pricing.store',
    ]);
    Route::resource('customer/outlets', OutletTypesController::class)->names([
       'index' => 'outlets',

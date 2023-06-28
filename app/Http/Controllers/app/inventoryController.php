@@ -14,6 +14,10 @@ class inventoryController extends Controller
    public function allocated(){
       return view('app.inventory.allocated');
    }
+   public function approval()
+   {
+      return view('app.inventory.approving');
+   }
 
    //allocate user
    public function allocate_user(Request $request){
