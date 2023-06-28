@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.865" height="13.865" viewBox="0 0 13.865 13.865">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #39b54a;
+      }
+    </style>
+  </defs>
+  <path id="Icon_awesome-arrow-circle-up_green" data-name="Icon awesome-arrow-circle-up green" class="cls-1" d="M.563,7.495a6.932,6.932,0,1,1,6.932,6.932A6.931,6.931,0,0,1,.563,7.495ZM4.577,8.3,6.6,6.192v5.1a.669.669,0,0,0,.671.671h.447a.669.669,0,0,0,.671-.671v-5.1L10.413,8.3a.672.672,0,0,0,.959.011l.3-.307a.668.668,0,0,0,0-.948L7.97,3.349a.668.668,0,0,0-.948,0L3.31,7.059a.668.668,0,0,0,0,.948l.3.307A.675.675,0,0,0,4.577,8.3Z" transform="translate(-0.563 -0.563)"/>
+</svg>
