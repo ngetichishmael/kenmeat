@@ -1,10 +1,12 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header mb-3 mt-0">
-       <ul class="nav navbar-nav flex-row " >
+       <ul class="nav navbar-nav flex-row " style="padding-top:10px;">
           <li class="nav-item me-auto">
              <a class="" href="#" >
-                <center><img src="{!! asset('app-assets/images/logo.jpg') !!}" alt="Kenmeat" class="img" width="100%">
-                </center>
+             <center>
+                  <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Kenmeat" class="img" style="height: 80px; padding-left:15px;">
+               </center>
+
              </a>
           </li>
        </ul>

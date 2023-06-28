@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
-@section('title', 'Login')
+@section('title', 'Reset Password')
 <!-- BEGIN: Head-->
 @include('partials._head')
 <!-- END: Head-->
@@ -30,17 +30,18 @@
                             <h4 class="mb-1 card-title"> Forgot your Password? 🔒 </h4>
                         <p class="mb-2 card-text"> Enter Email to associated with your account</p>
 
-                        @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                                    </span>
+                        @if (session('status'))
+                              <div class="alert alert-success">
+                                 {{ session('status') }}
+                              </div>
                         @endif
-                        @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                                        </span>
+                        @if($errors->has('email'))
+                              <span class="help-block">
+                                 <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                              </span>
                         @endif
-                        <form class="mt-2 auth-login-form" action="{{ route('login') }}" method="POST">
+                 
+                        <form class="mt-2 auth-login-form" action="{{ route('password.email') }}" method="POST">
                             @csrf
                             <div class="mb-1">
                                 <label for="login-email" class="form-label">Email</label>
