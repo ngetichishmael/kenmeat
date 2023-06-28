@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.805" height="16.644" viewBox="0 0 20.805 16.644">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #787878;
+      }
+    </style>
+  </defs>
+  <path id="Icon_material-email" data-name="Icon material-email" class="cls-1" d="M21.724,6H5.08A2.078,2.078,0,0,0,3.01,8.08L3,20.563a2.087,2.087,0,0,0,2.08,2.08H21.724a2.087,2.087,0,0,0,2.08-2.08V8.08A2.087,2.087,0,0,0,21.724,6Zm0,4.161-8.322,5.2-8.322-5.2V8.08l8.322,5.2,8.322-5.2Z" transform="translate(-3 -6)"/>
+</svg>
