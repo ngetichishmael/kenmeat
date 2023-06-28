@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\app;
 
+use App\Helpers\SMS;
 use App\Http\Controllers\Controller;
 use App\Models\activity_log;
 use App\Models\Area;
@@ -114,6 +115,8 @@ class usersController extends Controller
 
          ]
       );
+      $message = "Kindly login with your phone number as password: " . $request->phone_number;
+      (new SMS())($request->phone_number, $message);
       $van_sales = $request->van_sales == null ? "NO" : "YES";
       $new_sales = $request->new_sales == null ? "NO" : "YES";
       $deliveries = $request->deliveries == null ? "NO" : "YES";
