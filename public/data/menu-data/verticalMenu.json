@@ -1,0 +1,169 @@
+{
+    "menu": [
+        {
+            "url": "dashboard",
+            "name": "Dashboard",
+            "icon": "home",
+            "slug": "dashboard"
+        },
+             {
+            "name": "Users",
+            "icon": "users",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "organization/users",
+                    "name": "Users",
+                    "icon": "user",
+                    "slug": "OrganizationUsers"
+                },
+                {
+                    "url": "organization/administrators",
+                    "name": "Administrators",
+                    "icon": "lock",
+                    "slug": "OrganizationAdmins"
+                }
+            ]
+        },
+
+        {
+            "url": "finance/transactions",
+            "name": "Transactions",
+            "icon": "dollar-sign",
+            "slug": "FinanceTransactions"
+        },
+
+          {
+            "name": "Income",
+            "icon": "trending-up",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "finance/income-categories",
+                    "name": "Category",
+                    "icon": "minus-circle",
+                    "slug": "FinanceIncomeCategory"
+                },
+                {
+                    "url": "finance/income",
+                    "name": "Income",
+                    "icon": "minus-circle",
+                    "slug": "FinanceIncome"
+                }
+            ]
+        },
+
+             {
+            "name": "Expense",
+            "icon": "trending-down",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "finance/expense-categories",
+                    "name": "Category",
+                    "icon": "minus-circle",
+                    "slug": "FinanceExpenseCategory"
+                },
+                {
+                    "url": "finance/expense",
+                    "name": "Expense",
+                    "icon": "minus-circle",
+                    "slug": "FinanceExpense"
+                }
+            ]
+        },
+
+           
+
+              {
+            "url": "finance/budget/categories",
+            "name": "Budget",
+            "icon": "plus-circle",
+             "slug": "Budget"
+   
+        },
+
+                   {
+            "url": "budget/categories",
+            "name": "Bills",
+            "icon": "map",
+             "slug": "FinanceBills"
+   
+        },
+
+            {
+            "url": "organization/subscription/plans",
+            "name": "Subscription",
+            "icon": "dollar-sign",
+            "slug": "SubscriptionInformation"
+        },
+
+            
+        {
+            "url": "finance/banks",
+            "name": "Wallets",
+            "icon": "cpu",
+            "slug": "FinanceBank"
+        },
+
+
+
+        {
+            "navheader": "Others",
+            "slug": ""
+        },
+
+
+                {
+            "name": "Customer Support",
+            "icon": "headphones",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "support/faqs",
+                    "name": "FAQs",
+                    "icon": "minus-circle",
+                    "slug": "FaqsInformation"
+                },
+                {
+                    "url": "customer/support",
+                    "name": "Help Center",
+                    "icon": "minus-circle",
+                    "badge": "New",
+                    "slug": "CustomerSupport"
+                }
+            ]
+        },
+
+        {
+            "name": "Finance Article",
+            "icon": "shield",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "articles/categories",
+                    "name": "Category",
+                    "icon": "minus-circle",
+                    "slug": "ArticleCategory"
+                },
+                {
+                    "url": "post/articles",
+                    "name": "Articles",
+                    "icon": "minus-circle",
+                    "badge": "New",
+                    "slug": "ArticleInformation"
+                }
+            ]
+        },
+
+
+
+        {
+            "url": "organization/log",
+            "name": "Activity logs",
+            "icon": "activity",
+            "slug": "OrganizationLog"
+        }
+   
+    ]
+}
