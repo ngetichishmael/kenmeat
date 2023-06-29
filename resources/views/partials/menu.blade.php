@@ -80,10 +80,10 @@
                          href="{{ route('PaidPayment') }}"><span
                              class="menu-item text-truncate">Payments</span></a>
                  </li>
-                 <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer*') !!}"
+                 {{-- <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer*') !!}"
                          href="{{ route('PendingPayment') }}"><span
                              class="menu-item text-truncate">Creditors Payment</span></a>
-                 </li>
+                 </li> --}}
              </ul>
          </li>
          <li class="nav-item {!! Nav::isResource('warehousing') !!}">
