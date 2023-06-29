@@ -37,7 +37,7 @@ class SMS
          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
          CURLOPT_CUSTOMREQUEST => 'POST',
          CURLOPT_POSTFIELDS => json_encode([
-            "sender_name" => "PASANDA",
+            "sender_name" => "SOKOFLOW",
             "contact" => $phone_number,
             "message" => $message,
             "callback" => "https://pasanda.com/sms/callback"
