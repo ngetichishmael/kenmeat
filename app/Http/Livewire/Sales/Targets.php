@@ -66,7 +66,7 @@ class Targets extends Component
             if ($this->selectedAccountType && $this->selectedAccountType !== 'ALL') {
                $users = User::where('account_type', $this->selectedAccountType)->get();
             } else {
-               $users = User::whereNotIn('account_type', ['Customer', 'Admin'])->get();
+               $users = User::where('account_type', ['Customer', 'Admin'])->get();
             }
 
             foreach ($users as $user) {
@@ -97,7 +97,7 @@ class Targets extends Component
    }
    public function render()
    {
-      $account_types = User::whereNotIn('account_type', ['customer', 'Admin'])->select('account_type')->groupBy('account_type')->get();
+      $account_types = User::where('account_type', ['Customer', 'Admin'])->select('account_type')->groupBy('account_type')->get();
       return view('livewire.sales.targets',['account_types'=>$account_types]);
    }
 }
