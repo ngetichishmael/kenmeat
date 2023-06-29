@@ -63,9 +63,9 @@
                      Delivery History</span>
                   </a>
                </li>
-               <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('orders.distributororders') !!}">
+               <li style="padding-left: 50px"><a class="d-flex align-items-center" href="{!! route('orders.vansalesorders') !!}">
                      <span class="menu-title text-truncate" data-i18n="Todo">
-                     Distributor Orders</span>
+                     Vansales Orders</span>
                   </a>
                </li>
             </ul>
@@ -136,10 +136,6 @@
   <span class="menu-item text-truncate">Orders</span></a>
  </li>
  </ul>
- </li>
- <li class="nav-item {!! Nav::isResource('reports') !!}">
- <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i data-feather='file-text'></i><span
-    class="menu-title text-truncate" data-i18n="Invoice">All Reports</span></a>
  </li>
  <li class="nav-item {!! Nav::isResource('regions') !!}">
  <a class="d-flex align-items-center" href="#"><i data-feather="map-pin"></i><span
@@ -214,6 +210,10 @@
  </li>
  </ul>
  </li>
+ <li class="nav-item {!! Nav::isResource('reports') !!}">
+   <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i data-feather='file-text'></i><span
+      class="menu-title text-truncate" data-i18n="Invoice">All Reports</span></a>
+   </li>
  <li class="nav-item {!! Nav::isResource('activity')!!}">
  <a class="d-flex align-items-center" href="{!! route('activity.index') !!}">
  <i data-feather='activity'></i><span class="menu-title text-truncate" data-i18n="Todo"> Activity Logs </span>
