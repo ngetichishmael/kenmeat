@@ -71,7 +71,7 @@
                                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn w-100" tabindex="4" style="background: linear-gradient(to right, darkred, lightcoral); color: white;">Sign in</button>
+                            <button type="submit" class="btn w-100" tabindex="4" style="background: linear-gradient(to right, #012340, #025939,#027333,#03A63C,#04D939); color: white;">Sign in</button>
                         </form>
                     </div>
                 </div>

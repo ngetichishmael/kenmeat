@@ -91,7 +91,6 @@ class usersController extends Controller
          'name' => 'required',
          'phone_number' => 'required',
          'account_type' => 'required',
-         'region' => 'required',
       ]);
       $user_code = rand(100000, 999999);
       //save user
@@ -108,7 +107,7 @@ class usersController extends Controller
             "account_type" => $request->account_type,
             "email_verified_at" => now(),
             "route_code" => $request->region,
-            "region_id" => $request->region,
+            "region_id" => 1,
             "status" => 'Active',
             "password" => Hash::make($request->phone_number),
             "business_code" => FacadesAuth::user()->business_code,

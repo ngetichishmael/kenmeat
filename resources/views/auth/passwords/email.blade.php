@@ -11,7 +11,8 @@
     <div class="dashboard-landing">
         <div class="left-side">
             
-            <img src="{{ asset('app-assets/images/loginpage.svg') }}" alt="" class="img-fluid">
+            <!-- <img src="{{ asset('app-assets/images/loginpage.svg') }}" alt="" class="img-fluid"> -->
+            <img class="img-fluid" src="{{asset('images/pages/login-v2.svg')}}" alt="Forgot password V2" />
             
         </div>
         <div class="right-side">
@@ -52,7 +53,7 @@
                             </div>
                       
                        
-                            <button type="submit" class="btn w-100" tabindex="4" style="background: linear-gradient(to right, darkred, lightcoral); color: white;"> Send Reset Link </button>
+                            <button type="submit" class="btn w-100" tabindex="4" style="background: linear-gradient(to right, #012340, #025939,#027333,#03A63C,#04D939); color: white;"> Send Reset Link </button>
                         </form>
                            <p class="text-right mt-2" style="text-align: right;">
                               <a href="{{ route('logout') }}">

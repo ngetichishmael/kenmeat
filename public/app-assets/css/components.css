@@ -623,11 +623,11 @@ footer.footer-border {
 
 .main-menu.menu-light {
    color: #6e6b7b;
-   background: #025939;
+   background: #333333;
 }
 
 .main-menu.menu-light .navigation {
-   background: #025939;
+   background: #333333;
 }
 
 .main-menu.menu-light .navigation .navigation-header {
@@ -727,8 +727,10 @@ footer.footer-border {
 .main-menu.menu-light .navigation>li.active>a {
    /* background: linear-gradient(118deg, #007ec4, #007ec4); */
    
-   background: linear-gradient(to right,rgb(54, 0, 0), darkred, lightcoral);
-   box-shadow: 0 0 10px 1px green;
+   /* background: linear-gradient(to right,rgb(54, 0, 0), darkred, lightcoral); */
+   background: linear-gradient(to right,#012340, #025939,#027333,#03A63C,#04D939);
+
+   box-shadow: 0 0 10px 1px darkred;
    color: #fff;
    font-weight: 400;
    border-radius: 6px;
@@ -802,8 +804,7 @@ footer.footer-border {
 .main-menu.menu-light .navigation>li ul .active {
    background: linear-gradient(118deg, lightgreen, green);
    box-shadow: 0 0 10px 1px green;
-   7);
-   */ border-radius: 4px;
+   border-radius: 4px;
    z-index: 1;
 }
 
