@@ -106,7 +106,7 @@ class usersController extends Controller
             "name" => $request->name,
             "account_type" => $request->account_type,
             "email_verified_at" => now(),
-            "route_code" => $request->region,
+            "route_code" => 1,
             "region_id" => 1,
             "status" => 'Active',
             "password" => Hash::make($request->phone_number),
