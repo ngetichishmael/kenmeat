@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OutletTypesController;
 use App\Http\Controllers\Api\productCategoriesController;
 use App\Http\Controllers\Api\surveyController;
+use App\Http\Controllers\Api\StockRequisitionController;
 use App\Http\Controllers\Api\SurveryAnswersController;
 use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
@@ -75,7 +76,11 @@ Route::group(['namespace' => 'Api'], function () {
 
    Route::post('checkin/newsales/{checkinCode}/{random}/add-to-cart', 'CheckingSaleOrderController@NewSales')->middleware('auth:sanctum');
 
-
+   //stock requisition
+   Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
+   Route::post('/stock/create/request', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
+   Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
+   Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
 
 
    Route::get('checkin/{checkinCode}/cart', ['uses' => 'checkinController@cart', 'as' => 'checkin.cart']);
