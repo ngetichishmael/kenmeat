@@ -9,14 +9,17 @@ use App\Http\Controllers\Api\DeliveriesController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OutletTypesController;
 use App\Http\Controllers\Api\productCategoriesController;
-use App\Http\Controllers\Api\surveyController;
 use App\Http\Controllers\Api\StockRequisitionController;
+use App\Http\Controllers\Api\surveyController;
 use App\Http\Controllers\Api\SurveryAnswersController;
 use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\TargetsController;
+use App\Http\Controllers\Chat\SocketsController;
+use App\Http\Controllers\Api\Chat\ChatController;
 use Illuminate\Support\Facades\Route;
+use Knuckles\Scribe\Annotations as Scribe;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,13 +40,19 @@ Route::group(['namespace' => 'Api'], function () {
    Route::get('customers/{businessCode}', 'customersController@index')->middleware('auth:sanctum');
    Route::post('customers/add-customer', 'customersController@add_customer')->middleware('auth:sanctum');
    Route::post('customer/edit-customer', 'customersController@editCustomer')->middleware('auth:sanctum');
-   Route::get('customers/{code}/details', 'customersController@details');
-   Route::get('customers/{customerID}/{businessCode}/deliveries', 'customersController@deliveries');
-   Route::get('customers/delivery/{code}/details', 'customersController@delivery_details');
-   Route::get('customers/{customerID}/orders', 'customersController@orders');
+   Route::get('customers/{code}/details', 'customersController@details')->middleware('auth:sanctum');
+   Route::post('customer/request/toBeCreditor', 'customersController@RequestToBeCreditor')->middleware('auth:sanctum');
+   Route::post('customer/creditor/status', 'customersController@creditorStatus')->middleware('auth:sanctum');
+   Route::get('customers/{customerID}/{businessCode}/deliveries', 'customersController@deliveries')->middleware('auth:sanctum');
+   Route::get('customers/delivery/{code}/details', 'customersController@delivery_details')->middleware('auth:sanctum');
+   Route::get('customers/{customerID}/orders', 'customersController@orders')->middleware('auth:sanctum');
+   Route::get('customer/groups', 'customersController@groups')->middleware('auth:sanctum');
 
-   Route::get('customers/order/{orderCode}/details', 'customersController@order_details');
-   Route::get('customers/{customerID}/new-order/', 'customersController@new_order');
+//   Route::post('/messages', 'ChatController@sendMessage');
+
+
+   Route::get('customers/order/{orderCode}/details', 'customersController@order_details')->middleware('auth:sanctum');
+   Route::get('customers/{customerID}/new-order/', 'customersController@new_order')->middleware('auth:sanctum');
 
    //products
    Route::get('products/{businessCode}', 'productsController@index')->middleware('auth:sanctum');
@@ -74,13 +83,12 @@ Route::group(['namespace' => 'Api'], function () {
 
    //New Sales Order
 
-   Route::post('checkin/newsales/{checkinCode}/{random}/add-to-cart', 'CheckingSaleOrderController@NewSales')->middleware('auth:sanctum');
+   Route::post('checkin/newsales/{checkinCode}/{random}/{distributor}/add-to-cart', 'CheckingSaleOrderController@NewSales')->middleware('auth:sanctum');
 
-   //stock requisition
-   Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
-   Route::post('/stock/create/request', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
-   Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
-   Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
+
+   Route::post('checkin/change/distributor/status', 'checkinController@distributorschangeStatus')->middleware('auth:sanctum');
+
+
 
 
    Route::get('checkin/{checkinCode}/cart', ['uses' => 'checkinController@cart', 'as' => 'checkin.cart']);
@@ -88,6 +96,7 @@ Route::group(['namespace' => 'Api'], function () {
    Route::get('checkin/{checkinCode}/cart/{id}/delete', ['uses' => 'checkinController@cart_delete', 'as' => 'checkin.cart.delete']);
 
    Route::get('checkin/{checkinCode}/orders', ['uses' => 'checkinController@orders', 'as' => 'checkin.orders']);
+   Route::get('checkin/userOrders', ['uses' => 'checkinController@userOrders', 'as' => 'checkin.userOrders'])->middleware('auth:sanctum');
 
    Route::post('checkin/{checkinCode}/order/edit/reason', ['uses' => 'checkinController@order_edit_reason', 'as' => 'checkin.order.edit.reason']);
    Route::get('checkin/{checkinCode}/order/{orderID}/edit', ['uses' => 'checkinController@order_edit', 'as' => 'checkin.order.edit']);
@@ -192,7 +201,8 @@ Route::group(['namespace' => 'Api'], function () {
     */
    Route::get('/all/products', [CustomersProductsController::class, "getAllProducts"])->middleware('auth:sanctum');
    Route::post('/update/default/image', [CustomersProductsController::class, "sendDefaultImage"])->middleware('auth:sanctum');
-
+//customer offers endpoints
+   Route::get('/all/products-offers', [CustomersProductsController::class, "getAllProductsOffers"])->middleware('auth:sanctum');
 
 
    /**
@@ -203,7 +213,7 @@ Route::group(['namespace' => 'Api'], function () {
    /**
     * Product Category with product information and  Prices
     */
-   Route::get('/get/category/information', [productCategoriesController::class, "getCategory"]);
+   Route::get('/get/category/information', [productCategoriesController::class, "getCategory"])->middleware('auth:sanctum');
 
 
    /**
@@ -216,8 +226,34 @@ Route::group(['namespace' => 'Api'], function () {
     */
    Route::get('/get/outlet/types', [OutletTypesController::class, "getOutletTypes"])->middleware('auth:sanctum');
 
+   Route::get('customer/profile', 'customersController@customerprofile')->middleware('auth:sanctum');
+   Route::put('customer/profile/update', 'customersController@updateCustomerProfile')->middleware('auth:sanctum');
+   Route::put('customer/image/update', 'customersController@updateCustomerImage')->middleware('auth:sanctum');
    /**
     * Get Company Routes
     */
    Route::get('/get/company/routes', [CompanyRouteController::class, "getCompanyRoutes"])->middleware('auth:sanctum');
+
+  //stock requisition
+   Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
+   Route::post('/stock/create/request', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
+   Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
+   Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
+
+   Route::middleware(['auth'])->group(function () {
+   });
+   Route::post('socket/connect', [SocketsController::class, 'connect']);
+
+
+   Route::get('/chats', [ChatController::class, 'index']);
+   Route::patch('/chats/{id}/read', [ChatController::class, 'markAsRead']);
+
+   //support
+   Route::get('/support/all', 'SupportTicketController@index2')->middleware('auth:sanctum');
+   Route::post('/support/request', 'SupportTicketController@store')->middleware('auth:sanctum');
+   Route::post('support/{ticket_id}/messages/reply', 'SupportTicketController@replyToMessage')->middleware('auth:sanctum');
+   Route::get('support/{ticket_id}/messages', 'SupportTicketController@getMessages')->middleware('auth:sanctum');
+   Route::get('/support/{id}', 'SupportTicketController@show')->middleware('auth:sanctum');
+
+
 });
