@@ -1,4 +1,124 @@
+
+
 <div>
+
+<div class="row match-height">
+    <!-- Medal Card -->
+    <div class="col-xl-4 col-md-6 col-12">
+      <div class="card card-congratulation-medal">
+        <div class="card-body">
+          <h5>Welcome once again 🎉 </h5>
+          <p class="card-text font-small-3">Feel free to explore around</p>
+          <h3 class="mb-75 mt-2 pt-50">
+          <?php
+            // Calculate the sum total
+            $sumTotal = $Cash + $Mpesa + $Cheque + $total;
+            ?>
+
+            <a href="javascript:void(0);"> {{ number_format($sumTotal) }} </a>
+          </h3>
+          <button type="button" class="btn btn-primary">View Sales</button>
+          <img src="{{asset('images/illustration/badge.svg')}}" class="congratulation-medal" alt="Medal Pic" />
+        </div>
+      </div>
+    </div>
+    <!--/ Medal Card -->
+
+    <!-- Statistics Card -->
+    <div class="col-xl-8 col-md-6 col-12">
+      <div class="card card-statistics">
+        <div class="card-header">
+          <h4 class="card-title"> Revenue Collected</h4>
+          <div class="d-flex align-items-center">
+          
+          </div>
+        </div>
+        <div class="card-body statistics-body">
+          <div class="row">
+
+            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+              <div class="media">
+       
+                <a href="#vansalesSection" class="d-flex align-items-center">
+                                    <div class="avatar bg-light-info">
+                                    <div class="avatar-content">
+                    <i data-feather="trending-up" class="avatar-icon"></i>
+                  </div>
+                                    </div> &nbsp;&nbsp;
+                                    <div class="media-body my-auto pl-3 ml-3">
+                                        <h4 class="font-weight-bolder ml-2" style="font-weight: bolder">
+                                            &nbsp; {{ number_format($Cash) }}</h4>
+                                        <p class="card-text font-small-3 mb-0 font-medium-1"
+                                            style="color: rgba(71,75,79,0.76)"> Cash </p>
+                                    </div>
+                                </a>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+              <div class="media">
+
+                <a href="#vansalesSection" class="d-flex align-items-center">
+                                    <div class="avatar bg-light-success">
+                                    <div class="avatar-content">
+                    <i data-feather="shield" class="avatar-icon"></i>
+                  </div>
+                                    </div> &nbsp;&nbsp;
+                                    <div class="media-body my-auto pl-3 ml-3">
+                                        <h4 class="font-weight-bolder ml-2" style="font-weight: bolder">
+                                            &nbsp; {{ number_format($Mpesa) }}</h4>
+                                        <p class="card-text font-small-3 mb-0 font-medium-1"
+                                            style="color: rgba(71,75,79,0.76)"> Mpesa </p>
+                                    </div>
+                                </a>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+              <div class="media">
+
+
+                <a href="#vansalesSection" class="d-flex align-items-center">
+                                    <div class="avatar bg-light-danger">
+                                    <div class="avatar-content">
+                    <i data-feather="box" class="avatar-icon"></i>
+                  </div>
+                                    </div> &nbsp;&nbsp;
+                                    <div class="media-body my-auto pl-3 ml-3">
+                                        <h4 class="font-weight-bolder ml-2" style="font-weight: bolder">
+                                            &nbsp; {{ number_format($Cheque) }}</h4>
+                                        <p class="card-text font-small-3 mb-0 font-medium-1"
+                                            style="color: rgba(71,75,79,0.76)"> Cheque </p>
+                                    </div>
+                                </a>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-sm-6 col-12">
+              <div class="media">
+             
+
+                <a href="#vansalesSection" class="d-flex align-items-center">
+                                    <div class="avatar bg-light-warning">
+                                    <div class="avatar-content">
+                    <i data-feather="dollar-sign" class="avatar-icon"></i>
+                  </div>
+                                    </div> &nbsp;&nbsp;
+                                    <div class="media-body my-auto pl-3 ml-3">
+                                        <h4 class="font-weight-bolder ml-2" style="font-weight: bolder">
+                                            &nbsp; {{ number_format($total) }}</h4>
+                                        <p class="card-text font-small-3 mb-0 font-medium-1"
+                                            style="color: rgba(71,75,79,0.76)"> Reconciled</p>
+                                    </div>
+                                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Statistics Card -->
+  </div>
 <div class="col-xl-12 col-md-12 col-12">
             <!-- <div class="card">
                 <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
@@ -260,13 +380,19 @@
                  <div class="card card-company-table">
                     <div class="p-0 card-body">
                        <div class="table-responsive">
-                          <div>
-                              @livewire('dashboard.line-chart')
-                            </div>
+                       <div class="card-header">
+                            <p class="card-subtitle">Monthly Sales</p>
+                            
+                        </div>
+                    
+                        @livewire('dashboard.line-chart')                       
+                   
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <div class="col-lg-4 col-md-6 col-12">
               <div class="card card-developer-meetup">
                  <div class="text-center meetup-img-wrapper rounded-top">
@@ -328,338 +454,13 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-12">
-                   <section>
-                       <div class="row">
-                           <div class=" col-6 border border-primary">
-                               @livewire('dashboard.individual-targets')
-                           </div>
-                           <div class=" col-6 border border-primary">
-                               @livewire('dashboard.percentage-targets')
-                           </div>
-                       </div>
-                   </section>
-               </div> --}}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-6">
-                                <h4>Money Collected</h4>
-                                <table class="table table-striped table-bordered">
-                                    <thead>
-                                        <th>Total Collected</th>
-                                        <th width="20%"></th>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-success">
-                                            <td>Cash</td>
-                                            <td>{{ number_format($Cash) }}</td>
-                                        </tr>
-                                        <tr class="table-success">
-                                            <td>Mpesa</td>
-                                            <td>{{ number_format($Mpesa) }}</td>
-                                        </tr>
-                                        <tr class="table-success">
-                                            <td>Cheque</td>
-                                            <td>{{ number_format($Cheque) }}</td>
-                                        </tr>
-                                        <tr class="table-success">
-                                            <td>Total Reconciled</td>
-                                            <td>{{ number_format($total) }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-6">
-                                <h4>Receivables Aging</h4>
-                                <table class="table table-striped table-bordered">
-                                    <thead>
-                                        <th>Total Collected</th>
-                                        <th width="20%"></th>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-warning">
-                                            <td>Today</td>
-                                            <td>{{ number_format($daily) }}</td>
-                                        </tr>
-                                        <tr class="table-warning">
-                                            <td>0-7days</td>
-                                            <td>{{ number_format($weekly) }}</td>
-                                        </tr>
-                                        <tr class="table-warning">
-                                            <td>0-30Days</td>
-                                            <td>{{ number_format($monthly) }}</td>
-                                        </tr>
-                                        <tr class="table-warning">
-                                            <td>Total</td>
-                                            <td>{{ number_format($sumAll) }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
+                
             </div>
+
+            @include('livewire.dashboard.table')
         </div>
+       
+      
 
-        <section class="app-user-list" id="vansalesSection">
-            <div class="card">
-                <h5 class="card-header">Total Vansales</h5>
-            
-            </div>
-
-            <div class="card">
-                <div class="pt-0 card-datatable table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Order Code</th>
-                                <th>Customer</th>
-                                <th>Sales Associates</th>
-                                <th>Balance </th>
-                                <th>Payment Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($vansalesTotal as $key=>$sale)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $sale->order_code }}</td>
-                                    <td>{{ $sale->user()->pluck('name')->implode('') }}</td>
-                                    <td>{{ $sale->customer()->pluck('customer_name')->implode('') }}</td>
-                                    <td>{{ $sale->balance }}</td>
-                                    <td>{{ $sale->payment_status }}</td>
-                                    <td>{{ $sale->updated_at }}</td>
-                                </tr>
-                            @empty
-                                <x-emptyrow>
-                                    6
-                                </x-emptyrow>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    {{ $vansalesTotal->links() }}
-                </div>
-            </div>
-        </section>
-
-        <section class="app-user-list" id="preorderSection">
-            <div class="card">
-                <h5 class="card-header">Pre Order</h5>
-             
-            </div>
-
-            <div class="card">
-                <div class="pt-0 card-datatable table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Order Code</th>
-                                <th>Customer</th>
-                                <th>Sales Associates</th>
-                                <th>Balance </th>
-                                <th>Payment Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($preorderTotal as $key=>$sale)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $sale->order_code }}</td>
-                                    <td>{{ $sale->user()->pluck('name')->implode('') }}</td>
-                                    <td>{{ $sale->customer()->pluck('customer_name')->implode('') }}</td>
-                                    <td>{{ $sale->balance }}</td>
-                                    <td>{{ $sale->payment_status }}</td>
-                                    <td>{{ $sale->updated_at }}</td>
-                                </tr>
-                            @empty
-                                <x-emptyrow>
-                                    6
-                                </x-emptyrow>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    {{ $preorderTotal->links() }}
-                </div>
-            </div>
-        </section>
-
-        <section class="app-user-list" id="orderFulfillmentSection">
-            <div class="card">
-                <h5 class="card-header">Order Fulfilment</h5>
-            
-            </div>
-
-            <div class="card">
-                <div class="pt-0 card-datatable table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Order Code</th>
-                                <th>Customer</th>
-                                <th>Sales Associates</th>
-                                <th>Balance </th>
-                                <th>Payment Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($orderfullmentTotal as $key=>$sale)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $sale->order_code }}</td>
-                                    <td>{{ $sale->user()->pluck('name')->implode('') }}</td>
-                                    <td>{{ $sale->customer()->pluck('customer_name')->implode('') }}</td>
-                                    <td>{{ $sale->balance }}</td>
-                                    <td>{{ $sale->payment_status }}</td>
-                                    <td>{{ $sale->updated_at }}</td>
-                                </tr>
-                            @empty
-                                <x-emptyrow>
-                                    6
-                                </x-emptyrow>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    {{ $orderfullmentTotal->links() }}
-                </div>
-            </div>
-        </section>
-
-        <section class="app-user-list" id="activeUsersSection">
-            <div class="card">
-                <h5 class="card-header">Active Users</h5>
-             
-            </div>
-            {{-- @dd($activeUserTotal) --}}
-            <div class="card">
-                <div class="pt-0 card-datatable table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Sales Associates</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <!-- <th>Edit</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($activeUserTotal as $key=>$user)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $user->user()->pluck('name')->implode('') }}</td>
-                                    <td>{{ $user->user()->pluck('email')->implode('') }}</td>
-                                    <td>{{ $user->user()->pluck('status')->implode('') }}</td>
-                                    <!-- <td>
-                                        <a href="{{ route('user.edit', $user->user_code) }}"
-                                            class="btn btn-primary btn-sm">Edit</a>
-                                    </td> -->
-                                </tr>
-                            @empty
-                                <x-emptyrow>
-                                    6
-                                </x-emptyrow>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    {{ $activeUserTotal->links() }}
-                </div>
-            </div>
-        </section>
-
-
-        <section class="app-user-list" id="visitsSection">
-            <div class="card">
-                <h5 class="card-header">Visits</h5>
-            
-            </div>
-
-            <div class="card">
-                <div class="pt-0 card-datatable table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Customer</th>
-                                <th>Sales Associates</th>
-                                <th>Status</th>
-                                <!-- <th>Action</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($visitsTotal as $key=>$user)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $user->customer()->pluck('customer_name')->implode('') }}</td>
-                                    <td>{{ $user->user()->pluck('name')->implode('') }}</td>
-                                    <td>{{ $user->user()->pluck('status')->implode('') }}</td>
-                                    <!-- <td>
-                                        <a href="{{ route('customer.edit', $user->customer_id) }}"
-                                            class="btn btn-sm btn-primary">Edit</a>
-                                    </td> -->
-                                </tr>
-                            @empty
-                                <x-emptyrow>
-                                    6
-                                </x-emptyrow>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    {{ $visitsTotal->links() }}
-                </div>
-            </div>
-        </section>
-
-
-
-        <section class="app-user-list" id="buyingCustomersSection">
-            <div class="card">
-                <h5 class="card-header">Buying Customers</h5>
-            
-            </div>
-
-            <div class="card">
-                <div class="pt-0 card-datatable table-responsive">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Order Code</th>
-                                <th>Customer</th>
-                                <th>Sales Associates</th>
-                                <th>Balance </th>
-                                <th>Payment Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($customersCountTotal as $key=>$sale)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $sale->order_code }}</td>
-                                    <td>{{ $sale->User()->pluck('name')->implode('') }}</td>
-                                    <td>{{ $sale->customer()->pluck('customer_name')->implode('') }}</td>
-                                    <td>{{ $sale->balance }}</td>
-                                    <td>{{ $sale->payment_status }}</td>
-                                    <td>{{ $sale->updated_at }}</td>
-                                </tr>
-                            @empty
-                                <x-emptyrow>
-                                    6
-                                </x-emptyrow>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    {{ $customersCountTotal->links() }}
-                </div>
-            </div>
-        </section>
-                </div>
     </div>
