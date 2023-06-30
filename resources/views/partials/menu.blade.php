@@ -30,12 +30,12 @@
                  <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}" href="{{ route('customer') }}">
                    <span class="menu-item text-truncate">Customers</span></a>
                  </li>
-                 <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}" href="{{ route('creditors') }}">
+                 {{-- <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}" href="{{ route('creditors') }}">
                    <span class="menu-item text-truncate">Creditors</span></a>
-                 </li>
-                <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}" href="{{ route('approveCreditors') }}">
+                 </li> --}}
+                {{-- <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}" href="{{ route('approveCreditors') }}">
                    <span class="menu-item text-truncate">Approve Creditors</span></a>
-                 </li>
+                 </li> --}}
  
                  <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}" href="{{ route('groupings') }}">
                    <span class="menu-item text-truncate">Customer Groups</span></a>
