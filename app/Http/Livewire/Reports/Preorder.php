@@ -38,7 +38,7 @@ class Preorder extends Component
          }
       }
 
-      return $query->paginate(7);
+      return $query;
    }
    // public function export()
    // {
