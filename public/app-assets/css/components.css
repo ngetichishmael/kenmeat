@@ -118,6 +118,7 @@ html .navbar-floating.footer-static .app-content .kanban-wrapper {
    height: calc(var(--vh, 1vh) * 100 - calc(calc(2rem * 1) + 4.45rem + 3.35rem + 1.3rem + 0rem));
 }
 
+
 @media (max-width: 575.98px) {
 
    html .navbar-floating.footer-static .app-content .content-area-wrapper,
@@ -392,6 +393,7 @@ html .pace .pace-progress {
 /*
 * Col 3 layout for detached and general type
 */
+
 @media (min-width: 992px) {
    body .content-right {
       width: calc(100vw - (100vw - 100%) - 260px);
