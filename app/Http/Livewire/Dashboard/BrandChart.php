@@ -41,6 +41,8 @@ class BrandChart extends Component
          "borderWidth" => 2,
          "borderRadius" => 2,
          "borderSkipped" => true,
+         "barPercentage" => 0.5, // Adjust this value to control the width of the bars
+         "categoryPercentage" => 0.6 // Adjust this value to control the spacing between bars
       ]);
       $brandsales->labels(array_reverse($arrayCLabel));
       $brandsales->dataset('Least Performing Brand', 'bar', array_reverse($arrayCData))->options([
@@ -49,6 +51,8 @@ class BrandChart extends Component
          'backgroundColor' => '#f07f21',
          "borderWidth" => 2,
          "borderSkipped" => true,
+         "barPercentage" => 0.5, // Adjust this value to control the width of the bars
+         "categoryPercentage" => 0.6 // Adjust this value to control the spacing between bars
       ]);
       return view('livewire.dashboard.brand-chart', [
          'brandsales' => $brandsales,

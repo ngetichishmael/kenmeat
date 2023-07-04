@@ -25,23 +25,22 @@ class pendingorders extends Component
    public function render()
    {
       $searchTerm = '%' . $this->search . '%';
-      $sokoflow=suppliers::where('name', 'Sokoflow')->first();
-      $pendingorders = Orders::with('Customer', 'user', 'distributor')
-         ->where('order_status','=', 'Pending Delivery')
+      $sokoflow = suppliers::where('name', 'Sokoflow')->first();
+      $pendingorders = Orders::with('Customer', 'user')
+         ->where('order_status', '=', 'Pending Delivery')
          ->where(function ($query) use ($sokoflow) {
-               $query->whereNull('supplierID')
-                  ->orWhere('supplierID', '')
-                  ->orWhere('supplierID', $sokoflow->id);
+            $query->whereNull('supplierID')
+               ->orWhere('supplierID', '')
+               ->orWhere('supplierID', $sokoflow->id);
          })
-         ->where('order_type','=','Pre Order')
+         ->where('order_type', '=', 'Pre Order')
          ->where(function ($query) use ($searchTerm) {
             $query->whereHas('Customer', function ($subQuery) use ($searchTerm) {
                $subQuery->where('customer_name', 'like', $searchTerm);
             })
                ->orWhereHas('User', function ($subQuery) use ($searchTerm) {
                   $subQuery->where('name', 'like', $searchTerm);
-               })
-               ;
+               });
          })
          ->when($this->fromDate, function ($query) {
             $query->whereDate('created_at', '>=', $this->fromDate);
