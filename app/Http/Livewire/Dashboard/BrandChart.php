@@ -39,7 +39,7 @@ class BrandChart extends Component
          'color' => "#94DB9D",
          'backgroundColor' => '#009dde',
          "borderWidth" => 2,
-         "borderRadius" => 5,
+         "borderRadius" => 2,
          "borderSkipped" => true,
       ]);
       $brandsales->labels(array_reverse($arrayCLabel));

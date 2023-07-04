@@ -19,4 +19,8 @@ Route::middleware(['auth'])->group(function () {
    Route::get('notification/customer',[CustomersNotificationController::class,'index'])->name('CustomerNotification');
    Route::get('notification/users',[CustomersNotificationController::class,'users'])->name('UserNotification');
    Route::get('notification/all',[CustomersNotificationController::class,'all'])->name('AllNotification');
+
+   Route::get('chat',[ChatsController::class,'index'])->name('chat.index');
+   Route::get('chat/{query}',[ChatsController::class,'chat'])->name('chat');
+
 });

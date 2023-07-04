@@ -95,49 +95,17 @@ class User extends Authenticatable implements MustVerifyEmail
    }
 
 
-
-
-   /**
-    * Get the last added TargetSales for the User.
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne
-    */
-   public function TargetSale(): HasOne
+   public function conversations()
    {
-      return $this->hasOne(SalesTarget::class, 'user_code', 'user_code')
-         ->latest('created_at');
+
+      return $this->hasMany(Conversation::class, 'sender_id')->orWhere('receiver_id', $this->id)->whereNotDeleted();
    }
 
    /**
-    * Get the last added TargetLeads for the User.
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    * The channels the user receives notification broadcasts on.
     */
-   public function TargetLead(): HasOne
+   public function receivesBroadcastNotificationsOn(): string
    {
-      return $this->hasOne(LeadsTargets::class, 'user_code', 'user_code')
-         ->latest('created_at');
-   }
-
-   /**
-    * Get the last added TargetsOrder for the User.
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne
-    */
-   public function TargetOrder(): HasOne
-   {
-      return $this->hasOne(OrdersTarget::class, 'user_code', 'user_code')
-         ->latest('created_at');
-   }
-
-   /**
-    * Get the last added TargetsVisit for the User.
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne
-    */
-   public function TargetVisit(): HasOne
-   {
-      return $this->hasOne(VisitsTarget::class, 'user_code', 'user_code')
-         ->latest('created_at');
+      return 'users.' . $this->id;
    }
 }

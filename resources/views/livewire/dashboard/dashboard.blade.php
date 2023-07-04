@@ -1,4 +1,25 @@
 <div>
+<div class="col-xl-12 col-md-12 col-12">
+        <div class="card">
+                <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="validationTooltip01" style="padding:10px">Start Date</label>
+                            <input wire:model="start" name="startDate" type="date" class="form-control"
+                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="validationTooltip01" style="padding:10px">End Date</label>
+                            <input wire:model="end" name="startDate" type="date" class="form-control"
+                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
 
     <div class="row match-height">
         <!-- Medal Card -->
@@ -13,7 +34,7 @@
                         $sumTotal = $Cash + $Mpesa + $Cheque + $total;
                         ?>
 
-                        <a href="javascript:void(0);"> {{ number_format($sumTotal) }} </a>
+                        <a href="javascript:void(0);"> Ksh. {{ number_format($sumTotal) }} </a>
                     </h3>
                     <button type="button" class="btn btn-primary">View Sales</button>
                     <img src="{{ asset('images/illustration/badge.svg') }}" class="congratulation-medal"
@@ -118,27 +139,7 @@
         </div>
         <!--/ Statistics Card -->
     </div>
-    <div class="col-xl-12 col-md-12 col-12">
-        <!-- <div class="card">
-                <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="validationTooltip01">Start Date</label>
-                            <input wire:model="start" name="startDate" type="date" class="form-control"
-                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="validationTooltip01">End Date</label>
-                            <input wire:model="end" name="startDate" type="date" class="form-control"
-                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
-    </div>
     <div class="col-xl-12 col-md-12 col-12">
         <div class="card card-statistics">
             <div class="card-header">

@@ -36,6 +36,9 @@ require __DIR__ . '/customer/api.php';
 require __DIR__ . '/total/api.php';
 Route::group(['namespace' => 'Api'], function () {
 
+   Route::get('/user/chats', [ChatController::class, 'index'])->middleware('auth:sanctum');
+   Route::post('/user/chat/new', [ChatController::class, 'store'])->middleware('auth:sanctum');
+
    //customers
    Route::get('customers/{businessCode}', 'customersController@index')->middleware('auth:sanctum');
    Route::post('customers/add-customer', 'customersController@add_customer')->middleware('auth:sanctum');

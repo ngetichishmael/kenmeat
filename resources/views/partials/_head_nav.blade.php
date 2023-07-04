@@ -6,12 +6,19 @@
                 <li class="nav-item"><a class="nav-link menu-toggle" href="#"><i class="ficon"
                             data-feather="menu"></i></a></li>
             </ul>
+      
             <ul class="nav navbar-nav bookmark-icons">
+
                 <li class="nav-item d-none d-lg-block">
-                    <a class="nav-link" href="#" title="Chat"><i class="ficon"
-                            data-feather="message-square"></i></a>
+                <a class="nav-link" href="{{ route('ChatSupport') }}" data-toggle="tooltip" data-placement="top" >
+                    <i class="ficon" data-feather="message-square"></i>
+                    
+                    <span class="badge badge-pill badge-primary badge-up ">            
+                
+                {{ \App\Models\Message::whereNull('read_at')->count() }}
+                </span>  </a>
                 </li>
-            </ul>
+                </ul>
             <ul class="nav navbar-nav">
                 <li class="nav-item d-none d-lg-block">
                     <a class="nav-link bookmark-star"><i class="ficon text-warning" data-feather="star"></i></a>
