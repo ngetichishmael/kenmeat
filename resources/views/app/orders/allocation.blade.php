@@ -28,6 +28,7 @@
     @include('partials._messages')
     <form class="row" action="{!! route('order.create.delivery') !!}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('POST')
         <input type="hidden" name="order_code" value="{!! $order->order_code !!}">
         <input type="hidden" name="customer" value="{!! $order->customerID !!}">
         <div class="col-md-10">
