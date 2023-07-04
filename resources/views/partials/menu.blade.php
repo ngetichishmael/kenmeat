@@ -123,18 +123,12 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {!! Nav::isResource('users') !!}">
-                <a class="d-flex align-items-center" href="#">
+            <li class=" nav-item {!! Nav::isRoute('users.index') !!}">
+                <a class="d-flex align-items-center" href="{!! route('users.index') !!}">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo"> Users</span>
                 </a>
-                <ul class="menu-content">
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center"
-                            href="{!! route('users.admins') !!}">
-                            <span class="menu-item text-truncate">Admin</span></a>
-                    </li>
-                </ul>
-
             </li>
+
             <li class="nav-item {!! Nav::isResource('target') !!}">
                 <a class="d-flex align-items-center" href="#"><i data-feather="target"></i><span
                         class="menu-title text-truncate" data-i18n="Invoice">Target</span></a>
