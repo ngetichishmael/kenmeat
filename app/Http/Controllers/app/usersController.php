@@ -25,6 +25,7 @@ class usersController extends Controller
 
       return response()->json(['users' => $users]);
    }
+   
    public function getDistributors(Request $request)
    {
       $distributors = suppliers::whereNotIn('name', ['Sokoflow', 'Sokoflow'])->orWhereNull('name')->orWhere('name', '')
@@ -38,13 +39,13 @@ class usersController extends Controller
    //list
    public function list()
    {
-      $lists = User::whereIn('account_type', ['Admin', 'Manager'])
-         ->distinct('account_type')
-         ->whereNotIn('account_type', ['Customer'])
-         ->groupBy('account_type')
-         ->pluck('account_type');
-      $count = 1;
-      return view('app.users.list', compact('lists', 'count'));
+      // $lists = User::whereIn('account_type', ['Admin', 'Manager'])
+      //    ->distinct('account_type')
+      //    ->whereNotIn('account_type', ['Customer'])
+      //    ->groupBy('account_type')
+      //    ->pluck('account_type');
+      // $count = 1;
+      return view('app.users.usertypes');
    }
    public function index()
    {
@@ -218,4 +219,40 @@ class usersController extends Controller
    {
       abort(403, "This action is Limited to Admin Only");
    }
+
+
+
+   public function admin()
+   {
+      $admin = User::where('account_type', 'Admin');
+      return view('app.users.admin', compact('admin'));
+   }
+
+   public function tsr()
+   {
+      $tsr = User::where('account_type', 'Sales');
+      return view('app.users.tsr', compact('tsr'));
+   }
+   
+   public function ac()
+   {
+      $ac = User::where('account_type', 'Account Manager');
+      return view('app.users.accountmanager', compact('ac'));
+   }
+   public function Merchandizer()
+   {
+      $Merchandizer = User::where('account_type', 'Merchandizer');
+      return view('app.users.Merchandizer', compact('Merchandizer'));
+   }
+   public function hr()
+   {
+      $hr = User::where('account_type', 'HR');
+      return view('app.users.hr', compact('hr'));
+   }
+   public function rsm()
+   {
+      $rsm = User::where('account_type', 'Manager');
+      return view('app.users.rsm', compact('rsm'));
+   }
+
 }
