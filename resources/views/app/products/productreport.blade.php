@@ -50,7 +50,7 @@
                                         {{ number_format((float) $product->ProductPrice()->pluck('selling_price')->implode('')) }}
                                     </td>
                                     <td>
-                                        {{ number_format((float) $product->ProductPrice()->pluck('distributor_price')->implode('')) }}
+                                        {{-- {{ number_format((float) $product->ProductPrice()->pluck('distributor_price')->implode('')) }} --}}
                                     </td>
                                     <td>{{ $product->Inventory->current_stock ?? '0' }}</td>
                                     <td>{{ $product->sku_code }}</td>
