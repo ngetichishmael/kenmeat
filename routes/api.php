@@ -16,7 +16,8 @@ use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\TargetsController;
-use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Chat\SocketsController;
+use App\Http\Controllers\Api\Chat\ChatController;
 use Illuminate\Support\Facades\Route;
 use Knuckles\Scribe\Annotations as Scribe;
 /*
