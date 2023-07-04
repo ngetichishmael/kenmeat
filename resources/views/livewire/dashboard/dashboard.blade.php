@@ -1,5 +1,4 @@
-<div>
-    <div class="col-xl-12 col-md-12 col-12">
+<div class="col-xl-12 col-md-12 col-12">
         <div class="card">
             <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
                 <div class="col-md-2">
@@ -140,6 +139,7 @@
         <!--/ Statistics Card -->
     </div>
 
+    
     <div class="col-xl-12 col-md-12 col-12">
         <div class="card card-statistics">
             <div class="card-header">
