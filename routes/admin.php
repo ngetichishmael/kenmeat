@@ -4,6 +4,7 @@ use App\Http\Controllers\app\Map\MapsController;
 use Illuminate\Support\Facades\Route;
 use Knuckles\Scribe\Annotations as Scribe;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,7 @@ use Knuckles\Scribe\Annotations as Scribe;
 */
 
 Route::middleware(['auth'])->group(function () {
+
    Route::resource('target/sales', app\Target\SalesController::class)->names([
       'index' => 'sales.target',
       'show' => 'sales.target.show',
@@ -106,6 +108,18 @@ Route::middleware(['auth'])->group(function () {
       'create' => 'PendingPayment.create',
       'store' => 'PendingPayment.store',
    ]);
+
+   Route::resource('chat/support', ChatsController::class)->names([
+      'index' => 'ChatSupport',
+      'show' => 'ChatSupport.show',
+      'edit' => 'ChatSupport.edit',
+      'update' => 'ChatSupport.update',
+      'destroy' => 'ChatSupport.destroy',
+      'create' => 'ChatSupport.create',
+      'store' => 'ChatSupport.store',
+      'respond' => 'ChatSupport.respond',
+  ]);
+
    Route::resource('visits/user', UserVisitController::class)->names([
       'index' => 'UsersVisits',
       'show' => 'UsersVisits.show',

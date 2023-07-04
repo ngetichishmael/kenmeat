@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\TargetsController;
+use App\Http\Controllers\Api\ChatController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ require __DIR__ . '/manager/api.php';
 require __DIR__ . '/customer/api.php';
 require __DIR__ . '/total/api.php';
 Route::group(['namespace' => 'Api'], function () {
+
+   Route::get('/user/chats', [ChatController::class, 'index'])->middleware('auth:sanctum');
+   Route::post('/user/chat/new', [ChatController::class, 'store'])->middleware('auth:sanctum');
 
    //customers
    Route::get('customers/{businessCode}', 'customersController@index')->middleware('auth:sanctum');
