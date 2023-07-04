@@ -152,7 +152,7 @@ Route::group(['middleware' => ['verified']], function () {
       'store' => 'supplier.store',
    ]);
 
-    Route::get('supplier/{id}/delete', ['uses' => 'app\supplier\supplierController@delete', 'as' => 'supplier.destroy']);
+   Route::get('supplier/{id}/delete', ['uses' => 'app\supplier\supplierController@delete', 'as' => 'supplier.destroy']);
    // Route::get('supplier/create', ['uses' => 'app\supplier\supplierController@create', 'as' => 'supplier.create']);
    Route::post('warehousing/update/{id}', ['uses' => 'app\supplier\supplierController@update', 'as' => 'supplier.update']);
    // Route::get('supplier/{id}/edit', ['uses' => 'app\supplier\supplierController@edit', 'as' => 'supplier.edit']);
@@ -396,7 +396,7 @@ Route::group(['middleware' => ['verified']], function () {
    //   Route::get('distributororders', ['uses' => 'app\ordersController@distributororders', 'as' => 'orders.distributororders']);
    Route::get('pendingdeliveries', ['uses' => 'app\ordersController@pendingdeliveries', 'as' => 'orders.pendingdeliveries']);
    Route::get('orders/{code}/details', ['uses' => 'app\ordersController@details', 'as' => 'orders.details']);
-   Route::get('orders/{code}/pendingdetails', ['uses' => 'app\ordersController@pendingdetails', 'as' => 'orders.pendingdetails']);
+   Route::get('orders/{code}/pendingdetails', ['uses' => 'app\ordersController@details', 'as' => 'orders.pendingdetails']);
    Route::get('orders/{code}/distributorsdetails', ['uses' => 'app\ordersController@distributordetails', 'as' => 'orders.distributorsdetails']);
    Route::post('orders/{code}/distributorschangeStatus', ['uses' => 'app\ordersController@distributorschangeStatus', 'as' => 'orders.distributorschangeStatus']);
    Route::get('orders/customer/{id}', ['uses' => 'app\ordersController@makeOrder', 'as' => 'make.orders']);
@@ -484,5 +484,4 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('support/update/{id}', ['uses' => 'SupportTicketController@update', 'as' => 'support.update'])->middleware('auth:sanctum');
    Route::post('/support/{ticketId}/messages/{messageId}/reply', [SupportTicketController::class, 'replyToMessage'])->name('support.reply');
    Route::get('support/{ticket_id}/messages', ['uses' => 'SupportTicketController@getMessages', 'as' => 'support.getMessages'])->middleware('auth:sanctum');
-
 });
