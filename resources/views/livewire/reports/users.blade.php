@@ -20,6 +20,8 @@
                   <td>{{ $user->count}}</td>
                   <td>@if ($user->account_type ==="Admin")
                      <a href="{{ route('admin.details') }}" class="btn btn-success btn-sm">View</a>
+                     @else
+                     <a href="" class="btn btn-success btn-sm">View</a>
                      @endif
                      </td>
               </tr>
