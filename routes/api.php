@@ -16,8 +16,10 @@ use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\TargetsController;
-use App\Http\Controllers\Chat\SocketsController;
+use App\Http\Controllers\Api\ChatsController;
 use App\Http\Controllers\Api\Chat\ChatController;
+use App\Http\Controllers\Chat\SocketsController;
+
 use Illuminate\Support\Facades\Route;
 use Knuckles\Scribe\Annotations as Scribe;
 /*
@@ -36,8 +38,8 @@ require __DIR__ . '/customer/api.php';
 require __DIR__ . '/total/api.php';
 Route::group(['namespace' => 'Api'], function () {
 
-   Route::get('/user/chats', [ChatController::class, 'index'])->middleware('auth:sanctum');
-   Route::post('/user/chat/new', [ChatController::class, 'store'])->middleware('auth:sanctum');
+   Route::get('/user/chats', [ChatsController::class, 'index'])->middleware('auth:sanctum');
+   Route::post('/user/chat/new', [ChatsController::class, 'store'])->middleware('auth:sanctum');
 
    //customers
    Route::get('customers/{businessCode}', 'customersController@index')->middleware('auth:sanctum');
