@@ -10,6 +10,7 @@ use Livewire\Component;
 
 use App\Models\order_payments as OrderPayment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithPagination;
 
 class Dashboard extends Component
@@ -28,86 +29,132 @@ class Dashboard extends Component
    public $perVisits = 10;
    public $perOrderFulfilment = 10;
    public $perActiveUsers = 10;
+
+   public function whereBetweenDate(Builder $query, string $column = null, string $start = null, string $end = null): Builder
+   {
+      if (is_null($start) && is_null($end)) {
+         return $query;
+      }
+
+      if (!is_null($start) && Carbon::parse($start)->isSameDay(Carbon::parse($end))) {
+         return $query->where($column, '=', $start);
+      }
+
+      return $query->whereBetween($column, [$start, $end]);
+   }
    public function render()
    {
-      $start_date = Carbon::now()->startOfMonth()->format('Y-m-d');
-      $end_date = Carbon::now()->endOfMonth()->format('Y-m-d');
-      $this->start = $this->start == null ? $start_date : $this->start;
-      $this->end = $this->end == null ? $end_date : $this->end;
-      // dd($this->start);
+
 
 
       $vansales = Orders::where('order_type', 'Van sales')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->where('order_status', 'DELIVERED')
          ->sum('price_total');
+
       $vansalesTotal = Orders::with('user', 'customer')
          ->where('order_type', 'Van sales')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->where('order_status', 'DELIVERED')
          ->paginate($this->perVansale);
 
       $preorder = Orders::where('order_type', 'Pre Order')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->where('order_status', 'DELIVERED')
          ->sum('price_total');
+
       $preorderTotal = Orders::with('user', 'customer')
          ->where('order_type', 'Pre Order')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->where('order_status', 'DELIVERED')
          ->paginate($this->perPreorder);
+
       $orderfullment = Orders::where('order_status', 'DELIVERED')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->count();
+
       $orderfullmentTotal = Orders::with('user', 'customer')
          ->where('order_status', 'DELIVERED')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->paginate($this->perOrderFulfilment);
-      $activeUser = DB::table('customer_checkin')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+
+      $activeUser = checkin::where(function (Builder $query) {
+         $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      })
          ->distinct('user_code')
          ->count();
+
       $activeUserTotal = checkin::with('user', 'customer')
          ->distinct('user_code')
          ->groupBy('user_code')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->paginate($this->perActiveUsers);
-      $strike = DB::table('customer_checkin')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+
+      $strike = checkin::where(function (Builder $query) {
+         $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      })
          ->count();
 
       $visitsTotal = checkin::with('user', 'customer')
          ->groupBy('customer_id')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->paginate($this->perVisits);
+
 
 
 
       $activeAll = User::where('account_type', '<>', 'Admin')
          ->count();
-      $sales = DB::table('order_payments')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+      $sales = OrderPayment::where(function (Builder $query) {
+         $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      })
          ->select('id', 'amount', 'balance', 'payment_method', 'isReconcile', 'user_id')
          ->sum('balance');
 
       $cash = OrderPayment::where('payment_method', 'PaymentMethods.Cash')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->sum('amount');
       $mpesa = OrderPayment::where('payment_method', 'PaymentMethods.Mpesa')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->sum('amount');
       $cheque = OrderPayment::where('payment_method', 'PaymentMethods.Cheque')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->sum('amount');
 
 
       $customersCount = Orders::distinct('customerID')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->count();
       $customersCountTotal = Orders::with('user', 'customer')
          ->groupBy('customerID')
          ->distinct('customerID')
-         ->whereBetween('updated_at', [$this->start, $this->end])
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
          ->paginate($this->perBuyingCustomer);
       return view('livewire.dashboard.dashboard', [
          'Cash' => $cash,
@@ -136,10 +183,8 @@ class Dashboard extends Component
       $week = Carbon::now()->subWeeks(1);
 
       $this->daily = DB::table('order_payments')
-         ->whereDate('created_at', $today)
          ->sum('amount');
       $this->weekly = DB::table('order_payments')
-         ->whereBetween('created_at', [$week, $today])
          ->sum('amount');
       $this->monthly = DB::table('order_payments')
          ->whereBetween('created_at', [$week, $today])
