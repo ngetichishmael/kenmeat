@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\app;
 
-use App\Models\PriceGroup;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePriceGroupRequest;
-use App\Http\Requests\UpdatePriceGroupRequest;
+use App\Models\PriceGroup;
 use Illuminate\Http\Request;
+
 
 class PriceGroupController extends Controller
 {

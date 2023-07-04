@@ -5,6 +5,8 @@ namespace App\Http\Controllers\app\Target;
 use App\Models\VisitsTarget;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class VisitsController extends Controller
@@ -46,9 +48,13 @@ class VisitsController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function show($id)
+   public function show($user_code)
    {
-      //
+      $name = User::where('user_code', $user_code)->pluck('name')->implode('');
+      return view('livewire.visits.layout-view', [
+         'user_code' => $user_code,
+         'name' => $name
+      ]);
    }
 
    /**
@@ -59,9 +65,18 @@ class VisitsController extends Controller
     */
    public function edit($code)
    {
-      $edit = VisitsTarget::where('user_code', $code)->first();
+      $edit = VisitsTarget::where('user_code', $code)->orderBY('id', 'DESC')->first();
       if (!$edit) {
-         return redirect()->back();
+         $today = Carbon::now(); //Current Date and Time
+         $lastDayofMonth =    Carbon::parse($today)->endOfMonth()->toDateString();
+         VisitsTarget::Create(
+            [
+               'user_code' => $code,
+               'Deadline' => $lastDayofMonth,
+               'VisitsTarget' => 0
+            ]
+         );
+         $edit = VisitsTarget::where('user_code', $code)->orderBY('id', 'DESC')->first();
       }
       return view('app.Targets.visitsedit', ['edit' => $edit]);
    }
@@ -79,7 +94,7 @@ class VisitsController extends Controller
          'target' => 'required',
          'deadline' => 'required'
       ]);
-      $updatesales = VisitsTarget::where('user_code', $code)->first();
+      $updatesales = VisitsTarget::where('user_code', $code)->orderBY('id', 'DESC')->first();
       $updatesales->VisitsTarget = $request->target;
       $updatesales->Deadline = $request->deadline;
       $updatesales->save();

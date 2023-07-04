@@ -21,8 +21,7 @@
                         Dashboards</span>
                 </a>
             </li>
-
-            <li class="nav-item {!! Nav::isRoute('customer') !!}">
+            <li class="nav-item {!! Nav::isResource('customer') !!}">
                 <a class="d-flex align-items-center" href="#">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo">
                         Customers Managements</span>
@@ -32,10 +31,8 @@
                             href="{{ route('customer') }}">
                             <span class="menu-item text-truncate">Customers</span></a>
                     </li>
-
                     <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
-                            href="{{ route('groupings') }}">
-                            <span class="menu-item text-truncate">Customer Groups</span></a>
+                            href="{{ route('outlets') }}"><span class="menu-item text-truncate">Outlets</span></a>
                     </li>
                     <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
                             href="{{ route('CustomerComment') }}"><span
@@ -126,18 +123,12 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {!! Nav::isResource('users') !!}">
-                <a class="d-flex align-items-center" href="#">
+            <li class=" nav-item {!! Nav::isRoute('users.index') !!}">
+                <a class="d-flex align-items-center" href="{!! route('users.index') !!}">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo"> Users</span>
                 </a>
-                <ul class="menu-content">
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center"
-                            href="{!! route('users.admins') !!}">
-                            <span class="menu-item text-truncate">Admin</span></a>
-                    </li>
-                </ul>
-
             </li>
+
             <li class="nav-item {!! Nav::isResource('target') !!}">
                 <a class="d-flex align-items-center" href="#"><i data-feather="target"></i><span
                         class="menu-title text-truncate" data-i18n="Invoice">Target</span></a>
@@ -214,8 +205,9 @@
                 </ul>
             </li>
             <li class="nav-item {!! Nav::isResource('notification') !!}">
-                <a class="d-flex align-items-center" href="{!! route('ChatSupport') !!}"><i data-feather="message-circle"></i><span
-                        class="menu-title text-truncate" data-i18n="Invoice">Chats</span></a>
+                <a class="d-flex align-items-center" href="{!! route('ChatSupport') !!}"><i
+                        data-feather="message-circle"></i><span class="menu-title text-truncate"
+                        data-i18n="Invoice">Chats</span></a>
             </li>
             <li class="nav-item {!! Nav::isResource('survey') !!}">
                 <a class="d-flex align-items-center" href="#">
