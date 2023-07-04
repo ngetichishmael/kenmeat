@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
       'create' => 'SurveryResponses.create',
       'store' => 'SurveryResponses.store',
    ]);
-   Route::resource('customer/pricing', \PriceGroupController::class)->names([
+   Route::resource('customer/pricing', app\PriceGroupController::class)->names([
       'index' => 'pricing',
       'show' => 'pricing.show',
       'edit' => 'pricing.edit',
