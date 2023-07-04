@@ -40,19 +40,19 @@ class TargetResource extends JsonResource
             'AchievedLeadsTarget' =>  0,
             'Deadline' => $month,
          ],
-         'targets_order' => $this->TargetsOrder ? [
-            'OrdersTarget' => $this->TargetsOrder->OrdersTarget ?? 0,
-            'AchievedOrdersTarget' => $this->TargetsOrder->AchievedOrdersTarget ?? 0,
-            'Deadline' => $this->TargetsOrder->Deadline,
+         'targets_order' => $this->TargetOrder ? [
+            'OrdersTarget' => $this->TargetOrder->OrdersTarget ?? 0,
+            'AchievedOrdersTarget' => $this->TargetOrder->AchievedOrdersTarget ?? 0,
+            'Deadline' => $this->TargetOrder->Deadline,
          ] : [
             'OrdersTarget' => 0,
             'AchievedOrdersTarget' => 0,
             'Deadline' => $month,
          ],
-         'targets_visit' => $this->TargetsVisit ? [
-            'VisitsTarget' => $this->TargetsVisit->VisitsTarget ?? 0,
-            'AchievedVisitsTarget' => $this->TargetsVisit->AchievedVisitsTarget ?? 0,
-            'Deadline' => $this->TargetsVisit->Deadline,
+         'targets_visit' => $this->TargetVisit ? [
+            'VisitsTarget' => $this->TargetVisit->VisitsTarget ?? 0,
+            'AchievedVisitsTarget' => $this->TargetVisit->AchievedVisitsTarget ?? 0,
+            'Deadline' => $this->TargetVisit->Deadline,
          ] : [
             'VisitsTarget' => 0,
             'AchievedVisitsTarget' => 0,
