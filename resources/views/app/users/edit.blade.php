@@ -75,9 +75,12 @@
                                                         {{ $edit->account_type }}</label>
                                                     <select class="form-control select2" id="select-country"
                                                         name="account_type">
-                                                        <option value="">Select Type</option>
+                                                        <option value="">Select Category</option>
                                                         <option value="Admin">Administator</option>
                                                         <option value="Manager">Manager</option>
+                                                        <option value="HR">HR</option>
+                                                        <option value="Account Manager">Account Manager</option>
+                                                        <option value="Merchandiser">Merchandiser</option>
                                                         <option value="Sales">Sales Agent</option>
                                                     </select>
                                                 </div>
