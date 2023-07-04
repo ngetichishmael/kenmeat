@@ -30,7 +30,7 @@
                                 <th>Product Name</th>
                                 <th>Wholesale Price</th>
                                 <th>Retail Price</th>
-                                <th>Distributor Price</th>
+                                {{-- <th>Distributor Price</th> --}}
                                 <th>Quantity</th>
                                 <th>Sku Code</th>
                                 <th>Status</th>
@@ -49,9 +49,9 @@
                                     <td>
                                         {{ number_format((float) $product->ProductPrice()->pluck('selling_price')->implode('')) }}
                                     </td>
-                                    <td>
-                                        {{-- {{ number_format((float) $product->ProductPrice()->pluck('distributor_price')->implode('')) }} --}}
-                                    </td>
+                                    {{-- <td>
+                                        {{ number_format((float) $product->ProductPrice()->pluck('distributor_price')->implode('')) }}
+                                    </td> --}}
                                     <td>{{ $product->Inventory->current_stock ?? '0' }}</td>
                                     <td>{{ $product->sku_code }}</td>
                                     @if ($product->Inventory()->pluck('current_stock')->implode('') > 1)
