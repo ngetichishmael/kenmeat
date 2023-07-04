@@ -674,7 +674,7 @@ footer.footer-border {
 
 .main-menu.menu-light .navigation>li>a {
    margin: 0 15px;
-   font-size: 12px;
+   font-size: 10px;
 }
 
 .main-menu.menu-light .navigation>li>a .label {
@@ -713,13 +713,13 @@ footer.footer-border {
 
 .main-menu.menu-light .navigation>li:not(.open)>ul {
    display: none;
-   font-size: 13px;
+   font-size: 10px;
 }
 
 .main-menu.menu-light .navigation>li:not(.open)>ul .active {
    background: transparent;
    box-shadow: none;
-   font-size: 13px;
+   font-size: 10px;
 }
 
 .main-menu.menu-light .navigation>li.active {
@@ -764,7 +764,7 @@ footer.footer-border {
 
 .main-menu.menu-light .navigation>li ul li>a {
    padding: 10px 15px 10px 20px;
-   font-size: 13px;
+   font-size: 10px;
 }
 
 .main-menu.menu-light .navigation>li ul li ul a {

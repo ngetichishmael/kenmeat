@@ -405,7 +405,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::post('orders/allocate', ['uses' => 'app\ordersController@allocateOrders', 'as' => 'order.create.allocateorders']);
    Route::post('orders/reallocate', ['uses' => 'app\ordersController@reAllocateOrders', 'as' => 'order.create.reallocateorders']);
    //distributor orders
-   Route::get('distributororders', ['uses' => 'app\ordersController@distributororders', 'as' => 'orders.distributororders']);
+   Route::get('vansalesorders', ['uses' => 'app\ordersController@vansalesorders', 'as' => 'orders.vansalesorders']);
 
    /* ===  survey === */
    /* === category === */

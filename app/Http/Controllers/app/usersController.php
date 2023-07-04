@@ -106,7 +106,7 @@ class usersController extends Controller
             "name" => $request->name,
             "account_type" => $request->account_type,
             "email_verified_at" => now(),
-            "route_code" => $request->region,
+            "route_code" => 1,
             "region_id" => 1,
             "status" => 'Active',
             "password" => Hash::make($request->phone_number),
@@ -114,8 +114,13 @@ class usersController extends Controller
 
          ]
       );
-      $message = "Kindly login with your phone number as password: " . $request->phone_number;
-      (new SMS())($request->phone_number, $message);
+      if ($request->phone_number) {
+         $message = "Your data has been updated login with " . $request->phone_number . ' and new password is ' . $request->phone_number;
+         if (in_array($request->account, ['Admin', 'Manager'])) {
+            $message = "Your  data has been updated login with " . $request->email . ' and new password is ' . $request->phone_number;
+         }
+         (new SMS())($request->phone_number, $message);
+      }
       $van_sales = $request->van_sales == null ? "NO" : "YES";
       $new_sales = $request->new_sales == null ? "NO" : "YES";
       $deliveries = $request->deliveries == null ? "NO" : "YES";

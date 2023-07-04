@@ -48,7 +48,7 @@ class Orders extends Model
     */
    public function Payments(): HasMany
    {
-       return $this->hasMany(order_payments::class, 'order_id', 'order_code');
+      return $this->hasMany(order_payments::class, 'order_id', 'order_code');
    }
    /**
     * Get the User that owns the Orders
@@ -67,5 +67,14 @@ class Orders extends Model
    public function Customer(): BelongsTo
    {
       return $this->belongsTo(customers::class, 'customerID', 'id');
+   }
+   /**
+    * Get the distributors associated with the Orders
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
+   public function distributor(): HasOne
+   {
+      return $this->hasOne(customers::class, 'customerID', 'id');
    }
 }
