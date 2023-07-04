@@ -148,7 +148,17 @@ class checkinController extends Controller
          "customer" => $customer
       ]);
    }
+   public function userOrders(Request $request)
+   {
 
+      $orders = Orders::where('user_code', $request->user()->user_code)->with('distributor', 'Customer')->orderby('orders.id', 'desc')
+         ->get();
+      return response()->json([
+         "success" => true,
+         "message" => "All your Orders",
+         "Data" => $orders,
+      ]);
+   }
 
    /**
     * stock
