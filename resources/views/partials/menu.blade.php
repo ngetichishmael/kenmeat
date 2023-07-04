@@ -21,26 +21,6 @@
                         Dashboards</span>
                 </a>
             </li>
-            <li class="nav-item {!! Nav::isResource('maps') !!}">
-                <a class="d-flex align-items-center" href="#"><i data-feather="globe"></i><span
-                        class="menu-title text-truncate" data-i18n="Invoice">Maps</span></a>
-                <ul class="menu-content">
-                    <li class="nav-item {!! Nav::isResource('maps') !!}">
-                        <a class="d-flex align-items-center" href="{!! route('maps') !!}">
-                            <i data-feather='users'></i>
-                            <span class="menu-title text-truncate" data-i18n="Todo">
-                                Customers</span>
-                        </a>
-                    </li>
-                    <li class="nav-item {!! Nav::isResource('current-information') !!}">
-                        <a class="d-flex align-items-center" href="{!! route('current-information') !!}">
-                            <i data-feather='globe'></i>
-                            <span class="menu-title text-truncate" data-i18n="Todo">
-                                Sales Agents</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
             <li class="nav-item {!! Nav::isResource('customer') !!}">
                 <a class="d-flex align-items-center" href="#">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo">
@@ -106,8 +86,7 @@
                 </a>
                 <ul class="menu-content">
                     <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
-                            href="{{ route('PaidPayment') }}"><span
-                                class="menu-item text-truncate">Payments</span></a>
+                            href="{{ route('PaidPayment') }}"><span class="menu-item text-truncate">Payments</span></a>
                     </li>
                     {{-- <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer*') !!}"
                          href="{{ route('PendingPayment') }}"><span

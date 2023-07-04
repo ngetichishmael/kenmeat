@@ -48,6 +48,54 @@ class User extends Authenticatable implements MustVerifyEmail
    protected $casts = [
       'email_verified_at' => 'datetime',
    ];
+
+
+
+
+
+   /**
+    * Get the last added TargetSales for the User.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
+   public function TargetSale(): HasOne
+   {
+      return $this->hasOne(SalesTarget::class, 'user_code', 'user_code')
+         ->latest('created_at');
+   }
+
+   /**
+    * Get the last added TargetLeads for the User.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
+   public function TargetLead(): HasOne
+   {
+      return $this->hasOne(LeadsTargets::class, 'user_code', 'user_code')
+         ->latest('created_at');
+   }
+
+   /**
+    * Get the last added TargetsOrder for the User.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
+   public function TargetOrder(): HasOne
+   {
+      return $this->hasOne(OrdersTarget::class, 'user_code', 'user_code')
+         ->latest('created_at');
+   }
+
+   /**
+    * Get the last added TargetsVisit for the User.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
+   public function TargetVisit(): HasOne
+   {
+      return $this->hasOne(VisitsTarget::class, 'user_code', 'user_code')
+         ->latest('created_at');
+   }
    /**
     * Get all of the Targets for the User
     *
