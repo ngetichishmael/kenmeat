@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use App\Helpers\SMS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -116,7 +117,15 @@ class AuthController extends Controller
             ]);
             $message = "Your OTP is " . $code;
             (new SMS)($number, $message);
-
+            (new Activity)(
+               "Reset Password",
+               "Login",
+               'Reset Password',
+               $user->id,
+               $user->user_code,
+               "127.0.0.1",
+               "App"
+            );
             return response()->json(['data' => $user, 'otp' => $code]);
          } catch (ExceptionHandler $e) {
             return response()->json(['message' => 'Error occured while trying to send OTP code']);
@@ -134,16 +143,7 @@ class AuthController extends Controller
    public function verifyOTP($number, $otp)
    {
 
-
-      // $phone = $request->only('phone');
-      // $phone = substr($validated['phone'], 1);
-      // $phone = '+254'.$phone;
-      // $phone = str_replace(' ', '', $phone);
-
       $user = DB::table('users')->where('phone_number', $number)->get();
-
-      // return $user;
-
       $exists = UserCode::where('user_id', $user[0]->id)
          ->where('code', $otp)
          ->where('updated_at', '>=', now()->subMinutes(5))
@@ -151,13 +151,8 @@ class AuthController extends Controller
          ->exists();
 
       if ($exists) {
-         // DB::table('users')
-         // ->where('id', $user->id)
-         // ->update(['status' => 'activated']);
-         //  Log::info('Valid OTP entered');
          return response()->json(['message' => 'Valid OTP entered']);
       }
-      // Log::error('Invalid OTP entered');
       return response()->json(['message' => 'Invalid OTP entered']);
    }
 

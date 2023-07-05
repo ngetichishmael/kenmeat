@@ -55,11 +55,11 @@ class Index extends Component
 
    public function destroy($id)
    {
-       if ($id) {
-           $user = User::where('id', $id);
-           $user ->delete();
+      if ($id) {
+         $user = User::where('id', $id);
+         $user->delete();
 
-           return redirect()->to('/users');
-       }
+         return redirect()->to('/users');
+      }
    }
 }

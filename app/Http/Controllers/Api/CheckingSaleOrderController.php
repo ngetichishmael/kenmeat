@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\customer\checkin;
@@ -103,6 +104,15 @@ class CheckingSaleOrderController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
          ]);
+         (new Activity)(
+            "Van Sales for product " . $product->product_name,
+            "Van Sale",
+            'Conduct a Van Sales',
+            $request->user()->id,
+            $request->user()->user_code,
+            $request->ip() ?? "127.0.0.1",
+            "App"
+         );
       }
       return response()->json([
          "success" => true,
@@ -264,6 +274,16 @@ class CheckingSaleOrderController extends Controller
          DB::table('orders_targets')
             ->where('user_code', $user_code)
             ->increment('AchievedOrdersTarget', $value["qty"]);
+
+         (new Activity)(
+            "New Sales for product " . $product->product_name,
+            "New Sale",
+            'Conduct a New Sales',
+            $request->user()->id,
+            $request->user()->user_code,
+            $request->ip() ?? "127.0.0.1",
+            "App"
+         );
       }
       return response()->json([
          "success" => true,

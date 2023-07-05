@@ -2,28 +2,25 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromView;
+
 use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class UserVisitsExport implements FromView
+class ActivityExport implements FromView
 {
-
    protected $array;
 
    public function __construct($array)
    {
       $this->array = $array;
    }
-
-
-   //  
    /**
-    * @return \Illuminate\Support\Collection
+    * @return \Illuminate\Support\FromView
     */
    public function view(): View
    {
-      return view('exports.uservisits', [
-         'visits' => $this->array
+      return view('Exports.activity', [
+         'activities' => $this->array
       ]);
    }
 }
