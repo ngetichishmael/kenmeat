@@ -272,7 +272,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('warehousing/products/brand/{id}/destroy', ['uses' => 'app\products\brandController@destroy', 'as' => 'product.brand.destroy']);
 
    /* === users === */
-   Route::get('users', ['uses' => 'app\usersController@index', 'as' => 'users.index']);
+   Route::get('user', ['uses' => 'app\usersController@index', 'as' => 'users.index']);
    Route::get('user/create', ['uses' => 'app\usersController@create', 'as' => 'user.create']);
    Route::get('user/creatensm', ['uses' => 'app\usersController@creatensm', 'as' => 'user.creatensm']);
    Route::post('user/store', ['uses' => 'app\usersController@store', 'as' => 'user.store']);

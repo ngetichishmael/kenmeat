@@ -85,6 +85,17 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="select-country">Zone</label>
+                                                    <select class="form-control select2" id="select-country" name="route"
+                                                        required>
+                                                        <option value="">Zone</option>
+                                                        <option value="0">General</option>
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="mb-2 col-md-6 col-12 ">
                                                 <div class="form-group">
                                                     <label for="select-country">Current Status:

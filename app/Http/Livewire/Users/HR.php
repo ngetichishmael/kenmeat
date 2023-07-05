@@ -35,7 +35,7 @@ class HR extends Component
        User::whereId($id)->update(
           ['status' => "Suspended"]
        );
-       return redirect()->to('/users');
+       return redirect()->to('/users/hr');
     }
     public function activate($id)
     {
@@ -43,7 +43,7 @@ class HR extends Component
           ['status' => "Active"]
        );
  
-       return redirect()->to('/users');
+       return redirect()->to('/users/hr');
     }
 
 }

@@ -34,7 +34,7 @@ class Sales extends Component
        User::whereId($id)->update(
           ['status' => "Suspended"]
        );
-       return redirect()->to('/users');
+       return redirect()->to('/users/sales');
     }
     public function activate($id)
     {
@@ -42,7 +42,7 @@ class Sales extends Component
           ['status' => "Active"]
        );
  
-       return redirect()->to('/users');
+       return redirect()->to('/users/sales');
     }
 
 }
