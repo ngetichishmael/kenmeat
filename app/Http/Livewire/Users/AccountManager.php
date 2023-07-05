@@ -45,5 +45,15 @@ class AccountManager extends Component
        return redirect()->to('/users/account-managers');
     }
 
+    public function destroy($id)
+    {
+        if ($id) {
+            $user = User::where('id', $id);
+            $user ->delete();
+
+            return redirect()->to('/users/account-managers');
+        }
+    }
+
 
 }

@@ -5,7 +5,7 @@
 {{-- content section --}}
 @section('content')
     <!-- begin breadcrumb -->
-    <div class="mb-2 row">
+    <div class="mb-2 row" style="padding-left:6%; padding-right:5%">
         <div class="col-md-9">
             <h2 class="page-header"> Users </h2>
         </div>

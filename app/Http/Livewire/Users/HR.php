@@ -46,4 +46,14 @@ class HR extends Component
        return redirect()->to('/users/hr');
     }
 
+    public function destroy($id)
+    {
+        if ($id) {
+            $user = User::where('id', $id);
+            $user ->delete();
+
+            return redirect()->to('/users/hr');
+        }
+    }
+
 }

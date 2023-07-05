@@ -74,4 +74,5 @@
             <div class="mt-1">{!! $admins->links() !!}</div>
         </div>
     </div>
+    <br>
 </div>

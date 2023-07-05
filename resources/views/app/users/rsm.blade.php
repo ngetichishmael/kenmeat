@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
-@section('title', 'Admins')
+@section('title', 'Managers')
 
 {{-- content section --}}
 @section('content')
@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-3">
             <center>
-                <a href="{!! route('user.create') !!}" class="btn btn-sm" style="background-color: #027333;color:white"><i data-feather="user-plus"></i> Add </a>
+                <!-- <a href="{!! route('user.create') !!}" class="btn btn-sm" style="background-color: #027333;color:white"><i data-feather="user-plus"></i> Add </a> -->
 
                 {{-- <a href="{!! route('users.all.import') !!}" class="btn btn-primary btn-sm"><i class="fa fa-user-plus"></i> Import</a> --}}
             </center>
