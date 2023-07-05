@@ -65,7 +65,7 @@
                 <table class="table table-striped table-bordered zero-configuration table-responsive">
                     <thead>
                         <th width="1%">#</th>
-                        <th>Distributor</th>
+                        {{-- <th>Distributor</th> --}}
                         <th>Customer</th>
                         <th>Sales Person</th>
                         <th>Amount (Ksh.)</th>
@@ -79,7 +79,7 @@
                             <tr>
                                 {{-- @dd($order->id) --}}
                                 <td>{{ $count + 1 }}</td>
-                               <td>{{ $order->distributor()->pluck('name')->implode('') }}</td>
+                               {{-- <td>{{ $order->distributor()->pluck('name')->implode('') }}</td> --}}
                                 <td title="{{ $order->Customer->customer_name ?? null }}">
                                     {{ Str::limit($order->Customer->customer_name ?? null, 30) }}</td>
 {{--                                <td title="{{ $order->Customer->Area->Subregion->name ?? null }}">--}}
