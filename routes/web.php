@@ -281,12 +281,15 @@ Route::group(['middleware' => ['verified']], function () {
    //   Route::get('user{id}/destroy', ['uses' => 'app\usersController@destroy', 'as' => 'user.destroy']);
    Route::get('user{id}/suspend', ['uses' => 'app\usersController@suspend', 'as' => 'user.suspend']);
 
-   Route::get('users-Roles', ['uses' => 'app\usersController@list', 'as' => 'users.list']);
+   Route::get('users', ['uses' => 'app\usersController@list', 'as' => 'users.list']);
    Route::get('users-Admins', ['uses' => 'app\usersController@admins', 'as' => 'users.admins']);
-   Route::get('shop-attendee', ['uses' => 'app\usersController@shopattendee', 'as' => 'shop-attendee']);
-   Route::get('tsr', ['uses' => 'app\usersController@tsr', 'as' => 'tsr']);
-   Route::get('rsm', ['uses' => 'app\usersController@rsm', 'as' => 'rsm']);
-   Route::get('td', ['uses' => 'app\usersController@td', 'as' => 'td']);
+   Route::get('users/admins', ['uses' => 'app\usersController@admin', 'as' => 'users.admin']);
+
+   Route::get('users/merchandizer', ['uses' => 'app\usersController@Merchandizer', 'as' => 'Merchandizer']);
+   Route::get('users/sales', ['uses' => 'app\usersController@tsr', 'as' => 'tsr']);
+   Route::get('users/managers', ['uses' => 'app\usersController@rsm', 'as' => 'rsm']);
+   Route::get('users/hr', ['uses' => 'app\usersController@hr', 'as' => 'hr']);
+   Route::get('users/account-managers', ['uses' => 'app\usersController@ac', 'as' => 'users.ac']);
    //   Route::get('rider', ['uses' => 'app\usersController@technical', 'as' => 'rider']);
    // Routes for reports
    Route::middleware('web')->group(function () {
@@ -484,4 +487,11 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('support/update/{id}', ['uses' => 'SupportTicketController@update', 'as' => 'support.update'])->middleware('auth:sanctum');
    Route::post('/support/{ticketId}/messages/{messageId}/reply', [SupportTicketController::class, 'replyToMessage'])->name('support.reply');
    Route::get('support/{ticket_id}/messages', ['uses' => 'SupportTicketController@getMessages', 'as' => 'support.getMessages'])->middleware('auth:sanctum');
+
+   Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+   Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+   Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+   Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
+   Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+   Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 });

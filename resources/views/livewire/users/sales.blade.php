@@ -33,23 +33,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($admins as $key => $admin)
+                        @foreach ($tsr as $key => $user)
                             <tr>
                                 <td>{!! $key + 1 !!}</td>
 {{--                                <td>{!! $user->Region->name ?? ' ' !!}</td>--}}
-                                <td>{!! $admin->name !!}</td>
+                                <td>{!! $user->name !!}</td>
                                 <td>
-                                    {!! $admin->email !!}
+                                    {!! $user->email !!}
                                 </td>
-                                <td>{!! $admin->phone_number !!}</td>
-                                <td>{!! $admin->status !!}</td>
+                                <td>{!! $user->phone_number !!}</td>
+                                <td>{!! $user->status !!}</td>
                                 <td>
                                    <div class="dropdown" >
-                                      <button style="background-color: #027333; color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                      <button style="background-color: #027333;color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                          <i data-feather="settings"></i>
                                       </button>
                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                         <a href="{{ route('user.edit', $user->user_code) }}" type="button" class="dropdown-item btn btn-sm" style="color: #6df16d;font-weight: bold"><i data-feather="edit"></i> &nbsp;Edit</a>
+                                         <!-- <a href="{{ route('user.edit', $user->user_code) }}" type="button" class="dropdown-item btn btn-sm" style="color: #6df16d;font-weight: bold"><i data-feather="edit"></i> &nbsp;Edit</a>
                                          <a href="{{ route('user.edit', $user->user_code) }}" type="button" class="dropdown-item btn btn-sm" style="color: #7cc7e0; font-weight: bold"><i data-feather="eye"></i>&nbsp; View</a>
 {{--                                         <a href="{{ route('order.target.destroy', $order->id) }}" type="button" class="dropdown-item btn btn-sm me-2" style="color: #e5602f; font-weight: bold"><i data-feather="delete"> </i> &nbsp; Delete</a>--}}
 
@@ -62,7 +62,7 @@
                                         <a wire:click.prevent="activate({{ $user->id }})"
                                             onclick="confirm('Are you sure you want to ACTIVATE this user?')||event.stopImmediatePropagation()"
                                             type="button" class="dropdown-item btn btn-sm me-2" style="color:  #54a149; font-weight: bold"><i data-feather="check"></i>&nbsp;Activate </a>
-                                    @endif
+                                    @endif -->
                                       </div>
                                    </div>
                                 </td>
@@ -71,7 +71,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-1">{!! $admins->links() !!}</div>
+            <div class="mt-1">{!! $tsr->links() !!}</div>
         </div>
     </div>
 </div>
