@@ -1,6 +1,7 @@
-<div class="content-header row">
+<div>
+<div class="content-header row"style="padding-left:6%; padding-right:5%">
       <div class="content-header-left col-md-12 col-12 mb-2">
-         <div class="row breadcrumbs-top">
+         <div class="row breadcrumbs-top" >
             <div class="col-12">
                <!-- <h2 class="content-header-title float-start mb-0">Users Roles</h2> -->
                <div class="breadcrumb-wrapper">
@@ -19,8 +20,8 @@
       </div>
    </div>
    @include('partials._messages')
-   <div class="row">
-    <div class="col-md-10">
+   <div class="row" style="padding-left:6%; padding-right:5%">
+    <div class="col-md-12">
         <div class="card card-inverse">
            <div class="card-body">
               <table id="data-table-default" class="table table-striped table-bordered">
@@ -39,19 +40,19 @@
                        <td>{!! $list !!}</td>
                        <td>{{ $counts[$list] }}</td>
                        <td>
-                          <div class="d-flex" style="gap:20px">
+                          <div class="d-flex" style="gap:10px">
                              @if($list == 'Admin')
-                                <a href="{{ route('users.admin') }}" class="btn btn-info btn-sm">View</a>
+                                <a href="{{ route('users.admin') }}" class="btn btn-success btn-sm">View</a>
                             @elseif($list == 'Account Manager')
-                                <a href="{{ route('users.ac') }}" class="btn btn-info btn-sm">View</a>
+                                <a href="{{ route('users.ac') }}" class="btn btn-success btn-sm">View</a>
                                 @elseif($list == 'Manager')
-                                <a href="{{ route('rsm') }}" class="btn btn-info btn-sm">View </a>
+                                <a href="{{ route('rsm') }}" class="btn btn-success btn-sm">View </a>
                              @elseif($list == 'Sales')
-                                <a href="{{ route('tsr') }}" class="btn btn-info btn-sm">View </a>
+                                <a href="{{ route('tsr') }}" class="btn btn-success btn-sm">View </a>
                              @elseif($list == 'HR')
-                                <a href="{{ route('hr') }}" class="btn btn-info btn-sm">View </a>
+                                <a href="{{ route('hr') }}" class="btn btn-success btn-sm">View </a>
                                 @elseif($list == 'Merchandizer')
-                                <a href="{{ route('Merchandizer') }}" class="btn btn-info btn-sm">View</a>
+                                <a href="{{ route('Merchandizer') }}" class="btn btn-success btn-sm">View</a>
                             @endif
                           </div>
                        </td>
@@ -63,3 +64,4 @@
         </div>
      </div>
    </div>
+</div>

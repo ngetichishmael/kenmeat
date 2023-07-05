@@ -52,4 +52,14 @@ class Index extends Component
 
       return redirect()->to('/users');
    }
+
+   public function destroy($id)
+   {
+       if ($id) {
+           $user = User::where('id', $id);
+           $user ->delete();
+
+           return redirect()->to('/users');
+       }
+   }
 }
