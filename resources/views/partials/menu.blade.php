@@ -123,6 +123,10 @@
                     </li>
                 </ul>
             </li>
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/steven
             <li class="nav-item {!! Nav::isResource('users') !!}">
                 <a class="d-flex align-items-center" href="{!! route('users.list') !!}">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo"> Users</span>
@@ -133,7 +137,10 @@
                             <span class="menu-item text-truncate">Admin</span></a>
                     </li>
                 </ul> -->
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/steven
             </li>
 
             <li class="nav-item {!! Nav::isResource('target') !!}">
