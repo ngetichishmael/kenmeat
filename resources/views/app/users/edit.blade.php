@@ -72,7 +72,7 @@
                                             <div class="mb-2 col-md-6 col-12 ">
                                                 <div class="form-group">
                                                     <label for="select-country">Current Type:
-                                                        {{ $edit->account_type }}</label>
+                                                        {{ $edit->account_type ?? ''}}</label>
                                                     <select class="form-control select2" id="select-country"
                                                         name="account_type">
                                                         <option value="">Select Category</option>
@@ -99,7 +99,7 @@
                                             <div class="mb-2 col-md-6 col-12 ">
                                                 <div class="form-group">
                                                     <label for="select-country">Current Status:
-                                                        {{ $edit->status }}</label>
+                                                        {{ $edit->status ?? '' }}</label>
                                                     <select class="form-control select2" id="select-action" name="status">
                                                         <option value="">Select Action</option>
                                                         <option value="Active">Active</option>
