@@ -1,9 +1,5 @@
-<<<<<<< HEAD
+
 <div class="col-xl-12 col-md-12 col-12">
-=======
-<div>
-    <div class="col-xl-12 col-md-12 col-12">
->>>>>>> origin/steven
         <div class="card">
             <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
                 <div class="col-md-2">
@@ -342,8 +338,4 @@
 
             @include('livewire.dashboard.table')
         </div>
-
-
-
-    </div>
 </div>
