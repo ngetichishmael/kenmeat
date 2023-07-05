@@ -43,7 +43,7 @@
                                                 <div class="form-group">
                                                     <label for="first-name-column">User Name</label>
                                                     <input type="text" id="first-name-column" class="form-control"
-                                                        placeholder="User Name" value="{{ $edit->name }}"
+                                                        placeholder="User Name" value="{{ $edit->name ?? '' }}"
                                                         name="name" />
                                                 </div>
                                             </div>
@@ -51,14 +51,14 @@
                                                 <div class="form-group">
                                                     <label for="last-name-column">Last Name</label>
                                                     <input type="email" id="last-name-column" class="form-control"
-                                                        value="{{ $edit->email }}" placeholder="Email" name="email" />
+                                                        value="{{ $edit->email ?? ''}}" placeholder="Email" name="email" />
                                                 </div>
                                             </div>
                                             <div class="mb-2 col-md-6 col-12 ">
                                                 <div class="form-group">
                                                     <label for="city-column">Phone Number</label>
                                                     <input type="tel" id="city-column" class="form-control"
-                                                        pattern="[0789][0-9]{9}" value="{{ $edit->phone_number }}"
+                                                        pattern="[0789][0-9]{9}" value="{{ $edit->phone_number ?? '' }}"
                                                         name="phone_number" />
                                                 </div>
                                             </div>
