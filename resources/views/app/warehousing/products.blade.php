@@ -9,7 +9,6 @@
       <div class="col-md-8">
          <h2 class="page-header"><i data-feather="list"></i> Inventory for Warehouse {!! $warehouse->name !!} </h2>
       </div>
-      @if(Auth::check() && Auth::user()->account_type == "NSM" || Auth::check() && Auth::user()->account_type == "RSM")
          <div class="col-md-4">
             <center>
                <a href="{!! route('products.create') !!}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add New Products</a>
@@ -17,7 +16,6 @@
 
             </center>
          </div>
-      @endif
    </div>
    <!-- end breadcrumb -->
    <!-- begin page-header -->
@@ -30,7 +28,6 @@
             <label for=""></label>
             <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search Product">
          </div>
-         @if(Auth::check() && Auth::user()->account_type == "Admin" || Auth::check() && Auth::user()->account_type == "NSM" || Auth::check() && Auth::user()->account_type == "RSM" || Auth::check() && Auth::user()->account_type == "Shop-Attendee")
             <div class="col-md-3">
                <label for="">Items Per</label>
                <select wire:model="perPage" class="form-control">`
@@ -54,16 +51,11 @@
                     <th>Current Stock</th>
                     <th>Date</th>
                     <th>time</th>
-                    @if(Auth::check() && Auth::user()->account_type == "Admin" || Auth::check() && Auth::user()->account_type == "NSM" || Auth::check() && Auth::user()->account_type == "RSM")
                      <th>Actions</th>
-                  @endif
                 </tr>
                </thead>
                <tbody>
-               @endif
-               @foreach($products as $key => $product)
-                  @if((Auth::check() && Auth::user()->account_type == "RSM") || Auth::check() && Auth::user()->account_type == "NSM" || Auth::check() && Auth::user()->account_type == "Admin" )
-                     <tr>
+               @foreach($products as $key => $product)                   <tr>
                         <td>{!! $key + 1 !!}</td>
                         <td>{!! $product->product_name !!}</td>
 
@@ -95,7 +87,6 @@
 
                         </td>
                     </tr>
-                  @endif
                @endforeach
 
                </tbody>
