@@ -133,7 +133,6 @@
                             <span class="menu-item text-truncate">Admin</span></a>
                     </li>
                 </ul> -->
-
             </li>
 
             <li class="nav-item {!! Nav::isResource('target') !!}">

@@ -1,6 +1,3 @@
-<div>
-
-
 
 <div class="col-xl-12 col-md-12 col-12">
         <div class="card">
@@ -143,7 +140,7 @@
         <!--/ Statistics Card -->
     </div>
 
-    
+
     <div class="col-xl-12 col-md-12 col-12">
         <div class="card card-statistics">
             <div class="card-header">
@@ -341,7 +338,4 @@
 
             @include('livewire.dashboard.table')
         </div>
-
-
-
-    </div>
+</div>
