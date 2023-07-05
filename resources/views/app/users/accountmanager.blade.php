@@ -22,5 +22,4 @@
 @endsection
 {{-- page scripts --}}
 @section('script')
-
 @endsection
