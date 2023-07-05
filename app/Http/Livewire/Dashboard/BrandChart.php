@@ -39,9 +39,11 @@ class BrandChart extends Component
          'color' => "#94DB9D",
          'backgroundColor' => '#009dde',
          "borderWidth" => 2,
-         "borderRadius" => 5,
+         "borderRadius" => 2,
+         "barPercentage" => 0.6, // Adjust this value to make the bars smaller
+         "categoryPercentage" => 0.5, // Adjust this value to make the bars smaller
          "borderSkipped" => true,
-      ]);
+     ]);
       $brandsales->labels(array_reverse($arrayCLabel));
       $brandsales->dataset('Least Performing Brand', 'bar', array_reverse($arrayCData))->options([
          "responsive" => true,

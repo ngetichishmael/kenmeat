@@ -89,10 +89,7 @@
                                                         required>
                                                         <option value="">Zone</option>
                                                         <option value="0">General</option>
-                                                        @foreach ($routes as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->name }}
-                                                            </option>
-                                                        @endforeach
+                                                    
                                                     </select>
                                                 </div>
                                             </div>
