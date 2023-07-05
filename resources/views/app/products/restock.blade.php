@@ -27,14 +27,14 @@
 
        .sku-field .remove-sku {
           color: #fff;
-          background-color: #f44336;
+          background-color: #24B263;
           border: none;
           padding: 8px 12px;
           cursor: pointer;
        }
 
        .sku-field .remove-sku:hover {
-          background-color: #d32f2f;
+          background-color: #24B263;
        }
     </style>
     <h3 class="page-header"> Restock <b>{{$product_information->product_name ?? ''}}</b> Products </h3>

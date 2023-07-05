@@ -75,12 +75,12 @@
                         <td>{{ $product->updated_at->format('H:i:s') }}</td>
                         <td>
                             <div class="dropdown" >
-                             <button style="background-color: #B6121B;color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                             <button style="background-color: #24B263;color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <i data-feather="settings"></i>
                              </button>
                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a href="{{ route('products.restock', $product->id) }}" type="button" class="dropdown-item btn btn-sm" style="color: #6df16d;font-weight: bold"><i data-feather="plus"></i> &nbsp;Re-stock</a>
-                                <a href="#" type="button" class="dropdown-item btn btn-sm" style="color: #7cc7e0; font-weight: bold"><i data-feather="eye"></i>&nbsp; View</a>
+                                <a href="{{ route('products.restock', $product->id) }}" type="button" class="dropdown-item btn btn-sm" style="color: #858685;font-weight: bold"><i data-feather="plus"></i> &nbsp;Re-stock</a>
+{{--                                <a href="#" type="button" class="dropdown-item btn btn-sm" style="color: #868888; font-weight: bold"><i data-feather="eye"></i>&nbsp; View</a>--}}
                              </div>
                           </div>
 
