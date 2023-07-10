@@ -1,24 +1,25 @@
 <div>
     <div class="row mb-2">
- 
-        <div class="col-md-9">
+        <div class="col-md-5">
             <label for="">Search</label>
             <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search ...">
             <!-- Button trigger modal -->
-            <div class="mt-1">
-             <a href="{{ route('order.target.create') }}" type="button" class="btn" style="background-color: #B6121B;color:white">
-                 New Target
-             </a>
-         </div>
         </div>
         <div class="col-md-3">
             <label for="">Items Per</label>
-            <select wire:model="perPage" class="form-control">`
+            <select wire:model="perPage" class="form-control">
                 <option value="10" selected>10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
+        </div>
+        <div class="col-md-3">
+            <div class="mt-1">
+                <a href="{{ route('order.target.create') }}" type="button" class="btn btn-primary">
+                    New Target
+                </a>
+            </div>
         </div>
     </div>
     <div class="card card-default">
@@ -30,56 +31,54 @@
                         <th>Sales Person</th>
                         <th>Target</th>
                         <th>Achieved</th>
-                        <th>Dead Line</th>
-                        <th>Count Down</th>
+                        <th>Deadline</th>
+                        <th>Success Ratio</th>
                         <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                   @forelse ($orders as $order)
-                       <tr>
-                           <td>{{ $order->id }}</td>
-                           <td>{{ $order->User()->pluck('name')->implode('') }}</td>
-                           <td>{{ number_format($order->OrdersTarget) }}</td>
-                           <td>{{ number_format($order->AchievedOrdersTarget) }}</td>
-                           <td>{{ $order->Deadline }}</td>
-                           <td>
-                               @if ($today < $order->Deadline)
-                                   <button type="button" class="btn btn-outline-success">
-                                       <i data-feather="star" class="mr-25"></i>
-                                       <span>
-                                           @php
-                                               $now = time();
-                                               $deadline = strtotime($order->Deadline);
-                                               $datediff = $deadline-$now;
-                                               echo round($datediff / (60 * 60 * 24));
-                                           @endphp
-                                       </span>
-                                   </button>
-                               @else
-                                   <button type="button" class="btn btn-outline-danger">
-                                      <i data-feather="alert-triangle" class="mr-25"></i>
-                                      <span>
-                                          @php
-                                              $now = time();
-                                              $deadline = strtotime($order->Deadline);
-                                              $datediff = $deadline-$now;
-                                              echo round($datediff / (60 * 60 * 24));
-                                          @endphp
-                                      </span>
-                                  </button>
-                               @endif
-                           </td>
-                           <td><a href="{{ route('orderstarget.edit',$order->user_code) }}" class="btn btn-outline-info btn-sm">Edit</a></td>
-                       </tr>
-                   @empty
-                       <tr>
-                           <td colspan="4"> No orders Available</td>
-                       </tr>
-                   @endforelse
-               </tbody>
+                    @forelse ($targets as $key=>$target)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $target->name }}</td>
+                            <td>{{ $target->TargetOrder->OrdersTarget ?? 0 }}</td>
+                            <td>{{ $target->TargetOrder->AchievedOrdersTarget ?? 0 }}</td>
+                            <td>{{ $target->TargetOrder->Deadline ?? '' }}</td>
+                            <td>
+                                {{ $this->getSuccessRatio($target->TargetOrder->AchievedOrdersTarget ?? 0, $target->TargetOrder->OrdersTarget ?? 0) }}%
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button style="background-color: #007ec4;color:white"
+                                        class="btn btn-md  dropdown-toggle mr-2" type="button" id="dropdownMenuButton"
+                                        data-bs-trigger="click" aria-haspopup="true" aria-expanded="false"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                        <i data-feather="settings"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a href="{{ route('orderstarget.edit', $target->user_code) }}" type="button"
+                                            class="dropdown-item btn btn-sm" style="color:#7cc7e0 ;font-weight: bold"><i
+                                                data-feather="edit"></i>
+                                            &nbsp;Edit</a>
+                                        <a href="{{ route('order.target.show', [
+                                            'order' => $target->user_code,
+                                        ]) }}"
+                                            type="button" class="dropdown-item btn btn-sm"
+                                            style="color:#6df16d ; font-weight: bold"><i data-feather="eye"></i>&nbsp;
+                                            View</a>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7">No Targets Available</td>
+                        </tr>
+                    @endforelse
+                </tbody>
             </table>
         </div>
     </div>
- </div>
- 
+</div>

@@ -21,10 +21,10 @@
                         <tr>
                             <td><a href="{{ route('supplier.reports') }}" style="color: black">Suppliers </a></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td><a href="{{ route('distributor.reports') }}" style="color: black">Distributors
                                 </a></td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td><a href="{{ route('warehouse.reports') }}" style="color: black">Warehouse </a>
                             </td>

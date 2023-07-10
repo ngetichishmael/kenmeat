@@ -7,6 +7,7 @@ use App\Models\customer\customers;
 use Livewire\WithPagination;
 use App\Models\Routes;
 use Auth;
+
 class individual extends Component
 {
    use WithPagination;
@@ -15,7 +16,7 @@ class individual extends Component
    public $search = '';
    public function render()
    {
-      $routes = Routes::where('Type','Individual')->paginate($this->perPage);
+      $routes = Routes::where('Type', 'Individual')->orderBy('id', 'DESC')->paginate($this->perPage);
 
       return view('livewire.routes.individual', compact('routes'));
    }

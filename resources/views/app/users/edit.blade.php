@@ -80,19 +80,10 @@
                                                         <option value="Admin">Administator</option>
                                                         <option value="Manager">Manager</option>
                                                         <option value="Account Manager">Account Manager</option>
+                                                        <option value="HR">HR</option>
+                                                        <option value="Account Manager">Account Manager</option>
+                                                        <option value="Merchandiser">Merchandiser</option>
                                                         <option value="Sales">Sales Agent</option>
-                                                        <option value="Sales">Merchandizer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label for="select-country">Zone</label>
-                                                    <select class="form-control select2" id="select-country" name="route"
-                                                        required>
-                                                        <option value="">Zone</option>
-                                                        <option value="0">General</option>
-                                                    
                                                     </select>
                                                 </div>
                                             </div>

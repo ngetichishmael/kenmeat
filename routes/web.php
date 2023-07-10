@@ -152,7 +152,7 @@ Route::group(['middleware' => ['verified']], function () {
       'store' => 'supplier.store',
    ]);
 
-    Route::get('supplier/{id}/delete', ['uses' => 'app\supplier\supplierController@delete', 'as' => 'supplier.destroy']);
+   Route::get('supplier/{id}/delete', ['uses' => 'app\supplier\supplierController@delete', 'as' => 'supplier.destroy']);
    // Route::get('supplier/create', ['uses' => 'app\supplier\supplierController@create', 'as' => 'supplier.create']);
    Route::post('warehousing/update/{id}', ['uses' => 'app\supplier\supplierController@update', 'as' => 'supplier.update']);
    // Route::get('supplier/{id}/edit', ['uses' => 'app\supplier\supplierController@edit', 'as' => 'supplier.edit']);
@@ -297,7 +297,7 @@ Route::group(['middleware' => ['verified']], function () {
       Route::get('reports/pre-oders', 'app\ReportsController@reports')->name('preorders.reports');
       Route::get('reports/Van-sales', 'app\ReportsController@reports')->name('vansales.reports');
       Route::get('reports/delivery', 'app\ReportsController@reports')->name('delivery.reports');
-      Route::get('reports/sidai-users', 'app\ReportsController@reports')->name('sidai.reports');
+      Route::get('reports/kenmeat-users', 'app\ReportsController@reports')->name('sidai.reports');
       Route::get('reports/warehouse-Report', 'app\ReportsController@reports')->name('warehouse.reports');
       Route::get('reports/supplier-report', 'app\ReportsController@reports')->name('supplier.reports');
       Route::get('reports/visitation-report', 'app\ReportsController@reports')->name('visitation.reports');
@@ -405,7 +405,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('orders/customer/{id}', ['uses' => 'app\ordersController@makeOrder', 'as' => 'make.orders']);
    Route::get('orders/{code}/delivery/allocation', ['uses' => 'app\ordersController@allocation', 'as' => 'orders.delivery.allocation']);
    Route::post('orders/allocate', ['uses' => 'app\ordersController@delivery', 'as' => 'order.create.delivery']);
-   Route::post('orders/allocate', ['uses' => 'app\ordersController@allocateOrders', 'as' => 'order.create.allocateorders']);
+   // Route::post('orders/allocate', ['uses' => 'app\ordersController@allocateOrders', 'as' => 'order.create.allocateorders']);
    Route::post('orders/reallocate', ['uses' => 'app\ordersController@reAllocateOrders', 'as' => 'order.create.reallocateorders']);
    //distributor orders
    Route::get('vansalesorders', ['uses' => 'app\ordersController@vansalesorders', 'as' => 'orders.vansalesorders']);

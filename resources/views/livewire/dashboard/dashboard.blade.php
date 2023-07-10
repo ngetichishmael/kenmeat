@@ -1,26 +1,23 @@
-<div>
-
-
 
 <div class="col-xl-12 col-md-12 col-12">
         <div class="card">
-                <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="validationTooltip01" style="padding:10px">Start Date</label>
-                            <input wire:model="start" name="startDate" type="date" class="form-control"
-                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
-                        </div>
+            <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="validationTooltip01" style="padding:10px">Start Date</label>
+                        <input wire:model="start" name="startDate" type="date" class="form-control"
+                            id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="validationTooltip01" style="padding:10px">End Date</label>
-                            <input wire:model="end" name="startDate" type="date" class="form-control"
-                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
-                        </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="validationTooltip01" style="padding:10px">End Date</label>
+                        <input wire:model="end" name="startDate" type="date" class="form-control"
+                            id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
                     </div>
                 </div>
             </div>
+        </div>
 
     </div>
 
@@ -143,7 +140,7 @@
         <!--/ Statistics Card -->
     </div>
 
-    
+
     <div class="col-xl-12 col-md-12 col-12">
         <div class="card card-statistics">
             <div class="card-header">
@@ -253,132 +250,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="col-xl-12 col-md-12 col-12">
-        <div class="card card-statistics">
-            <div class="card-header">
-                <h4 class="card-title">Statistics</h4>
-                <div class="d-flex align-items-center">
-                    <p class="mb-0 card-text font-small-2 mr-25">Default Shows Monthly Report</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="validationTooltip01">Start Date</label>
-                            <input wire:model="start" name="startDate" type="date" class="form-control"
-                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="validationTooltip01">End Date</label>
-                            <input wire:model="end" name="startDate" type="date" class="form-control"
-                                id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body statistics-body">
-                    <div class="row">
-                        <div class="mb-2 col-xl-2 col-sm-4 col-12 mb-xl-0">
-                            <a href="#vansalesSection">
-                                <div class="media">
-                                    <div class="mr-2 avatar bg-light-primary">
-                                        <div class="avatar-content">
-                                            <span class="material-symbols-outlined">production_quantity_limits</span>
-                                        </div>
-                                    </div>
-                                    <div class="my-auto media-body">
-                                        <h4 class="mb-0 font-weight-bolder">{{ number_format($vansales) }}</h4>
-                                        <p class="mb-0 card-text font-small-3">Van Sales</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mb-2 col-xl-2 col-sm-4 col-12 mb-xl-0">
-                            <a href="#preorderSection">
-                                <div class="media">
-                                    <div class="mr-2 avatar bg-light-info">
-                                        <div class="avatar-content">
-                                            <span class="material-symbols-outlined">arrow_forward</span>
-                                        </div>
-                                    </div>
-                                    <div class="my-auto media-body">
-                                        <h4 class="mb-0 font-weight-bolder">{{ number_format($preorder) }}</h4>
-                                        <p class="mb-0 card-text font-small-3">Pre Order</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mb-2 col-xl-2 col-sm-4 col-12 mb-xl-0">
-                            <a href="#orderFulfillmentSection">
-                                <div class="media">
-                                    <div class="mr-2 avatar bg-light-danger">
-                                        <div class="avatar-content">
-                                            <i data-feather="award" class="avatar-icon font-medium-3"></i>
-                                        </div>
-                                    </div>
-                                    <div class="my-auto media-body">
-                                        <h4 class="mb-0 font-weight-bolder">{{ number_format($orderfullment) }}</h4>
-                                        <p class="mb-0 card-text font-small-3">Order Fulfillment</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mb-2 col-xl-2 col-sm-4 col-12 mb-xl-0">
-                            <a href="#activeUsersSection">
-                                <div class="media">
-                                    <div class="mr-2 avatar bg-light-success">
-                                        <div class="avatar-content">
-                                            <span class="material-symbols-outlined">check_circle</span>
-                                        </div>
-                                    </div>
-                                    <div class="my-auto media-body">
-                                        <h4 class="mb-0 font-weight-bolder">
-                                            {{ number_format($activeUser) }} / {{ number_format($activeAll) }}
-                                        </h4>
-                                        <p class="mb-0 card-text font-small-3">Active Users</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mb-2 col-xl-2 col-sm-4 col-12 mb-xl-0">
-                            <a href="#visitsSection">
-                                <div class="media">
-                                    <div class="mr-2 avatar bg-light-success">
-                                        <div class="avatar-content">
-                                            <i data-feather="truck" class="avatar-icon font-medium-3"></i>
-                                        </div>
-                                    </div>
-                                    <div class="my-auto media-body">
-                                        <h4 class="mb-0 font-weight-bolder">{{ number_format($strike) }}</h4>
-                                        <p class="mb-0 card-text font-small-3">Visits</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mb-2 col-xl-2 col-sm-4 col-12 mb-xl-0">
-                            <a href="#buyingCustomersSection">
-                                <div class="media">
-                                    <div class="mr-2 avatar bg-light-success">
-                                        <div class="avatar-content">
-                                            <span class="material-symbols-outlined">rocket_launch</span>
-                                        </div>
-                                    </div>
-                                    <div class="my-auto media-body">
-                                        <h4 class="mb-0 font-weight-bolder">{{ number_format($customersCount) }}
-                                        </h4>
-                                        <p class="mb-0 card-text font-small-3">Buying Customer</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!--/ Statistics Card -->
         <div class="row match-height">
             <div class="col-lg-8 col-12">
                 <div class="card card-company-table">
@@ -472,7 +343,4 @@
 
             @include('livewire.dashboard.table')
         </div>
-
-
-
-    </div>
+</div>

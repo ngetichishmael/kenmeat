@@ -147,11 +147,23 @@ class usersController extends Controller
    //edit
    public function edit($user_code)
    {
-      $edit = User::where('user_code', $user_code)
-         ->where('business_code', FacadesAuth::user()->business_code)
-         ->first();
-      $permissions = AppPermission::where('user_code', $user_code)->firstOrFail();
+      $edit = User::whereId($user_code)->first();
+      $permissions = AppPermission::where('user_code', $user_code)->first();
+      if ($permissions == null) {
+         $permissions = AppPermission::updateOrCreate(
+            [
+               "user_code" => $edit->user_code,
 
+            ],
+            [
+               "van_sales" => "NO",
+               "new_sales" => "NO",
+               "schedule_visits" => "NO",
+               "deliveries" => "NO",
+               "merchanizing" => "NO",
+            ]
+         );
+      }
       $regions = Region::all();
 
       return view('app.users.edit', [
@@ -174,7 +186,7 @@ class usersController extends Controller
 
       User::updateOrCreate(
          [
-            "user_code" => $user_code,
+            "id" => $user_code,
             "business_code" => FacadesAuth::user()->business_code,
          ],
          [
@@ -183,7 +195,8 @@ class usersController extends Controller
             "name" => $request->name,
             "account_type" => $request->account_type,
             "status" => 'Active',
-            "region_id" => $request->region,
+            "region_id" => 1,
+            "route_code" => 1,
 
          ]
       );
@@ -207,14 +220,8 @@ class usersController extends Controller
 
       Session()->flash('success', 'User updated Successfully');
 
-      return redirect()->back();
+      return redirect()->route('users.index');
    }
-   //   public function destroy($id)
-   //   {
-   //      User::where('id', $id)->delete();
-   //      Session()->flash('success', 'User deleted Successfully');
-   //      return redirect()->route('users.index');
-   //   }
    public function import()
    {
       abort(403, "This action is Limited to Admin Only");

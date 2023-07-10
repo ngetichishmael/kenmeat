@@ -36,7 +36,11 @@ class ordersController extends Controller
    {
       return view('app.orders.pendingorders');
    }
-
+   public function allocateOrders(Request $request)
+   {
+      $data = $request->all();
+      dd($data);
+   }
    public function makeOrder($id)
    {
       return view('app.orders.make', [
