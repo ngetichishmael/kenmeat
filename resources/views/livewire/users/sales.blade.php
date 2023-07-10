@@ -42,6 +42,7 @@
 {{--                            <th>Region</th>--}}
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Region</th>
                             <th>Phone</th>
                             <th>Status</th>
                             <th width="12%">Actions</th>
@@ -56,6 +57,8 @@
                                 <td>
                                     {!! $user->email !!}
                                 </td>
+                              
+                                <td>{!! $user->Region->name ?? '' !!}</td>
                                 <td>{!! $user->phone_number !!}</td>
                                 <td>
                                    @if ($user->status == 'Active')

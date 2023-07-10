@@ -450,7 +450,12 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-6">
+                            
                             <div class="card">
+                            <div class="card-header">
+                                <p class="card-subtitle"> Brand Performance</p>
+
+                            </div>
                                 @livewire('dashboard.brand-chart')
                             </div>
                         </div>
