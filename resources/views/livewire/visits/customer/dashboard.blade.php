@@ -30,10 +30,10 @@
                     <tbody>
                         @foreach ($visits as $count => $visit)
                             <td>{!! $count + 1 !!}</td>
-                            <td>{!! $visit->User->Region->name !!}</td>
-                            <td>{!! $visit->User->name !!} </td>
-                            <td> {{ $visit->Customer->customer_name }}</td>
-                            <td>{{ $visit->start_time }}</td>
+                            <td>{!! $visit->User->Region->name??'' !!}</td>
+                            <td>{!! $visit->User->name??'' !!} </td>
+                            <td> {{ $visit->Customer->customer_name??'' }}</td>
+                            <td>{{ $visit->start_time??'' }}</td>
                             <td>{{ $visit->stop_time ?? 'User within' }}</td>
 
                             </tr>

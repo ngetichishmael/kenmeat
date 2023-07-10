@@ -63,7 +63,6 @@ class customerController extends Controller
 
       Session::flash('success', 'Customer Group Added');
       return redirect()->route('groupings');
-
    }
 
    public function create()
@@ -73,7 +72,7 @@ class customerController extends Controller
       $pricing = PriceGroup::get();
       $prices = price_group::all();
 
-      return view('app.customers.create', compact('country', 'groups', 'pricing','prices'));
+      return view('app.customers.create', compact('country', 'groups', 'pricing', 'prices'));
    }
    public function createcreditor()
    {
@@ -81,7 +80,7 @@ class customerController extends Controller
       $groups = customer_group::all();
       $pricing = PriceGroup::get();
       $prices = price_group::all();
-      return view('app.customers.creditor', compact('country', 'groups', 'pricing','prices'));
+      return view('app.customers.creditor', compact('country', 'groups', 'pricing', 'prices'));
    }
 
    public function details($id)
@@ -95,9 +94,9 @@ class customerController extends Controller
       return view('app.creditors.show', ['customer' => $customer]);
    }
 
-   public function approvecreditor($id)
+   public function approvecreditor(Request $request, $id)
    {
-      $c=Customers::whereId($id)->update(
+      $c = Customers::whereId($id)->update(
          [
             'customer_type' => 'creditor',
             'creditor_approved' => 1,
@@ -110,9 +109,10 @@ class customerController extends Controller
       $activityLog->activity = 'Customer approved';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Customer successfully Approved';
-      $activityLog->action = 'Customer With id'. $c.' successfully Approved';
+      $activityLog->action = 'Customer With id' . $c . ' successfully Approved';
       $activityLog->activityID = $random;
-      $activityLog->ip_address ="";
+      $activityLog->source = 'Web';
+      $activityLog->ip_address = $request->ip() ?? '';
       $activityLog->save();
 
       return redirect()->route('creditors');
@@ -124,17 +124,17 @@ class customerController extends Controller
          'customer_name' => 'required'
       ]);
       $emailData = $request->email == null ? null : $request->email;
-      $random=Str::random(10);
+      $random = Str::random(10);
       $user = new User();
       $user->name = $request->customer_name;
-      $user->email=$emailData;
-      $user->user_code=$random;
+      $user->email = $emailData;
+      $user->user_code = $random;
       $user->phone_number = $request->phone_number;
       $user->gender = $request->gender;
-      $user->account_type= "Customer";
-      $user->email_verified_at =Carbon::now();
-      $user->status="Active";
-      $user->region_id= $request->region;
+      $user->account_type = "Customer";
+      $user->email_verified_at = Carbon::now();
+      $user->status = "Active";
+      $user->region_id = $request->region;
       $user->business_code = Auth::user()->business_code;
       $user->password = Hash::make("password");
       $user->save();
@@ -171,7 +171,8 @@ class customerController extends Controller
       $activityLog->action = 'Customer ' . $customer->customer_name . ' successfully Created';
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address = "";
+      $activityLog->source = 'Web';
+      $activityLog->ip_address = $request->ip() ?? '';
       $activityLog->save();
 
       return redirect()->route('customer');
@@ -185,7 +186,7 @@ class customerController extends Controller
 
       $customer = new customers;
       $customer->customer_name = $request->customer_name;
-      $customer->id_number =$request->id_number;
+      $customer->id_number = $request->id_number;
       $customer->address = $request->address;
       $customer->contact_person = $request->contact_person;
       $customer->telephone = $request->telephone;
@@ -203,17 +204,17 @@ class customerController extends Controller
       $customer->save();
 
       $emailData = $request->email == null ? null : $request->email;
-      $random=Str::random(10);
+      $random = Str::random(10);
       $user = new User();
       $user->name = $request->customer_name;
-      $user->email=$request->customer_name;
-      $user->user_code=$random;
+      $user->email = $request->customer_name;
+      $user->user_code = $random;
       $user->phone_number = $request->phone_number;
       $user->gender = $request->gender;
-      $user->account_type= "Customer";
-      $user->email_verified_at =Carbon::now();
-      $user->status="Active";
-      $user->region=Auth::user()->region_id;
+      $user->account_type = "Customer";
+      $user->email_verified_at = Carbon::now();
+      $user->status = "Active";
+      $user->region = Auth::user()->region_id;
       $user->business_code = Auth::user()->business_code;
       $user->password = "password";
       $user->save();
@@ -241,7 +242,8 @@ class customerController extends Controller
       ]);
       $groups = groups::get();
       $pricing = PriceGroup::get();
-      return view('app.customers.edit',
+      return view(
+         'app.customers.edit',
          compact('customer', 'country', 'regions', 'subregions', 'areas', 'groups', 'pricing')
       );
    }
@@ -263,8 +265,9 @@ class customerController extends Controller
       $groups = customer_group::all();
       $prices = price_group::all();
       $pricing = PriceGroup::get();
-      return view('app.creditors.edit',
-         compact('customer', 'country', 'regions', 'subregions', 'areas', 'groups', 'pricing','prices')
+      return view(
+         'app.creditors.edit',
+         compact('customer', 'country', 'regions', 'subregions', 'areas', 'groups', 'pricing', 'prices')
       );
    }
 
@@ -273,8 +276,8 @@ class customerController extends Controller
       $this->validate($request, [
          'customer_name' => 'required'
       ]);
-$region=
-      $customer = customers::where('id', $id)->first();
+      $region =
+         $customer = customers::where('id', $id)->first();
       $customer->customer_name = $request->customer_name ?? $customer->customer_name;
       $customer->id_number = $request->id_number ?? $customer->id_number;
       $customer->contact_person = $request->contact_person;
@@ -292,7 +295,7 @@ $region=
       $customer->created_by = FacadesAuth::user()->user_code;
       $customer->save();
 
-      $user=User::where('user_code', $customer->user_code)->first();
+      $user = User::where('user_code', $customer->user_code)->first();
       if ($user != null || !empty($user)) {
          $user->region_id = $request->region ?? Auth::user()->region_id ?? null;
          $user->save();
@@ -306,7 +309,8 @@ $region=
       $activityLog->action = 'Customer ' . $customer->customer_name . ' successfully ';
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address = "";
+      $activityLog->source = 'Web';
+      $activityLog->ip_address = $request->ip() ?? '';
       $activityLog->save();
 
       return redirect()->route('customer');
@@ -366,5 +370,4 @@ $region=
       $accounts = customers::where('businessID', FacadesAuth::user()->business_code)->orderby('id', 'desc')->get(['id', 'customer_name as text']);
       return ['results' => $accounts];
    }
-
 }

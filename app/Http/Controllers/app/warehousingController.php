@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\app;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\activity_log;
 use App\Models\products\product_information;
@@ -13,12 +14,11 @@ use App\Imports\WarehouseImport;
 use Illuminate\Http\Request;
 use App\Models\warehousing;
 use App\Models\country;
-use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
-use Session;
-use Helper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class warehousingController extends Controller
@@ -71,9 +71,9 @@ class warehousingController extends Controller
       $country = country::pluck('name', 'name')->prepend('choose country');
       $regions = Region::all();
       $allsubregions = Subregion::all()->whereNotNull('id')->pluck('id');
-      $warehouse_code=Str::random(20);
+      $warehouse_code = Str::random(20);
 
-      return view('app.warehousing.create', compact('country','allsubregions','regions', 'warehouse_code'));
+      return view('app.warehousing.create', compact('country', 'allsubregions', 'regions', 'warehouse_code'));
    }
 
    /**
@@ -121,23 +121,22 @@ class warehousingController extends Controller
       $activityLog->activity = 'Adding a Warehouse';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Creating a warehouse';
-      $activityLog->action = 'User '.auth()->user()->name.' Created warehouse '.$request->name;
+      $activityLog->action = 'User ' . auth()->user()->name . ' Created warehouse ' . $request->name;
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address ="";
+      $activityLog->ip_address =  $request->ip() ?? '';
       $activityLog->save();
 
       return redirect()->route('warehousing.index');
    }
    public function products($code)
    {
-      $warehouse= warehousing::where('warehouse_code',$code)->first();
+      $warehouse = warehousing::where('warehouse_code', $code)->first();
       if (!empty($warehouse)) {
          $products = product_information::with('Inventory', 'ProductPrice', 'ProductSKU')->where('warehouse_code', $code)->paginate($this->perPage);
          session(['warehouse_code' => $warehouse->warehouse_code]);
          return view('app.warehousing.products', compact('products', 'warehouse'));
-      }
-      else{
+      } else {
          return redirect()->back();
       }
    }
@@ -173,8 +172,8 @@ class warehousingController extends Controller
       $warehouseCode = $request->input('warehouse');
       $shopattendee = $request->input('shopattendee');
       $positions = $request->input('position');
-      $check=warehouse_assign::where('manager',$shopattendee)->get();
-      if ($check->count()>0){
+      $check = warehouse_assign::where('manager', $shopattendee)->get();
+      if ($check->count() > 0) {
          session()->flash('error', 'Could not assign, User(s) is already assigned to a warehouse');
          return redirect()->back();
       }
@@ -190,7 +189,7 @@ class warehousingController extends Controller
             $assign->save();
 
             $assignedUsers[] = $user->name . ' (' . $positions[$key] . ')';
-         }else{
+         } else {
             session()->flash('error', 'Could not assign User(s) to a warehouse');
             return redirect()->route('warehousing.index');
          }
@@ -199,7 +198,7 @@ class warehousingController extends Controller
       $action = 'Warehouse ' . $warehouse->name . ' was assigned to ';
       $action .= implode(', ', $assignedUsers);
 
-      $random=Str::random(20);
+      $random = Str::random(20);
       $activityLog = new activity_log();
       $activityLog->activity = 'Assigning a user to a warehouse';
       $activityLog->user_code = auth()->user()->user_code;
@@ -220,11 +219,11 @@ class warehousingController extends Controller
     */
    public function show(Request $request)
    {
-      $code=$request->query('warehouse_code');
+      $code = $request->query('warehouse_code');
 
-      $attendees=warehouse_assign::where('warehouse_code',$code)->with('managers', 'user','updatedBy')->get();
+      $attendees = warehouse_assign::where('warehouse_code', $code)->with('managers', 'user', 'updatedBy')->get();
 
-      $warehouse = warehousing::where('warehouse_code',$code)->with('subregion','region')->first();
+      $warehouse = warehousing::where('warehouse_code', $code)->with('subregion', 'region')->first();
       return view('app.warehousing.view', compact('warehouse', 'attendees'));
    }
 
@@ -238,7 +237,7 @@ class warehousingController extends Controller
    {
       $country = country::pluck('name', 'name')->prepend('choose country');
       $edit = warehousing::where('warehouse_code', $code)->with('region', 'subregion')->first();
-      $regions=Region::all();
+      $regions = Region::all();
 
       return view('app.warehousing.edit', compact('country', 'edit', 'regions'));
    }
@@ -280,10 +279,10 @@ class warehousingController extends Controller
       $activityLog->activity = 'Updating a Warehouse';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Warehouse Detail Update';
-      $activityLog->action = 'User '.auth()->user()->name.' Updated details for warehouse '.$request->name;
+      $activityLog->action = 'User ' . auth()->user()->name . ' Updated details for warehouse ' . $request->name;
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address ="";
+      $activityLog->ip_address = "";
       $activityLog->save();
 
       return redirect()->route('warehousing.index');
@@ -297,22 +296,21 @@ class warehousingController extends Controller
     */
    public function destroy($code)
    {
-      $checkIfMain = warehousing::where('business_code',Auth::user()->business_code)->where('warehouse_code',$code)->first();
-      if($checkIfMain->is_main != 'Yes'){
+      $checkIfMain = warehousing::where('business_code', Auth::user()->business_code)->where('warehouse_code', $code)->first();
+      if ($checkIfMain->is_main != 'Yes') {
          return 'working on delete parameters';
 
          //recorord activity
-         $activities = '<b>'.Auth::user()->name.'</b> Has <b>Deleted</b> warehouse <i> '.$checkIfMain->name.'</i>';
+         $activities = '<b>' . Auth::user()->name . '</b> Has <b>Deleted</b> warehouse <i> ' . $checkIfMain->name . '</i>';
          $section = 'Warehouse';
          $action = 'Update';
          $businessID = Auth::user()->business_code;
          $activityID = $checkIfMain->warehouse_code;
 
-         Helper::activity($activities,$section,$action,$activityID,$businessID);
+         Helper::activity($activities, $section, $action, $activityID, $businessID);
+      } else {
 
-      }else{
-
-         Session::flash('warning','This warehouse is linked as the main warehouse, it can not the deleted');
+         Session::flash('warning', 'This warehouse is linked as the main warehouse, it can not the deleted');
 
          return redirect()->back();
       }

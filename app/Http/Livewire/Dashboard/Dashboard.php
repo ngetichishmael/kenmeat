@@ -39,7 +39,7 @@ class Dashboard extends Component
       if (!is_null($start) && Carbon::parse($start)->isSameDay(Carbon::parse($end))) {
          return $query->where($column, '=', $start);
       }
-
+      $end = $end == null ? Carbon::now()->endOfMonth()->format('Y-m-d') : $end;
       return $query->whereBetween($column, [$start, $end]);
    }
    public function render()

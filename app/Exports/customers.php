@@ -2,22 +2,22 @@
 
 namespace App\Exports;
 
+use App\Models\customer\customers as CustomerCustomers;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use App\Models\finance\customer\customers as customer;
-use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class customers implements FromCollection, WithHeadings
 {
    /**
- * @return \Illuminate\Support\Collection
-   */
+    * @return \Illuminate\Support\Collection
+    */
    public function collection()
    {
-      return customer::join('customer_address','customer_address.customerID','=','customers.id')
-                  ->where('businessID', Auth::user()->businessID)
-                  ->select('contact_type','designation','department','salutation','customer_name','email','email_cc','other_phone_number','primary_phone_number','website','facebook','twitter','linkedin','bill_attention','bill_street','bill_city','bill_state','bill_postal_address','bill_zip_code','ship_attention','ship_street','ship_city','ship_state','ship_zip_code','ship_postal_address')
-                  ->get();
+      return CustomerCustomers::join('customer_address', 'customer_address.customerID', '=', 'customers.id')
+         ->where('businessID', FacadesAuth::user()->businessID)
+         ->select('contact_type', 'designation', 'department', 'salutation', 'customer_name', 'email', 'email_cc', 'other_phone_number', 'primary_phone_number', 'website', 'facebook', 'twitter', 'linkedin', 'bill_attention', 'bill_street', 'bill_city', 'bill_state', 'bill_postal_address', 'bill_zip_code', 'ship_attention', 'ship_street', 'ship_city', 'ship_state', 'ship_zip_code', 'ship_postal_address')
+         ->get();
    }
 
    public function headings(): array

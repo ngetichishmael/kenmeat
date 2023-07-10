@@ -4,7 +4,6 @@ namespace App\Http\Controllers\app;
 
 use App\Helpers\SMS;
 use App\Http\Controllers\Controller;
-use App\Models\activity_log;
 use App\Models\Area;
 use App\Models\suppliers\suppliers;
 use Illuminate\Http\Request;
@@ -25,7 +24,7 @@ class usersController extends Controller
 
       return response()->json(['users' => $users]);
    }
-   
+
    public function getDistributors(Request $request)
    {
       $distributors = suppliers::whereNotIn('name', ['Sokoflow', 'Sokoflow'])->orWhereNull('name')->orWhere('name', '')
@@ -49,7 +48,7 @@ class usersController extends Controller
    }
    public function index()
    {
-      return view('app.users.index');
+      return view('app.users.usertypes');
    }
    public function indexUser()
    {
@@ -240,7 +239,7 @@ class usersController extends Controller
       $tsr = User::where('account_type', 'Sales');
       return view('app.users.tsr', compact('tsr'));
    }
-   
+
    public function ac()
    {
       $ac = User::where('account_type', 'Account Manager');
@@ -261,5 +260,4 @@ class usersController extends Controller
       $rsm = User::where('account_type', 'Manager');
       return view('app.users.rsm', compact('rsm'));
    }
-
 }

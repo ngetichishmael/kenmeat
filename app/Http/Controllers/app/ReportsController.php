@@ -102,20 +102,45 @@ class ReportsController extends Controller
       $admins = User::where('account_type', 'Admin')->get();
       return view('app.items.admin', ['admins' => $admins]);
    }
-   public function rsm()
+   public function gtsales()
    {
-      $rsms = User::where('account_type', 'RSM')->get();
-      return view('app.items.rsm', ['rsms' => $rsms]);
+      $gtsales = User::where('account_type', 'GT Sales')->get();
+      return view('app.items.gtsales', ['gtsales' => $gtsales]);
    }
-   public function nsm()
+   public function asm()
    {
-      $nsms = User::where('account_type', 'NSM')->get();
-      return view('app.items.nsm', ['nsms' => $nsms]);
+      $asms = User::where('account_type', 'Account Manager')->get();
+      return view('app.items.asm', ['asms' => $asms]);
    }
-   public function shopattendee()
+   public function hr()
    {
-      $attendee = User::where('account_type', 'Shop-Attendee')->get();
-      return view('app.items.attendee', ['attendee' => $attendee]);
+      $hrs = User::where('account_type', 'HR')->get();
+      return view('app.items.hr', ['hrs' => $hrs]);
+   }
+   public function dataentry()
+   {
+      $dataentry = User::where('account_type', 'Data entry')->get();
+      return view('app.items.dataentry', ['dataentry' => $dataentry]);
+   }
+   public function manager()
+   {
+      $managers = User::where('account_type', 'Manager')->get();
+      return view('app.items.manager', ['managers' => $managers]);
+   }
+   public function merchandiser()
+   {
+      $Merchandiser = User::where('account_type', 'Merchandiser')->get();
+      return view('app.items.merchandiser', ['Merchandiser' => $Merchandiser]);
+   }
+   public function sales()
+   {
+      $sales = User::where('account_type', 'Sales')->get();
+      return view('app.items.sales', ['sales' => $sales]);
+   }
+   public function teamleader()
+   {
+      $teamleader = User::where('account_type', 'Team Leader')->get();
+      return view('app.items.tl', ['teamleader' => $teamleader]);
    }
    public function paymentsDetails($id)
    {
@@ -143,12 +168,12 @@ class ReportsController extends Controller
       $count = 1;
       return view('app.territories.routes', ['routes' => $routes, 'count' => $count]);
    }
-   public function customers($id)
-   {
-      $customers = customers::where('route', $id)->get();
-      $count = 1;
-      return view('app.territories.customers', ['count' => $count, 'customers' => $customers]);
-   }
+   // public function customers($id)
+   // {
+   //    $customers = customers::where('route', $id)->get();
+   //    $count = 1;
+   //    return view('app.territories.customers', ['count' => $count, 'customers' => $customers]);
+   // }
 
    public function productreport($code)
    {

@@ -8,7 +8,7 @@
 @section('content')
     <!-- begin breadcrumb -->
 
-    <div class="content-header row" >
+    <div class="content-header row">
         <div class="mb-2 content-header-left col-md-12 col-12">
             <div class="row breadcrumbs-top" style="padding-left:10%; padding-right:5%">
                 <div class="col-12">
@@ -44,14 +44,15 @@
                                                     <label for="first-name-column">Name</label>
                                                     <input type="text" id="first-name-column" class="form-control"
                                                         placeholder="User Name" value="{{ $edit->name ?? '' }}"
-                                                        name="name" required/>
+                                                        name="name" required />
                                                 </div>
                                             </div>
                                             <div class="mb-2 col-md-6 col-12 ">
                                                 <div class="form-group">
                                                     <label for="last-name-column">Email</label>
                                                     <input type="email" id="last-name-column" class="form-control"
-                                                        value="{{ $edit->email ?? ''}}" placeholder="Email" name="email" required/>
+                                                        value="{{ $edit->email ?? '' }}" placeholder="Email" name="email"
+                                                        required />
                                                 </div>
                                             </div>
                                             <div class="mb-2 col-md-6 col-12 ">
@@ -59,7 +60,7 @@
                                                     <label for="city-column">Phone Number</label>
                                                     <input type="tel" id="city-column" class="form-control"
                                                         pattern="[0789][0-9]{9}" value="{{ $edit->phone_number ?? '' }}"
-                                                        name="phone_number" required/>
+                                                        name="phone_number" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
@@ -72,18 +73,29 @@
                                             <div class="mb-2 col-md-6 col-12 ">
                                                 <div class="form-group">
                                                     <label for="select-country">Current Type:
-                                                        {{ $edit->account_type ?? ''}}</label>
+                                                        {{ $edit->account_type ?? '' }}</label>
                                                     <select class="form-control select2" id="select-country"
                                                         name="account_type" required>
                                                         <option value="{{ $edit->account_type ?? ''}}">  {{ $edit->account_type ?? ''}} </option>
                                                         <option value="Merchandizer"> </option>
+                                                        name="account_type">
+                                                        <option value="">Select Category</option>
                                                         <option value="Admin">Administator</option>
                                                         <option value="Manager">Manager</option>
                                                         <option value="Account Manager">Account Manager</option>
-                                                        <option value="HR">HR</option>
-                                                        <option value="Account Manager">Account Manager</option>
-                                                        <option value="Merchandiser">Merchandiser</option>
                                                         <option value="Sales">Sales Agent</option>
+                                                        <option value="Sales">Merchandizer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="select-country">Zone</label>
+                                                    <select class="form-control select2" id="select-country" name="route"
+                                                        required>
+                                                        <option value="">Zone</option>
+                                                        <option value="0">General</option>
+
                                                     </select>
                                                 </div>
                                             </div>

@@ -12,9 +12,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Delivery_items;
 use App\Models\order_payments;
+use App\Models\suppliers\suppliers;
 use App\Http\Controllers\Controller;
-use App\Models\products\product_price;
 use Illuminate\Support\Facades\Auth;
+use App\Models\products\product_price;
 use Illuminate\Support\Facades\Session;
 
 class ordersController extends Controller
@@ -46,6 +47,25 @@ class ordersController extends Controller
       return view('app.orders.make', [
          'id' => $id,
       ]);
+   }
+
+   public function pendingdetails($code)
+   {
+      $order = Orders::where('order_code', $code)->first();
+      // dd($code);
+      $items = Order_items::where('order_code', $order->order_code)->get();
+      $sub = Order_items::select('allocated_subtotal')->where('order_code', $order->order_code)->get();
+      $total = Order_items::select('allocated_totalamount')->where('order_code', $order->order_code)->get();
+      $Customer_id = Orders::select('customerID')->where('order_code', $code)->first();
+      $id = $Customer_id->customerID;
+      $test = customers::where('id', $id)->first();
+      $payment = order_payments::where('order_id', $order->order_code)->first();
+      $distributors = suppliers::whereRaw('LOWER(name) NOT IN (?, ?)', ['sokoflow', 'Sokoflow'])->whereIn('status', ['Active', 'active'])
+         ->orWhereNull('status')
+         ->orWhere('status', '')
+         ->orderby('name', 'desc')->get();
+      $account_types = User::whereNotIn('account_type', ['Customer', 'Admin'])->groupBy('account_type')->get();
+      return view('app.orders.pendingdetails', compact('order','account_types', 'items', 'test', 'payment', 'distributors', 'sub', 'total'));
    }
    //order details
    public function details($code)

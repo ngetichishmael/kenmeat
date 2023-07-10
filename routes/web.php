@@ -281,7 +281,7 @@ Route::group(['middleware' => ['verified']], function () {
    //   Route::get('user{id}/destroy', ['uses' => 'app\usersController@destroy', 'as' => 'user.destroy']);
    Route::get('user{id}/suspend', ['uses' => 'app\usersController@suspend', 'as' => 'user.suspend']);
 
-   Route::get('users', ['uses' => 'app\usersController@list', 'as' => 'users.list']);
+   Route::get('users', ['uses' => 'app\usersController@index', 'as' => 'users.list']);
    Route::get('users-Admins', ['uses' => 'app\usersController@admins', 'as' => 'users.admins']);
    Route::get('users/admins', ['uses' => 'app\usersController@admin', 'as' => 'users.admin']);
 
@@ -321,10 +321,15 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('orders/vansaleitems/{order_code}', ['uses' => 'app\ReportsController@vansaleitems', 'as' => 'vansale.items']);
    Route::get('orders/deliveryitems/{order_code}', ['uses' => 'app\ReportsController@deliveryitems', 'as' => 'delivery.items']);
    Route::get('reports/admins/details', ['uses' => 'app\ReportsController@admins', 'as' => 'admins.details']);
-   Route::get('reports/rsm/details', ['uses' => 'app\ReportsController@rsm', 'as' => 'rsm.details']);
-   Route::get('reports/shop-attendee/details', ['uses' => 'app\ReportsController@shopattendee', 'as' => 'attendee.details']);
-   Route::get('reports/nsm/details', ['uses' => 'app\ReportsController@nsm', 'as' => 'nsm.details']);
-   Route::get('reports/customers/details', ['uses' => 'app\ReportsController@customer', 'as' => 'customer.details']);
+   Route::get('reports/GT-Sales/details', ['uses' => 'app\ReportsController@gtsales', 'as' => 'gtsales.details']);
+   Route::get('reports/HumanResource-Manager/details', ['uses' => 'app\ReportsController@hr', 'as' => 'hr.details']);
+   Route::get('reports/Sales/details', ['uses' => 'app\ReportsController@sales', 'as' => 'sales.details']);
+   Route::get('reports/Merchandiser/details', ['uses' => 'app\ReportsController@merchandiser', 'as' => 'merchandiser.details']);
+   Route::get('reports/Dat-Entry/details', ['uses' => 'app\ReportsController@dataentry', 'as' => 'dataentry.details']);
+   Route::get('reports/Managers/details', ['uses' => 'app\ReportsController@manager', 'as' => 'manager.details']);
+   Route::get('reports/Team-Leader/details', ['uses' => 'app\ReportsController@teamleader', 'as' => 'teamleader.details']);
+   Route::get('reports/	Account-Sales-Manager/details', ['uses' => 'app\ReportsController@asm', 'as' => 'asm.details']);
+   Route::get('reports/customer/details', ['uses' => 'app\ReportsController@customer', 'as' => 'customer.details']);
    Route::get('reports/admin/details', ['uses' => 'app\ReportsController@admin', 'as' => 'admin.details']);
 
    //getting subregions

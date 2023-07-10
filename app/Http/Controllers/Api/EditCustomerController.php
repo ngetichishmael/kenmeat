@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
 use App\Models\customers;
 use Illuminate\Http\Request;
@@ -40,6 +41,15 @@ class EditCustomerController extends Controller
             "businessID" => $request->user()->business_code ?? $customer->business_code,
             "created_by" => $request->user()->id ?? $customer->id
          ]
+      );
+      (new Activity)(
+         "Edit customner by name " . $customer->customer_name,
+         "Customer",
+         'Edit',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
       );
    }
 }
