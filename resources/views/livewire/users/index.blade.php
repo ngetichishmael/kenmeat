@@ -5,8 +5,6 @@
             <input wire:model.debounce.300ms="search" type="text" class="form-control"
                 placeholder="Enter name, email or phone number">
         </div>
-
-
         <div class="col-md-3">
             <label for="">Items Per</label>
             <select wire:model="perPage" class="form-control">`

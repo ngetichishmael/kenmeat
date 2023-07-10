@@ -13,7 +13,7 @@
 
     <div class="content-header row">
         <div class="mb-2 content-header-left col-md-12 col-12">
-            <div class="row breadcrumbs-top"  style="padding-left:10%; padding-right:5%">
+            <div class="row breadcrumbs-top" style="padding-left:10%; padding-right:5%">
                 <div class="col-12">
                     <h2 class="mb-0 content-header-title float-start">Users </h2>
                     <div class="breadcrumb-wrapper">
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="row"  style="padding-left:10%; padding-right:2%">
+    <div class="row" style="padding-left:10%; padding-right:2%">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">

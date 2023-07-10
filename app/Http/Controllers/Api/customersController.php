@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use Carbon\Carbon;
 use App\Models\Area;
 use App\Models\Cart;
@@ -125,6 +126,15 @@ class customersController extends Controller
          "status" => 200,
          "message" => "Customer added successfully",
       ]);
+      (new Activity)(
+         "Registered new customner by " . $customer->customer_name,
+         "Customer",
+         'Registration',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
+      );
    }
 
    public function editCustomer(Request $request)
@@ -163,7 +173,15 @@ class customersController extends Controller
          ]
       );
 
-
+      (new Activity)(
+         "Edit customner by name " . $edited->customer_name,
+         "Customer",
+         'Edit',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
+      );
 
       return response()->json([
          "success" => true,

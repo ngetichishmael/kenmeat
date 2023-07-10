@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -79,7 +80,7 @@ class CustomerAuthController extends Controller
 
       $image_path = $request->file('image')->store('image', 'public');
       $account = Str::random(20);
-      customers::create([
+      $customer = customers::create([
          'customer_name' => $request->customer_name,
          'account' => $account,
          'approval' => "Approved",
@@ -113,7 +114,15 @@ class CustomerAuthController extends Controller
       $user = User::where('phone_number', $request->phone_number)->firstOrFail();
 
       $token = $user->createToken('auth_token')->plainTextToken;
-
+      (new Activity)(
+         "Registered new customner by " . $customer->customer_name,
+         "Customer",
+         'Registration',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
+      );
       return response()->json([
          "success" => true,
          "token_type" => 'Bearer',

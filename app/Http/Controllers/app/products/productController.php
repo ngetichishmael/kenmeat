@@ -48,13 +48,13 @@ class productController extends Controller
     */
    public function create()
    {
-      $code= session('warehouse_code');
+      $code = session('warehouse_code');
       $categories = category::where('business_code', Auth::user()->business_code)->pluck('name', 'id');
       $suppliers = suppliers::where('business_code', Auth::user()->business_code)
          ->pluck('name', 'id');
       $brands = brand::where('business_code', Auth::user()->business_code)->pluck('name', 'id');
 
-      return view('app.products.create', compact('categories','code', 'suppliers', 'brands'));
+      return view('app.products.create', compact('categories', 'code', 'suppliers', 'brands'));
    }
 
    /**
@@ -68,14 +68,14 @@ class productController extends Controller
       $this->validate($request, [
          'product_name' => [
             'required',
-            Rule::unique('product_information', 'product_name')->ignore($request->id),'string',
+            Rule::unique('product_information', 'product_name')->ignore($request->id), 'string',
          ],
          'buying_price' => 'required',
          'selling_price' => 'required',
          'distributor_price' => 'required',
          'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
       ]);
-      $code= session('warehouse_code');
+      $code = session('warehouse_code');
       $image_path = $request->file('image')->store('image', 'public');
       $product_code = Str::random(20);
       $product = new product_information;
@@ -132,21 +132,19 @@ class productController extends Controller
 
       );
       session()->flash('success', 'Product successfully added.');
-      $random=rand(0,9999);
+      $random = rand(0, 9999);
       $activityLog = new activity_log();
       $activityLog->activity = 'Creating Product';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Add Product';
-      $activityLog->action = 'Product '.$product->product_name .'added in warehouse'.$code;
+      $activityLog->action = 'Product ' . $product->product_name . 'added in warehouse' . $code;
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address ="";
+      $activityLog->source = 'Web';
+      $activityLog->ip_address = $request->ip() ?? '';
       $activityLog->save();
 
-//      return redirect()->route('product.index');
-      return redirect('/warehousing/'.$code.'/products');
-
-
+      return redirect('/warehousing/' . $code . '/products');
    }
 
    public function importProducts(Request $request)
@@ -154,7 +152,7 @@ class productController extends Controller
       $this->validate($request, [
          'upload_import' => 'required',
       ]);
-      $code= session('warehouse_code');
+      $code = session('warehouse_code');
       $product_code = Str::random(20);
       $filePath = $request->file('upload_import')->path();
 
@@ -196,7 +194,7 @@ class productController extends Controller
             $product->save();
 
             $productPrice = new product_price;
-            $productPrice -> product_code=$product_code;
+            $productPrice->product_code = $product_code;
             $productPrice->productID = $product->id;
             $productPrice->distributor_price = $distributorPrice;
             $productPrice->buying_price = $buyingPrice;
@@ -232,17 +230,18 @@ class productController extends Controller
       }
 
       session()->flash('success', 'Products imported successfully.');
-      $random=rand(0,9999);
+      $random = rand(0, 9999);
       $activityLog = new activity_log();
       $activityLog->activity = 'Importing Products';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Imported Products';
-      $activityLog->action = 'Products '.$product->product_name .'added in warehouse'.$code;
+      $activityLog->action = 'Products ' . $product->product_name . 'added in warehouse' . $code;
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address ="";
+      $activityLog->source = 'Web';
+      $activityLog->ip_address = $request->ip() ?? '';
       $activityLog->save();
-      return redirect('/warehousing/'.$code.'/products');
+      return redirect('/warehousing/' . $code . '/products');
    }
 
 
@@ -281,7 +280,7 @@ class productController extends Controller
          ->orderBy('product_information.id', 'desc')
          ->first();
 
-//      return $details;
+      //      return $details;
 
       return view('app.products.details.show', compact('details'));
    }
@@ -327,7 +326,7 @@ class productController extends Controller
       $product_information = product_information::whereId($id)->first();
       $product_price = product_price::where('productID', $id)->first();
       $product_inventory = product_inventory::where('productID', $id)->first();
-      $code=$product_information->warehouse_code;
+      $code = $product_information->warehouse_code;
 
 
       return view('app.products.restock', [
@@ -339,7 +338,7 @@ class productController extends Controller
          'product_information' => $product_information,
          'product_inventory' => $product_inventory,
          'product_price' => $product_price,
-         'code'=>$code,
+         'code' => $code,
       ]);
    }
 
@@ -379,24 +378,22 @@ class productController extends Controller
 
             $information->updated_at = now();
             $information->save();
-
          }
       }
 
       session()->flash('success', 'Product successfully restocked!');
-      $random=Str::random(20);
+      $random = Str::random(20);
       $activityLog = new activity_log();
       $activityLog->activity = 'Product updating';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Product update ';
-      $activityLog->action = 'Product '.$request->product_name .' successfully updated ';
+      $activityLog->action = 'Product ' . $request->product_name . ' successfully updated ';
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
       $activityLog->ip_address = $request->ip();
       $activityLog->save();
 
-//      return redirect()->back();
-      return redirect('/warehousing/'.$information->warehouse_code.'/products');
+      return redirect('/warehousing/' . $information->warehouse_code . '/products');
    }
    public function update(Request $request, $id)
    {
@@ -404,55 +401,21 @@ class productController extends Controller
       if ($information->image == null) {
          $this->validate($request, [
             'product_name' => 'required',
-//            'buying_price' => 'required',
-//            'selling_price' => 'required',
-//            'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
          ]);
       }
       $this->validate($request, [
          'product_name' => 'required',
-//         'buying_price' => 'required',
-//         'selling_price' => 'required',
-//         'image' => 'sometimes|mimes:png,jpg,bmp,gif,jpeg|max:5048',
       ]);
-//      if ($request->has('image')) {
-//         $image_path = $request->file('image')->store('image', 'public');
-//      }
       product_information::updateOrCreate([
          'id' => $id,
          "business_code" => Auth::user()->business_code,
       ], [
          "product_name" => $request->product_name,
          "sku_code" => $request->sku_code,
-//         "url" => Str::slug($request->product_name),
-//         "brand" => $request->brandID,
          "supplierID" => $request->supplierID,
-//         "category" => $request->category,
-//         "image" => $image_path ?? $information->image,
-//         "active" => $request->status,
          "track_inventory" => 'Yes',
-//         "business_code" => Auth::user()->business_code,
          "updated_by" => Auth::user()->user_code,
       ]);
-
-
-//      product_price::updateOrCreate(
-//         [
-//            'productID' => $id,
-//         ],
-//         [
-//            'buying_price' => $request->buying_price,
-//            'selling_price' => $request->selling_price,
-//            'offer_price' => $request->buying_price,
-//            'setup_fee' => $request->selling_price,
-//            'taxID' => "1",
-//            'tax_rate' => "0",
-//            'default_price' => $request->selling_price,
-//            'business_code' => Auth::user()->business_code,
-//            'created_by' => Auth::user()->user_code,
-//         ]
-//      );
-
       product_inventory::updateOrCreate(
          [
 
@@ -465,7 +428,7 @@ class productController extends Controller
             'expiration_date' => "None",
             'default_inventory' => "None",
             'notification' => 0,
-//            'created_by' => Auth::user()->user_code,
+            //            'created_by' => Auth::user()->user_code,
             'updated_by' => Auth::user()->user_code,
             'business_code' => Auth::user()->business_code,
          ]
@@ -473,41 +436,42 @@ class productController extends Controller
       );
 
       session()->flash('success', 'Product successfully restocked!');
-      $random=Str::random(20);
+      $random = Str::random(20);
       $activityLog = new activity_log();
       $activityLog->activity = 'Product updating';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Product update ';
-      $activityLog->action = 'Product '.$request->product_name .' successfully updated ';
+      $activityLog->action = 'Product ' . $request->product_name . ' successfully updated ';
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
       $activityLog->ip_address = $request->ip();
       $activityLog->save();
 
-      return redirect('/warehousing/'.$information->warehouse_code.'/products');
+      return redirect('/warehousing/' . $information->warehouse_code . '/products');
    }
 
-   public function approvestock($requisition_id){
-      $requisition_products = RequisitionProduct::where('requisition_id',$requisition_id)->get();
-      foreach ($requisition_products as $requisition_product){
+   public function approvestock(Request $request, $requisition_id)
+   {
+      $requisition_products = RequisitionProduct::where('requisition_id', $requisition_id)->get();
+      foreach ($requisition_products as $requisition_product) {
          $approveproduct = product_information::whereId($requisition_product)->first();
          $approveproduct->is_approved = "Yes";
          $approveproduct->save();
       }
       session()->flash('success', 'Product successfully Approved !');
-      $random=rand(0, 9999);
+      $random = rand(0, 9999);
       $activityLog = new activity_log();
       $activityLog->activity = 'Stock Approval';
       $activityLog->user_code = auth()->user()->user_code;
       $activityLog->section = 'Stock Approved ';
-      $activityLog->action = 'Product '.$approveproduct->product_name .' Successfully Approved  ';
+      $activityLog->action = 'Product ' . $approveproduct->product_name . ' Successfully Approved  ';
       $activityLog->userID = auth()->user()->id;
       $activityLog->activityID = $random;
-      $activityLog->ip_address = '';
+      $activityLog->source = 'Web';
+      $activityLog->ip_address = $request->ip() ?? '';
       $activityLog->save();
 
       return redirect()->route('inventory.approval');
-
    }
 
    /**
@@ -607,49 +571,11 @@ class productController extends Controller
     */
    public function destroy($id)
    {
-      // //check product in invoice
-      // $invoice = invoice_products::where('productID', $id)->count();
-
-      // if ($invoice == 0) {
-      //    //delete image from folder/directory
-      //    $check_image = ModelsFile_manager::where('fileID', $id)->where('business_code', Auth::user()->business_code)->where('folder', 'products')->count();
-
-      //    if ($check_image > 0) {
-      //       //directory
-      //       $directory = base_path() . '/storage/files/business/' . Wingu::business(Auth::user()->business_code)->primary_email . '/finance/products/';
-      //       $images = ModelsFile_manager::where('fileID', $id)->where('business_code', Auth::user()->business_code)->where('folder', 'products')->get();
-      //       foreach ($images as $image) {
-      //          if (File::exists($directory)) {
-      //             unlink($directory . $image->file_name);
-      //          }
-      //          $image->delete();
-      //       }
-      //    }
-
-      //    product_information::where('id', $id)->where('business_code', Auth::user()->business_code)->delete();
-      //    product_inventory::where('productID', $id)->where('business_code', Auth::user()->business_code)->delete();
-      //    //delete categories
-      //    $categories = product_category_product_information::where('productID', $id)->get();
-      //    foreach ($categories as $category) {
-      //       product_category_product_information::find($category->id)->delete();
-      //    }
-
-      //    //delete tags
-      //    $tags = product_tag::where('product_id', $id)->get();
-      //    foreach ($tags as $tag) {
-      //       product_tag::find($tag->id)->delete();
-      //    }
-
-      //delete price
       product_price::where('productID', $id)->where('business_code', Auth::user()->business_code)->delete();
 
       session()->flash('success', 'The Item was successfully deleted !');
 
       return redirect()->back();
-      // } else {
-      //    session()->flash('error', 'You have recorded transactions for this product. Hence, this product cannot be deleted.');
-      //    return redirect()->back();
-      // }
    }
 
    /**
