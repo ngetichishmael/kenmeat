@@ -142,6 +142,11 @@ class Dashboard extends Component
             $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
          })
          ->sum('amount');
+      $bank = OrderPayment::where('payment_method', 'PaymentMethods.BankTransfer')
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
+         ->sum('amount');
 
 
       $customersCount = Orders::distinct('customerID')
@@ -161,7 +166,7 @@ class Dashboard extends Component
          'Mpesa' => $mpesa,
          'Cheque' => $cheque,
          'sales' => $sales,
-         'total' => $cash + $cheque + $mpesa,
+         'total' => $bank,
          'vansales' => $vansales,
          'preorder' => $preorder,
          'orderfullment' => $orderfullment,
