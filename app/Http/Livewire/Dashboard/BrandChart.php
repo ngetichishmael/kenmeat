@@ -10,6 +10,8 @@ class BrandChart extends Component
 {
    public function render()
    {
+
+      
       $brands = DB::table('order_items')->select('product_name', DB::raw('SUM(total_amount) as total'))
          ->groupBy('product_name')
          ->orderBy('total', 'desc')
