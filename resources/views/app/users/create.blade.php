@@ -75,7 +75,9 @@
                                                         <option value="Merchandizer"> </option>
                                                         <option value="Admin">Administator</option>
                                                         <option value="Manager">Manager</option>
+                                                        <option value="HR">HR</option>
                                                         <option value="Account Manager">Account Manager</option>
+                                                        <option value="Merchandiser">Merchandiser</option>
                                                         <option value="Sales">Sales Agent</option>
                                                         <option value="Sales">Merchandizer</option>
                                                     </select>

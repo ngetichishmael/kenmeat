@@ -35,79 +35,77 @@
     <div class="card card-default">
         <div class="card-body">
             <div class="pt-0 card-datatable">
-                <table class="table table-striped table-bordered zero-configuration table-responsive">
-                    <thead>
-                        <tr>
-                            <th width="1%">#</th>
-{{--                            <th>Region</th>--}}
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Status</th>
-                            <th width="12%">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($admins as $key => $user)
-                            <tr>
-                                <td>{!! $key + 1 !!}</td>
-{{--                                <td>{!! $user->Region->name ?? ' ' !!}</td>--}}
-                                <td>{!! $user->name !!}</td>
-                                <td>
-                                    {!! $user->email !!}
-                                </td>
-                                <td>{!! $user->phone_number !!}</td>
-                                <td>
-                                   @if ($user->status == 'Active')
-                                    <span class="badge badge-pill badge-light-success mr-1">Active</span>
-                                    @else
-                                    <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
+            <table class="table table-striped table-bordered zero-configuration table-responsive">
+    <thead>
+        <tr>
+            <th width="1%">#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th width="12%">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($admins as $key => $user)
+            <tr>
+                <td>{!! $key + 1 !!}</td>
+                <td>{!! $user->name !!}</td>
+                <td>{!! $user->email !!}</td>
+                <td>{!! $user->phone_number !!}</td>
+                <td>
+                    @if ($user->status == 'Active')
+                        <span class="badge badge-pill badge-light-success mr-1">Active</span>
+                    @else
+                        <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
+                    @endif
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                            <i data-feather="more-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ route('user.view', $user->user_code) }}">
+                                <i data-feather="eye" class="mr-50"></i>
+                                <span>View</span>
+                            </a>
+                            <a class="dropdown-item" href="{{ route('user.edit', $user->user_code) }}">
+                                <i data-feather='edit' class="mr-50"></i>
+                                <span>Edit</span>
+                            </a>
+                            @if ($user->status == 'Active')
+                                <a wire:click.prevent="deactivate({{ $user->id }})"
+                                    onclick="confirm('Are you sure you want to DEACTIVATE this user?')||event.stopImmediatePropagation()"
+                                    class="dropdown-item">
+                                    <i data-feather='check-circle' class="mr-50"></i>
+                                    <span>Suspend</span>
+                                </a>
+                            @else
+                                <a wire:click.prevent="activate({{ $user->id }})"
+                                    onclick="confirm('Are you sure you want to ACTIVATE this user?')||event.stopImmediatePropagation()"
+                                    class="dropdown-item">
+                                    <i data-feather='x-circle' class="mr-50"></i>
+                                    <span>Activate</span>
+                                </a>
+                            @endif
+                            <a class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
+                                onclick="confirm('Are you sure you want to delete the User?')||event.stopImmediatePropagation()">
+                                <i data-feather="trash" class="mr-50"></i>
+                                <span>Delete</span>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="6" class="text-center">No result found</td>
+            </tr>
+        @endforelse
+    </tbody>
+</table>
 
-                                    @endif
-                                </td>
-                                <td>
-                              
-
-                                   <div class="dropdown">
-                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                                                 <i data-feather="more-vertical"></i>
-                                             </button>
-                                             <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('user.edit', $user->user_code) }}">
-                                                        <i data-feather='edit' class="mr-50"></i>
-                                                        <span>Edit</span>
-                                                    </a>
-                                                    <a class="dropdown-item" href="{{ route('user.edit', $user->user_code) }}">
-                                                        <i data-feather="eye" class="mr-50"></i>
-                                                        <span>View</span>
-                                                    </a>
-
-                                            @if ($user->status == 'Active')
-                                                <a wire:click.prevent="deactivate({{ $user->id }})"
-                                            onclick="confirm('Are you sure you want to DEACTIVATE this user?')||event.stopImmediatePropagation()" class="dropdown-item">
-                                                          <i data-feather='check-circle' class="mr-50"></i>
-                                                          <span>Suspend</span>
-                                                </a>
-                                            @else
-                                                <a wire:click.prevent="activate({{ $user->id }})"
-                                            onclick="confirm('Are you sure you want to ACTIVATE this user?')||event.stopImmediatePropagation()" class="dropdown-item">
-                                                         <i data-feather='x-circle' class="mr-50"></i>
-                                                         <span>Activate</span>
-                                                </a>
-                                            @endif
-
-                                                 <a   class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
-                                            onclick="confirm('Are you sure to want to Delete the User?')||event.stopImmediatePropagation()">
-                                                     <i data-feather="trash" class="mr-50"></i>
-                                                     <span>Delete</span>
-                                                 </a>
-                                             </div>
-                                         </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
             <div class="mt-1">{!! $admins->links() !!}</div>
         </div>

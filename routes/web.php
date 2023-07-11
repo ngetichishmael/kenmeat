@@ -277,6 +277,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('user/creatensm', ['uses' => 'app\usersController@creatensm', 'as' => 'user.creatensm']);
    Route::post('user/store', ['uses' => 'app\usersController@store', 'as' => 'user.store']);
    Route::get('user/{id}/edit', ['uses' => 'app\usersController@edit', 'as' => 'user.edit']);
+   Route::get('user/{id}/view', ['uses' => 'app\usersController@view', 'as' => 'user.view']);
    Route::post('user/{id}/update', ['uses' => 'app\usersController@update', 'as' => 'user.update']);
    //   Route::get('user{id}/destroy', ['uses' => 'app\usersController@destroy', 'as' => 'user.destroy']);
    Route::get('user{id}/suspend', ['uses' => 'app\usersController@suspend', 'as' => 'user.suspend']);
