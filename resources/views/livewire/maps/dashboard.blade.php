@@ -25,7 +25,7 @@
 
        #customer-counter {
            position: absolute;
-           top: 0;
+           top: 5;
            right: 0;
            background-color: #ccc;
            color: #333;
@@ -51,12 +51,14 @@
        <div id="map-container">
            <div id="customer-list-container" style="none">
                <div style="position: relative; background-color: transparent;" class="ml-2">
-                   <div class="form-group">
+                   <div class="form-group" style="padding:10px">
                        <input id="search-input" class="form-control form-control-sm" type="text"
                            placeholder="Search customer" />
+                           <!-- <span id="customer-counter"></span> -->
                    </div>
 
-                   <span id="customer-counter"></span>
+<br>
+                  
                    <ul id="customer-list">
                    </ul>
                </div>

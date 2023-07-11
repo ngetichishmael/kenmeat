@@ -27,14 +27,14 @@
                         Customers Managements</span>
                 </a>
                 <ul class="menu-content">
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
+                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer') !!}"
                             href="{{ route('customer') }}">
                             <span class="menu-item text-truncate">Customers</span></a>
                     </li>
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
+                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('outlets') !!}"
                             href="{{ route('outlets') }}"><span class="menu-item text-truncate">Outlets</span></a>
                     </li>
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
+                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('comment') !!}"
                             href="{{ route('CustomerComment') }}"><span
                                 class="menu-item text-truncate">Comments</span></a>
                     </li>
@@ -190,7 +190,7 @@
                             href="{{ route('areas') }}">
                             <span class="menu-item text-truncate">Routes</span></a>
                     </li>
-                    <li class="nav-item {!! Nav::isResource('maps') !!}">
+                    <!-- <li class="nav-item {!! Nav::isResource('maps') !!}">
                         <a class="d-flex align-items-center" href="#"><span class="menu-title text-truncate"
                                 data-i18n="Invoice">Maps</span></a>
                         <ul class="menu-content">
@@ -207,7 +207,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
             <li class="nav-item {!! Nav::isResource('routes') !!}">
