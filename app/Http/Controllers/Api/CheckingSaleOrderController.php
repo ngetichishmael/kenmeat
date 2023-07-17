@@ -38,10 +38,10 @@ class CheckingSaleOrderController extends Controller
 
    public function VanSales(Request $request, $checkinCode, $random)
    {
-      $checkin = checkin::where('code', $checkinCode)->first();
+      // $checkin = checkin::where('code', $checkinCode)->first();
       $user_code = $request->user()->user_code;
       $total = 0;
-      $requestData = $request->all();
+      $requestData = $request->json()->all(); 
    
       foreach ($requestData as $value) {
          $price_total = $value["qty"] * $value["price"];
@@ -70,8 +70,8 @@ class CheckingSaleOrderController extends Controller
                'updated_at' => now()
             ]);
    
-         $customerID = $checkin->customer_id ?? $user_code;
-         $businessCode = $checkin->business_code ?? $user_code;
+         // $customerID = $checkin->customer_id ?? $user_code;
+         // $businessCode = $checkin->business_code ?? $user_code;
    
          Order::updateOrCreate(
             [
@@ -79,17 +79,17 @@ class CheckingSaleOrderController extends Controller
             ],
             [
                'user_code' => $user_code,
-               'customerID' => $customerID,
+               'customerID' => $checkinCode,
                'price_total' => $total,
                'balance' => $total,
                'order_status' => 'Pending Delivery',
                'payment_status' => 'Pending Payment',
                'qty' => $value["qty"],
-               'discount' => $value["discount"] ?? "0",
+               'discount' => $value["discount"] ?? "0", // Access discount directly from $value
                'checkin_code' => $checkinCode,
                'order_type' => 'Van sales',
                'delivery_date' => now(),
-               'business_code' => $businessCode,
+               'business_code' => $user_code,
                'updated_at' => now(),
             ]
          );
@@ -124,7 +124,7 @@ class CheckingSaleOrderController extends Controller
          "success" => true,
          "message" => "Product added to order",
          "order_code" => $random,
-         "data"    => $checkin
+         "data"    => null
       ]);
    }
    
@@ -219,86 +219,86 @@ class CheckingSaleOrderController extends Controller
 
    // Beginning of NewSales
    public function NewSales(Request $request, $checkinCode, $random)
-{
-   $user_code = $request->user()->user_code;
-   $requestData = $request->json()->all(); // Use `json()` method to retrieve the JSON data as an array
-   $total = 0;
+   {
+      $user_code = $request->user()->user_code;
+      $requestData = $request->json()->all(); // Use `json()` method to retrieve the JSON data as an array
+      $total = 0;
 
-   foreach ($requestData as $value) { // Iterate over the product objects
-      $price_total = $value["qty"] * $value["price"];
-      $total += $price_total;
-      $product = product_information::whereId($value["productID"])->first();
+      foreach ($requestData as $value) { // Iterate over the product objects
+         $price_total = $value["qty"] * $value["price"];
+         $total += $price_total;
+         $product = product_information::whereId($value["productID"])->first();
 
-      Cart::updateOrCreate(
-         [
-            'checkin_code' => Str::random(20),
-            "order_code" => $random,
-         ],
-         [
-            'productID' => $value["productID"],
-            "product_name" => $product->product_name,
-            "qty" => $value["qty"],
-            "price" =>  $value["price"],
-            "amount" => $value["qty"] *  $value["price"],
-            "total_amount" => $value["qty"] *  $value["price"],
-            "userID" => $user_code,
-         ]
-      );
-      Order::updateOrCreate(
-         [
+         Cart::updateOrCreate(
+            [
+               'checkin_code' => Str::random(20),
+               "order_code" => $random,
+            ],
+            [
+               'productID' => $value["productID"],
+               "product_name" => $product->product_name,
+               "qty" => $value["qty"],
+               "price" =>  $value["price"],
+               "amount" => $value["qty"] *  $value["price"],
+               "total_amount" => $value["qty"] *  $value["price"],
+               "userID" => $user_code,
+            ]
+         );
+         Order::updateOrCreate(
+            [
+               'order_code' => $random,
+            ],
+            [
+               'user_code' => $user_code,
+               'customerID' => $checkinCode,
+               'price_total' => $total,
+               'balance' => $total,
+               'order_status' => 'Pending Delivery',
+               'payment_status' => 'Pending Payment',
+               'qty' => $value["qty"],
+               'discount' => $value["discount"] ?? "0", // Access discount directly from $value
+               'checkin_code' => $checkinCode,
+               'order_type' => 'Pre Order',
+               'delivery_date' => now(),
+               'business_code' => $user_code,
+               'updated_at' => now(),
+            ]
+         );
+         Order_items::create([
             'order_code' => $random,
-         ],
-         [
-            'user_code' => $user_code,
-            'customerID' => $checkinCode,
-            'price_total' => $total,
-            'balance' => $total,
-            'order_status' => 'Pending Delivery',
-            'payment_status' => 'Pending Payment',
-            'qty' => $value["qty"],
-            'discount' => $value["discount"] ?? "0", // Access discount directly from $value
-            'checkin_code' => $checkinCode,
-            'order_type' => 'Pre Order',
-            'delivery_date' => now(),
-            'business_code' => $user_code,
+            'productID' => $value["productID"],
+            'product_name' => $product->product_name,
+            'quantity' => $value["qty"],
+            'sub_total' => $value["qty"] *  $value["price"],
+            'total_amount' => $value["qty"] *  $value["price"],
+            'selling_price' =>  $value["price"],
+            'discount' => 0,
+            'taxrate' => 0,
+            'taxvalue' => 0,
+            'created_at' => now(),
             'updated_at' => now(),
-         ]
-      );
-      Order_items::create([
-         'order_code' => $random,
-         'productID' => $value["productID"],
-         'product_name' => $product->product_name,
-         'quantity' => $value["qty"],
-         'sub_total' => $value["qty"] *  $value["price"],
-         'total_amount' => $value["qty"] *  $value["price"],
-         'selling_price' =>  $value["price"],
-         'discount' => 0,
-         'taxrate' => 0,
-         'taxvalue' => 0,
-         'created_at' => now(),
-         'updated_at' => now(),
+         ]);
+
+         DB::table('orders_targets')
+            ->where('user_code', $user_code)
+            ->increment('AchievedOrdersTarget', $value["qty"]);
+
+         (new Activity)(
+            "New Sales for product " . $product->product_name,
+            "New Sale",
+            'Conduct a New Sales',
+            $request->user()->id,
+            $request->user()->user_code,
+            $request->ip() ?? "127.0.0.1",
+            "App"
+         );
+      }
+      return response()->json([
+         "success" => true,
+         "message" => "Product added to order",
+         "order_code" => $random,
+         "data"    => null
       ]);
-
-      DB::table('orders_targets')
-         ->where('user_code', $user_code)
-         ->increment('AchievedOrdersTarget', $value["qty"]);
-
-      (new Activity)(
-         "New Sales for product " . $product->product_name,
-         "New Sale",
-         'Conduct a New Sales',
-         $request->user()->id,
-         $request->user()->user_code,
-         $request->ip() ?? "127.0.0.1",
-         "App"
-      );
    }
-   return response()->json([
-      "success" => true,
-      "message" => "Product added to order",
-      "order_code" => $random,
-      "data"    => null
-   ]);
-}
 
 }
