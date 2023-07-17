@@ -33,7 +33,7 @@ class pendingorders extends Component
                ->orWhere('supplierID', '')
                ->orWhere('supplierID', $sokoflow->id);
          })
-         ->where('order_type', '=', 'Pre Order')
+         
          ->where(function ($query) use ($searchTerm) {
             $query->whereHas('Customer', function ($subQuery) use ($searchTerm) {
                $subQuery->where('customer_name', 'like', $searchTerm);
