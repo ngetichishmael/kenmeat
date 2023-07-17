@@ -1,7 +1,6 @@
 @extends('layouts.app3')
 
 
-@endsection
 {{-- page header --}}
 @section('title', 'Order Details')
 
