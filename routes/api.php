@@ -206,6 +206,9 @@ Route::group(['namespace' => 'Api'], function () {
 
     /**
      * App permissions
+     *
+     *
+     *
      */
     Route::get('/get/permissions', [AppsPermissionController::class, "getAllPermission"])->middleware('auth:sanctum');
 
