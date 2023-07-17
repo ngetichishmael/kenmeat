@@ -28,6 +28,13 @@ use Carbon\Carbon;
 
 class checkinController extends Controller
 {
+   public function getCurrentDateTime()
+   {
+      $currentDateTime = Carbon::now();
+      $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
+      return $formattedDateTime;
+   }
+
    /**
     * Create Customer Checkin Session
     *

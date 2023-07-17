@@ -1,21 +1,20 @@
-@extends('layouts.app')
+
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'Customer Comments')
-{{-- page styles --}}
-@section('stylesheets')
-
-@endsection
-
 
 {{-- content section --}}
 @section('content')
     <!-- begin breadcrumb -->
-    <div class="row mb-2">
-        <div class="col-md-8">
-            <h2 class="page-header">Customers Comments</h2>
+    <div class="mb-2 row">
+        <div class="col-md-9">
+            <h2 class="page-header"> Customer Comments</h2>
         </div>
-        =
+    
     </div>
-
+    <!-- end breadcrumb -->
     @livewire('comment.dashboard')
-@endsection=
+@endsection
+{{-- page scripts --}}
+@section('script')
+@endsection

@@ -29,24 +29,21 @@ class distributororders extends Component
    {
       $searchTerm = '%' . $this->search . '%';
       $sokoflow = suppliers::whereIn('name', ['Sokoflow', 'SOKOFLOW', 'sokoflow'])->first();
-      $pendingorders = Orders::with('Customer', 'user', 'distributor')
+      $pendingorders = Orders::with('Customer', 'user')
+         ->where('order_status', '=', 'Pending Delivery')
          ->where(function ($query) use ($sokoflow) {
-            $query->whereNotNull('supplierID')
-               ->where('supplierID', '!=', '')
-               ->where('supplierID', '!=', $sokoflow->id);
+            $query->whereNull('supplierID')
+               ->orWhere('supplierID', '')
+               ->orWhere('supplierID', $sokoflow->id);
          })
-         ->where('order_type','=','Pre Order')
+         ->where('order_type','=','Van Sales')
          ->where(function ($query) use ($searchTerm) {
             $query->whereHas('Customer', function ($subQuery) use ($searchTerm) {
                $subQuery->where('customer_name', 'like', $searchTerm);
             })
                ->orWhereHas('User', function ($subQuery) use ($searchTerm) {
                   $subQuery->where('name', 'like', $searchTerm);
-               })
-               ;
-         })
-         ->when($this->statusFilter, function ($query) {
-            $query->where('order_status', $this->statusFilter);
+               });
          })
          ->when($this->fromDate, function ($query) {
             $query->whereDate('created_at', '>=', $this->fromDate);

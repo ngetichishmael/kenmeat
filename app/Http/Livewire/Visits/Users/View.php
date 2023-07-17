@@ -30,7 +30,7 @@ class View extends Component
     public function data()
     {
         $this->username = User::where('user_code', $this->user_code)->pluck('name')->implode('');
-
+    
         $query = DB::table('users')
             ->join('customer_checkin', 'users.user_code', '=', 'customer_checkin.user_code')
             ->join('customers', 'customer_checkin.customer_id', '=', 'customers.id')
@@ -44,20 +44,22 @@ class View extends Component
                 DB::raw("DATE_FORMAT(customer_checkin.updated_at, '%d/%m/%Y') as formatted_date"),
                 DB::raw('TIMEDIFF(customer_checkin.stop_time, customer_checkin.start_time) AS duration')
             )
-            ->orderBy('formatted_date', 'DESC');
-            if ($this->start != null) {
-                $end_date = Carbon::now()->endOfMonth()->format('Y-m-d');
-                $this->end = $this->end == null ? $end_date : $this->end;
-                $query->whereBetween('customer_checkin.updated_at', [$this->start, $this->end]);
-             }
-
-             if ($this->start == $this->end) {
-                $query->where('customer_checkin.updated_at', 'LIKE', '%' . $this->start . '%');
-             }
-
-             $visits = $query->paginate($this->perPage);
+            ->orderBy('customer_checkin.updated_at', 'DESC'); // Order by the updated_at column in descending order
+    
+        if ($this->start != null) {
+            $end_date = Carbon::now()->endOfMonth()->format('Y-m-d');
+            $this->end = $this->end == null ? $end_date : $this->end;
+            $query->whereBetween('customer_checkin.updated_at', [$this->start, $this->end]);
+        }
+    
+        if ($this->start == $this->end) {
+            $query->where('customer_checkin.updated_at', 'LIKE', '%' . $this->start . '%');
+        }
+    
+        $visits = $query->paginate($this->perPage);
         return $visits;
     }
+    
     public function export()
     {
         return Excel::download(new UserVisitsExport($this->data()), $this->username . 'visits.xlsx');

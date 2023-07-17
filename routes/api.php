@@ -78,6 +78,15 @@ Route::group(['namespace' => 'Api'], function () {
 
     // Route::post('checkin/{checkinCode}/add-to-cart',['uses' => 'checkinController@add_to_cart','as' => 'add.to.cart']);
     //Route::post('checkin/{checkinCode}/add-to-cart','checkinController@add_to_cart')->middleware('auth:sanctum');
+    //customer checking
+    Route::post('customer/checkin/session', ['uses' => 'checkinController@create_checkin_session']);
+    Route::get('customer/{CustomerCode}/checkin', ['uses' => 'checkinController@checkin', 'as' => 'customer.checkin']);
+    Route::get('checkin/{checkinCode}/stock', ['uses' => 'checkinController@stock', 'as' => 'checkin.stock']);
+    Route::get('checkin/{checkinCode}/out', ['uses' => 'checkinController@checkout', 'as' => 'check.out']);
+
+    Route::get('getdate', ['uses' => 'checkinController@getCurrentDateTime', 'as' => 'getCurrentDateTime']);
+    // Route::post('checkin/{checkinCode}/add-to-cart',['uses' => 'checkinController@add_to_cart','as' => 'add.to.cart']);
+    //Route::post('checkin/{checkinCode}/add-to-cart','checkinController@add_to_cart')->middleware('auth:sanctum');
 
     // Van Sales
     Route::post('checkin/vansales/{checkinCode}/{random}/add-to-cart', 'CheckingSaleOrderController@VanSales')->middleware('auth:sanctum');

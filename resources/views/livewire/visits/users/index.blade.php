@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'User Visits')
 
@@ -22,5 +22,6 @@
     </div>
     @include('partials._messages')
     @livewire('visits.users.dashboard')
+    <br>
 @endsection
 {{-- page scripts --}}

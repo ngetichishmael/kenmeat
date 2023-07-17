@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title','Delivery')
 
