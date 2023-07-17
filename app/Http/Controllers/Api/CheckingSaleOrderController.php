@@ -212,15 +212,17 @@ class CheckingSaleOrderController extends Controller
    // Beginning of NewSales
    public function NewSales(Request $request, $checkinCode, $random)
    {
-      // $checkin = customers::whereId($checkinCode)->first();
-
       $user_code = $request->user()->user_code;
-      $request = $request->collect();
+      $requestData = $request->all(); // Use `all()` method instead of `collect()` to retrieve the request data as an array
       $total = 0;
-      foreach ($request as $value) {
+   
+      foreach ($requestData['products'] as $value) { // Access the 'products' array from the request data
          $price_total = $value["qty"] * $value["price"];
          $total += $price_total;
          $product = product_information::whereId($value["productID"])->first();
+         
+         // Rest of the code remains the same...
+   
          Cart::updateOrCreate(
             [
                'checkin_code' => Str::random(20),
