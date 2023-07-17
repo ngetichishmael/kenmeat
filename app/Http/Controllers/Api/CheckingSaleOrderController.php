@@ -35,16 +35,19 @@ class CheckingSaleOrderController extends Controller
    }
 
    //Start Vansales
+
    public function VanSales(Request $request, $checkinCode, $random)
    {
       $checkin = checkin::where('code', $checkinCode)->first();
       $user_code = $request->user()->user_code;
       $total = 0;
-      $request = $request->collect();
-      foreach ($request as $value) {
+      $requestData = $request->all();
+   
+      foreach ($requestData as $value) {
          $price_total = $value["qty"] * $value["price"];
          $total += $price_total;
          $product = product_information::with('ProductPrice')->where('id', $value["productID"])->first();
+   
          Cart::updateOrCreate(
             [
                'checkin_code' => $checkinCode,
@@ -60,36 +63,37 @@ class CheckingSaleOrderController extends Controller
                "userID" => $user_code,
             ]
          );
+   
          DB::table('inventory_allocated_items')
             ->where('product_code', $value["productID"])
-            ->decrement(
-               'allocated_qty',
-               $value["qty"],
-               [
-                  'updated_at' => now()
-               ]
-            );
+            ->decrement('allocated_qty', $value["qty"], [
+               'updated_at' => now()
+            ]);
+   
+         $customerID = $checkin->customer_id ?? $user_code;
+         $businessCode = $checkin->business_code ?? $user_code;
+   
          Order::updateOrCreate(
             [
-
                'order_code' => $random,
             ],
             [
                'user_code' => $user_code,
-               'customerID' => $checkin->customer_id,
+               'customerID' => $customerID,
                'price_total' => $total,
                'balance' => $total,
                'order_status' => 'Pending Delivery',
                'payment_status' => 'Pending Payment',
                'qty' => $value["qty"],
-               'discount' => $items["discount"] ?? "0",
+               'discount' => $value["discount"] ?? "0",
                'checkin_code' => $checkinCode,
                'order_type' => 'Van sales',
                'delivery_date' => now(),
-               'business_code' => $checkin->business_code,
+               'business_code' => $businessCode,
                'updated_at' => now(),
             ]
          );
+   
          Order_items::create([
             'order_code' => $random,
             'productID' => $value["productID"],
@@ -98,12 +102,13 @@ class CheckingSaleOrderController extends Controller
             'sub_total' => $value["qty"] * $value["price"],
             'total_amount' => $value["qty"] * $value["price"],
             'selling_price' => $value["price"],
-            'discount' => $items["discount"]  ?? "0",
+            'discount' => $value["discount"] ?? "0",
             'taxrate' => 0,
             'taxvalue' => 0,
             'created_at' => now(),
             'updated_at' => now(),
          ]);
+   
          (new Activity)(
             "Van Sales for product " . $product->product_name,
             "Van Sale",
@@ -114,6 +119,7 @@ class CheckingSaleOrderController extends Controller
             "App"
          );
       }
+   
       return response()->json([
          "success" => true,
          "message" => "Product added to order",
@@ -121,6 +127,8 @@ class CheckingSaleOrderController extends Controller
          "data"    => $checkin
       ]);
    }
+   
+   
 
    //End of Vansales
    //Start Vansales
