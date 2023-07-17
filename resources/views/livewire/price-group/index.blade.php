@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'Regions')
 {{-- page styles --}}
@@ -31,7 +31,7 @@
             <div class="card card-default">
                 <div class="card-body">
                     <div class="card-body">
-                        <h4 class="card-title">Add Group</h4>
+                        <!-- <h4 class="card-title">Add Group</h4> -->
 
                         <form class="form" method="POST" action="{{ route('pricing.store') }}">
                             @method('POST')
@@ -51,7 +51,7 @@
                             </div>
 
                             <div class="my-1 col-sm-9 offset-sm-3">
-                                <button type="submit" class="mr-1 btn " style="background-color: #B6121B;color:white">Submit</button>
+                                <button type="submit" class="mr-1 btn " style="background-color: #089000; color:white">Submit</button>
                             </div>
                         </form>
                     </div>

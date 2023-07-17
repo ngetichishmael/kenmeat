@@ -79,7 +79,7 @@ Route::group(['namespace' => 'Api'], function () {
    Route::get('checkin/{checkinCode}/out', ['uses' => 'checkinController@checkout', 'as' => 'check.out']);
 
 
-
+   Route::get('getdate', ['uses' => 'checkinController@getCurrentDateTime', 'as' => 'getCurrentDateTime']);
    // Route::post('checkin/{checkinCode}/add-to-cart',['uses' => 'checkinController@add_to_cart','as' => 'add.to.cart']);
    //Route::post('checkin/{checkinCode}/add-to-cart','checkinController@add_to_cart')->middleware('auth:sanctum');
 
