@@ -296,4 +296,16 @@ class usersController extends Controller
       $rsm = User::where('account_type', 'Manager');
       return view('app.users.rsm', compact('rsm'));
    }
+
+   public function HorecaSales()
+   {
+      $HorecaSales = User::where('account_type', 'Horeca Sales');
+      return view('app.users.horecasales', compact('HorecaSales'));
+   }
+
+   public function GTSales()
+   {
+      $GTSales = User::where('account_type', 'GT Sales');
+      return view('app.users.gtsales', compact('GTSales'));
+   }
 }
