@@ -43,17 +43,21 @@
                           <div class="d-flex" style="gap:10px">
                              @if($list == 'Admin')
                                 <a href="{{ route('users.admin') }}" class="btn btn-success btn-sm">View</a>
-                            @elseif($list == 'Account Manager')
+                              @elseif($list == 'Account Manager')
                                 <a href="{{ route('users.ac') }}" class="btn btn-success btn-sm">View</a>
-                                @elseif($list == 'Manager')
+                              @elseif($list == 'Manager')
                                 <a href="{{ route('rsm') }}" class="btn btn-success btn-sm">View </a>
-                             @elseif($list == 'Sales')
+                              @elseif($list == 'Sales')
                                 <a href="{{ route('tsr') }}" class="btn btn-success btn-sm">View </a>
-                             @elseif($list == 'HR')
+                              @elseif($list == 'HR')
                                 <a href="{{ route('hr') }}" class="btn btn-success btn-sm">View </a>
-                                @elseif($list == 'Merchandizer')
+                              @elseif($list == 'Merchandizer')
                                 <a href="{{ route('Merchandizer') }}" class="btn btn-success btn-sm">View</a>
-                            @endif
+                              @elseif($list == 'GT Sales')
+                                <a href="{{ route('GTSales') }}" class="btn btn-success btn-sm">View</a>
+                              @elseif($list == 'Horeca Sales')
+                                <a href="{{ route('HorecaSales') }}" class="btn btn-success btn-sm">View</a>
+                              @endif
                           </div>
                        </td>
                     </tr>
