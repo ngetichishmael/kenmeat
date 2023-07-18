@@ -96,11 +96,11 @@
                                         <span>Activate</span>
                                     </a>
                                 @endif
-                                <a class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
+                                <!-- <a class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
                                     onclick="confirm('Are you sure to want to Delete the User?')||event.stopImmediatePropagation()">
                                     <i data-feather="trash" class="mr-50"></i>
                                     <span>Delete</span>
-                                </a>
+                                </a> -->
                             </div>
                         </div>
                     </td>
