@@ -30,10 +30,18 @@ class CurrentDeviceInformationController extends Controller
         ]);
     }
 
-    public function getUserCoordinates(Request $request, $userCode)
+    public function getUserCoordinates(Request $request, $userCode, $date)
     {
         // Fetch the marker data for the specified userCode
-        $markerData = CurrentDeviceInformation::where('user_code', $userCode)->orderBy('id', 'DESC')->limit(25)->get();
+        info($date);
+        $markerData = CurrentDeviceInformation::where('user_code', $userCode)
+            ->when($date, function ($query) use ($date) {
+                $query->where('updated_at', 'LIKE', '%' . $date . '%');
+            })
+            ->orderBy('id', 'desc')
+            ->take(25) // Get the last 25 records based on descending 'id'
+            ->get()
+            ->reverse(); // Reverse the result to get the records in ascending order
 
         // Prepare the data for the map
         $markers = [];
@@ -58,4 +66,5 @@ class CurrentDeviceInformationController extends Controller
         // Return the marker data as JSON response
         return response()->json($markers);
     }
+
 }
