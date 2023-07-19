@@ -93,7 +93,7 @@
                             <div class="tab-pane active" id="account" aria-labelledby="account-tab" role="tabpanel">
                                 <form class="form-validate">
                                     <div class="row">
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="mt-1 border rounded table-responsive">
                                                 <h6 class="py-1 mx-1 mb-0 font-medium-2">
                                                     <i data-feather="lock" class="font-medium-3 mr-25"></i>
@@ -170,7 +170,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="mt-2 col-12 d-flex flex-sm-row flex-column justify-content-center" style="gap: 20px;">
                                                 <a href="{{ route('users.list') }}" type="reset" class="btn btn-outline-secondary">Back</a>
                                         </div>

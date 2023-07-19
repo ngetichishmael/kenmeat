@@ -56,12 +56,12 @@
             <div class="pt-0 card-datatable">
             <table class="table table-striped table-bordered zero-configuration table-responsive">
                     <thead>
-                        <th width="1%">#</th>
+                        <!-- <th width="1%">#</th> -->
                         <th>Name</th>
                         <th>number</th>
                         <th width="15%">Address</th>
-                        <th>Zone</th>
-                        <th>Region</th>
+                        <th>Zone/Region</th>
+                        
                         <th>Route</th>
                         <th>Created By</th>
                         <!-- <th>Status</th> -->
@@ -72,9 +72,9 @@
                     </thead>
                     <tbody>
                         @foreach ($contacts as $count => $contact)
-                            <td>{!! $count + 1 !!}</td>
+                            <!-- <td>{!! $count + 1 !!}</td> -->
                             <td>
-                                {!! $contact->customer_name !!}
+                                {!! $contact->customer_name !!} <br>
                                 @if ($contact->approval === 'Approved')
                                 <span class="badge badge-pill badge-light-success mr-1">Approved</span>
                                 @else
@@ -86,11 +86,15 @@
                                 {{ $contact->address }}
                             </td>
                             <td>
-                                {!! $contact->Area->Subregion->Region->name ?? ' ' !!}
+                                @if ($contact->Area && $contact->Area->Subregion && $contact->Area->Subregion->Region)
+                                    {!! $contact->Area->Subregion->Region->name !!}
+                                    @if ($contact->Area->Subregion->name)
+                                    , <br><i>{!! $contact->Area->Subregion->name !!}</i>
+                                    @endif
+                                @endif
                             </td>
-                            <td>
-                                {!! $contact->Area->Subregion->name ?? '' !!}
-                            </td>
+
+                         
                             <td>
                                 {!! $contact->Area->name ?? '' !!}
                             </td>

@@ -25,7 +25,7 @@
              <div class="col-md-2">
                 
 
-                 <a href="{!! route('user.create') !!}" class="btn btn-gradient-success" style="background-color: #027333; color:white"> <i data-feather="user-plus" style="padding:2px"></i>  Add User</a>
+                 <a href="{!! route('user.create') !!}" class="btn btn-gradient"  style="background-color: #089000; color:white"> <i data-feather="user-plus" style="padding:2px"></i>  Add User</a>
 
              </div>
              
@@ -64,8 +64,8 @@
                 </td>
                 <td>
                     <div class="dropdown">
-                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                            <i data-feather="more-vertical"></i>
+                    <button type="button" class="btn btn-sm dropdown-toggle show-arrow " data-toggle="dropdown" style="background-color: #089000; color:white" >
+                        <i data-feather="settings"></i>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('user.view', $user->user_code) }}">
@@ -91,11 +91,11 @@
                                     <span>Activate</span>
                                 </a>
                             @endif
-                            <a class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
+                            <!-- <a class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
                                 onclick="confirm('Are you sure you want to delete the User?')||event.stopImmediatePropagation()">
                                 <i data-feather="trash" class="mr-50"></i>
                                 <span>Delete</span>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </td>

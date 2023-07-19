@@ -25,7 +25,7 @@
              <div class="col-md-2">
                 
 
-                 <a href="{!! route('user.create') !!}" class="btn btn-gradient" style="background-color: #089000; color:white"> <i data-feather="user-plus" style="padding:2px"></i>  Add User</a>
+                 <a href="{!! route('user.create') !!}" class="btn btn-gradient"  style="background-color: #089000; color:white"> <i data-feather="user-plus" style="padding:2px"></i>  Add User</a>
 
              </div>
              
@@ -39,7 +39,6 @@
     <thead>
         <tr>
             <th width="1%">#</th>
-            {{-- <th>Region</th> --}}
             <th>Name</th>
             <th>Email</th>
             <th>Region</th>
@@ -49,10 +48,9 @@
         </tr>
     </thead>
     <tbody>
-        @forelse ($ac as $key => $user)
+        @forelse ($gs as $key => $user)
             <tr>
                 <td>{!! $key + 1 !!}</td>
-                {{-- <td>{!! $user->Region->name ?? ' ' !!}</td> --}}
                 <td>{!! $user->name !!}</td>
                 <td>{!! $user->email !!}</td>
                 <td>{!! $user->Region->name ?? '' !!}</td>
@@ -66,7 +64,7 @@
                 </td>
                 <td>
                     <div class="dropdown">
-                        <button type="button" class="btn btn-sm dropdown-toggle show-arrow " data-toggle="dropdown" style="background-color: #089000; color:white" >
+                    <button type="button" class="btn btn-sm dropdown-toggle show-arrow " data-toggle="dropdown" style="background-color: #089000; color:white" >
                         <i data-feather="settings"></i>
                         </button>
                         <div class="dropdown-menu">
@@ -94,14 +92,13 @@
                                 </a>
                             @endif
                             <!-- <a class="dropdown-item" wire:click.prevent="destroy({{ $user->id }})"
-                                onclick="confirm('Are you sure you want to Delete the User?')||event.stopImmediatePropagation()">
+                                onclick="confirm('Are you sure you want to delete the User?')||event.stopImmediatePropagation()">
                                 <i data-feather="trash" class="mr-50"></i>
                                 <span>Delete</span>
                             </a> -->
                         </div>
                     </div>
-                </td>                                
-                          
+                </td>
             </tr>
         @empty
             <tr>
@@ -112,9 +109,9 @@
 </table>
 
             </div>
-            <div class="mt-1">{!! $ac->links() !!}</div>
+            <div class="mt-1">{!! $gs->links() !!}</div>
         </div>
     </div>
-    <br>
+<br>
     
 </div>

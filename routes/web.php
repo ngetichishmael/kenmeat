@@ -286,6 +286,8 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('users/managers', ['uses' => 'app\usersController@rsm', 'as' => 'rsm']);
     Route::get('users/hr', ['uses' => 'app\usersController@hr', 'as' => 'hr']);
     Route::get('users/account-managers', ['uses' => 'app\usersController@ac', 'as' => 'users.ac']);
+    Route::get('users/GT-Sales', ['uses' => 'app\usersController@GTSales', 'as' => 'GTSales']);
+    Route::get('users/Horeca-Sales', ['uses' => 'app\usersController@HorecaSales', 'as' => 'HorecaSales']);
     //   Route::get('rider', ['uses' => 'app\usersController@technical', 'as' => 'rider']);
     // Routes for reports
     Route::middleware('web')->group(function () {
