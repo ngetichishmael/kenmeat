@@ -8,9 +8,16 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public string $typeMap = 'roadmap';
-    public bool $customerListVisible = true;
-    public array $mapMarkers = [];
+    public $typeMap = 'roadmap';
+    public $customerListVisible = true;
+    public $mapMarkers = [];
+    public $selectedDate;
+
+// A method to set the selected date (you can call this method when the date changes)
+    public function setDate($date)
+    {
+        $this->selectedDate = $date;
+    }
     public function render()
     {
         $initialMarkers = [];
