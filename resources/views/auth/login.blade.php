@@ -45,7 +45,7 @@
                             <div class="mb-1">
                                 <label for="login-email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="login-email" name="email"
-                                    placeholder="" aria-describedby="login-email" tabindex="1"
+                                    aria-describedby="login-email" tabindex="1"
                                     autofocus />
                            
                             </div>
@@ -59,7 +59,6 @@
                                 <div class="input-group input-group-merge form-password-toggle">
                                     <input type="password" class="form-control form-control-merge" id="login-password"
                                         name="password" tabindex="2"
-                                        placeholder=""
                                         aria-describedby="login-password" />
                                     <span class="cursor-pointer input-group-text"><i data-feather="eye"></i></span>
                                
