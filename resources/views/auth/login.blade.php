@@ -56,13 +56,13 @@
                                         <small>Forgot Password?</small>
                                     </a>
                                 </div>
-                                {{-- <div class="input-group input-group-merge form-password-toggle">
+                                <div class="input-group input-group-merge form-password-toggle">
                                     <input type="password" class="form-control form-control-merge" id="login-password"
                                         name="password" tabindex="2"
                                         aria-describedby="login-password" />
                                     <span class="cursor-pointer input-group-text"><i data-feather="eye"></i></span>
                                
-                                </div> --}}
+                                </div>
                             </div>
                             <div class="mb-1">
                                 <div class="form-check">
