@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\productCategoriesController;
 use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
 use App\Http\Controllers\Api\ReportsController;
+use App\Http\Controllers\Api\ReturnableController;
 use App\Http\Controllers\Api\StockRequisitionController;
 use App\Http\Controllers\Api\SurveryAnswersController;
 use App\Http\Controllers\Api\surveyController;
@@ -255,5 +256,11 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('support/{ticket_id}/messages/reply', 'SupportTicketController@replyToMessage')->middleware('auth:sanctum');
     Route::get('support/{ticket_id}/messages', 'SupportTicketController@getMessages')->middleware('auth:sanctum');
     Route::get('/support/{id}', 'SupportTicketController@show')->middleware('auth:sanctum');
+
+    // Reconcilation and returanable routes
+
+    Route::post('/products/returns', [ReturnableController::class, 'returnProducts'])->middleware('auth:sanctum');
+    Route::post('/reconcile/payment', [ReturnableController::class, 'reconcilePayment'])->middleware('auth:sanctum');
+    Route::get('/reconcile/products/{customer_id}', [ReturnableController::class, 'reconcileProductWithPayment'])->middleware('auth:sanctum');
 
 });
