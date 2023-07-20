@@ -64,6 +64,7 @@
                         
                         <th>Route</th>
                         <th>Created By</th>
+                        <th>Created At</th>
                         <!-- <th>Status</th> -->
                         <th>Action</th>
                         <!-- <th>Order</th>
@@ -100,6 +101,10 @@
                             </td>
                             <td>
                                 {!! $contact->Creator->name ?? '' !!}
+                            </td>
+
+                            <td>
+                                {!! $contact->Creator->created_at ?? '' !!}
                             </td>
 
                             <!-- <td>
