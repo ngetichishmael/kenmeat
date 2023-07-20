@@ -47,7 +47,7 @@
                             <div class="mb-1">
                                 <label for="login-email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="login-email" name="email"
-                                    placeholder="john@example.com" aria-describedby="login-email" tabindex="1"
+                                    placeholder="" aria-describedby="login-email" tabindex="1"
                                     autofocus />
                            
                             </div>
