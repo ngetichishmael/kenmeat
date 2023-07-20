@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Returnable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,28 +12,36 @@ class ReconcilationController extends Controller
     public function index(Request $request)
     {
         $user_id = $request->user()->id;
-        $mpesa = DB::select('SELECT SUM(`amount`) as Mpesa
-                FROM
-                    `order_payments`
-                WHERE
-                    `order_payments`.`payment_method` =? AND`order_payments`.`isReconcile` =? AND `order_payments`.`user_id`=?', ['PaymentMethods.Mpesa','false', $user_id]);
-        $cash = DB::select('SELECT SUM(`amount`) as Cash
-                FROM
-                    `order_payments`
-                WHERE
-                    `order_payments`.`payment_method` =? AND`order_payments`.`isReconcile` =? AND `order_payments`.`user_id`=?', ['PaymentMethods.Cash', 'false',$user_id]);
-        $cheque = DB::select('SELECT SUM(`amount`) as Cheque
-                FROM
-                    `order_payments`
-                WHERE
-                    `order_payments`.`payment_method` =? AND`order_payments`.`isReconcile` =? AND `order_payments`.`user_id`=?', ['PaymentMethods.Cheque','false', $user_id]);
+
+        $paymentMethods = ['Mpesa', 'Cash', 'Cheque'];
+
+        $result = [];
+        foreach ($paymentMethods as $method) {
+            $totalAmount = DB::table('order_payments')
+                ->where('payment_method', 'PaymentMethods.' . $method)
+                ->where('isReconcile', 'false')
+                ->where('user_id', $user_id)
+                ->sum('amount');
+            $result[$method] = $totalAmount;
+        }
+
+        $returnables = Returnable::join('product_information', 'returnables.product_information_id', '=', 'product_information.id')
+            ->join('product_price', 'product_price.productID', '=', 'returnables.product_information_id')
+            ->where('returnables.user_id', '=', $user_id)
+            ->select(
+                'product_information.product_name as product_name',
+                'product_price.buying_price as buying_price',
+                'product_price.selling_price as selling_price',
+                'returnables.quantity as quantity'
+            )
+            ->get();
 
         return response()->json([
             "success" => true,
             "message" => "Total Amount Expected",
-            "Mpesa" => $mpesa,
-            "Cash" => $cash,
-            "Cheque" => $cheque
+            "data" => $result,
+            "returnable" => $returnables,
         ]);
     }
+
 }

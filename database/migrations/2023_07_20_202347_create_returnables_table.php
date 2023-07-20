@@ -20,6 +20,7 @@ class CreateReturnablesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
+            $table->integer('quantity')->default(0);
             $table->enum('status', ['Not Returned', 'Returned'])->default('Not Returned');
             $table->foreignIdFor(customers::class);
             $table->foreignIdFor(product_information::class);

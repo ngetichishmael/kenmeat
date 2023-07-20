@@ -15,6 +15,13 @@ class CreateFormResponsesTable extends Migration
     {
         Schema::create('form_responses', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id')->nullable();
+            $table->string('customer_id')->nullable();
+            $table->string('region_or_route')->nullable();
+            $table->string('time_period')->nullable();
+            $table->string('image')->nullable();
+            $table->string('project_name')->nullable();
+            $table->text('feedback_comments')->nullable();
             $table->timestamps();
         });
     }
