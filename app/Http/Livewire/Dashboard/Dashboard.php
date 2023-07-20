@@ -90,11 +90,13 @@ class Dashboard extends Component
          })
          ->paginate($this->perOrderFulfilment);
 
-      $activeUser = checkin::where(function (Builder $query) {
-         $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-      })
-         ->distinct('user_code')
-         ->count();
+      // $activeUser = checkin::where(function (Builder $query) {
+      //    $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      // })
+      //    ->distinct('user_code')
+      //    ->count();
+
+      $activeUser = User::where('status', 'Active')->count();
 
       $activeUserTotal = checkin::with('user', 'customer')
          ->distinct('user_code')
