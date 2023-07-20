@@ -140,7 +140,8 @@ class usersController extends Controller
          ]
       );
       Session()->flash('success', 'User Created Successfully, Default Password is Phone_number');
-      return redirect()->back();
+      return redirect('/users');
+
    }
 
    //edit
