@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\CurrentDeviceInformationController;
 use App\Http\Controllers\Api\CustomersProductsController;
 use App\Http\Controllers\Api\CustomerVisitsOrders;
 use App\Http\Controllers\Api\DeliveriesController;
-use App\Http\Controllers\Api\FormResponseController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OutletTypesController;
 use App\Http\Controllers\Api\productCategoriesController;
@@ -223,7 +222,7 @@ Route::group(['namespace' => 'Api'], function () {
      * Post Device data
      */
     Route::post('/current/device/information', [CurrentDeviceInformationController::class, "postCurrentDeviceInformation"])->middleware('auth:sanctum');
-    Route::get('getMarkers/{userCode}/{date}', [CurrentDeviceInformationController::class, "getUserCoordinates"])->name('getUserCoordinates');
+    Route::get('getMarkers/{userCode}/{date}', [CurrentDeviceInformationController::class, "getUserCoordinates"]);
 
     /**
      * Get Outlet Types
