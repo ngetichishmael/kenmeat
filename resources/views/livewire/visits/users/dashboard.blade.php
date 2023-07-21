@@ -82,31 +82,47 @@
    <div class="card card-default">
         <div class="card-body">
             <div class="pt-0 card-datatable">
-              <table class="table table-striped table-bordered zero-configuration table-responsive">
-                   <thead>
-                       <th width="1%">#</th>
-                       <th>Sales Associate</th>
-                       <th>Visit Count</th>
-                       <th>Total Time Spent</th>
-                       <th>Total Trading Time</th>
-                       <th>View</th>
-                   </thead>
-                   <tbody>
-                       @foreach ($visits as $count => $visit)
-                           <tr>
-                               <td>{!! $count + 1 !!}</td>
-                               <td>{!! $visit->name !!}</td>
-                               <td>{!! $visit->visit_count !!} </td>
-                               <td> {{ $visit->average_time }}</td>
-                               <td>{{ $visit->total_time_spent }}</td>
-                               <td>
-                                   <a href="{{ route('UsersVisits.show', ['user' => $visit->user_code]) }}"
-                                       class="btn btn-primary btn-sm">View</a>
-                               </td>
-                           </tr>
-                       @endforeach
-                   </tbody>
-               </table>
+            <table class="table table-striped table-bordered zero-configuration table-responsive">
+    <thead>
+        <th width="1%">#</th>
+        <th>Sales Associate</th>
+        <th>Visit Count</th>
+       
+        <th>Total Trading Time</th>
+        <th>View</th>
+    </thead>
+            <tbody>
+                @if ($visits->count() > 0)
+                    @foreach ($visits as $count => $visit)
+                        <tr>
+                            <td>{!! $count + 1 !!}</td>
+                            <td>{!! $visit->name !!}</td>
+                            <td>{!! $visit->visit_count !!} </td>
+                            <td>{{ $visit->last_visit_time }}</td>
+                          
+                            <td>
+                                <a href="{{ route('UsersVisits.show', ['user' => $visit->user_code]) }}"
+                                    class="btn btn-primary btn-sm">View</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+               
+                            @if ($start == null && $end == null)  
+                                <tr>
+                                    <td colspan="8" style="text-align: center; "> No visits today.</td>
+                                </tr>
+                            @else
+                                 <tr>
+                                    <td colspan="8" style="text-align: center; ">  No visits found.</td>
+                                </tr>
+                               
+                            @endif
+                     
+                @endif
+            </tbody>
+        </table>
+
 
                <div class="mt-1">
                    {{ $visits->links() }}
