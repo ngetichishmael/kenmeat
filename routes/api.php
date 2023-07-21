@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CurrentDeviceInformationController;
 use App\Http\Controllers\Api\CustomersProductsController;
 use App\Http\Controllers\Api\CustomerVisitsOrders;
 use App\Http\Controllers\Api\DeliveriesController;
+use App\Http\Controllers\Api\FormResponseController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OutletTypesController;
 use App\Http\Controllers\Api\productCategoriesController;
@@ -264,6 +265,6 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('/reconcile/products/{customer_id}', [ReturnableController::class, 'reconcileProductWithPayment'])->middleware('auth:sanctum');
 
     // Forms validation
-    Route::post('/form/responses', [Api\FormResponseController::class, 'store'])->middleware('auth:sanctum');
+    Route::post('/form/responses', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
 
 });

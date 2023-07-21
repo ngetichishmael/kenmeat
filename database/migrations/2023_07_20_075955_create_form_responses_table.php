@@ -22,17 +22,26 @@ class CreateFormResponsesTable extends Migration
             $table->string('image')->nullable();
             $table->string('project_name')->nullable();
             $table->text('feedback_comments')->nullable();
-            $table->string('available_products')->nullable();
-            $table->string('out_of_stock_products')->nullable();
+
+            // Presence
+            $table->json('products_available')->nullable();
+            $table->json('out_of_stock_prods')->nullable();
             $table->string('interested_in_new_order')->nullable();
             $table->string('stock_replenishment')->nullable();
             $table->date('expiry_date_update')->nullable();
+
+            // Pricing
             $table->string('pricing_accuracy')->nullable();
             $table->string('incorrect_pricing_product_name')->nullable();
             $table->string('incorrect_pricing_current_price')->nullable();
+
+            // Promotion
             $table->string('progress_status')->nullable();
             $table->text('new_insights')->nullable();
+
+            // Placement
             $table->string('product_visible')->nullable();
+
             $table->timestamps();
         });
     }
