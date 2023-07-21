@@ -27,6 +27,7 @@ class ReturnableController extends Controller
                 'product_information_id' => $product['product_id'],
                 'customer_id' => $customer_id,
                 'customers_id' => $customer_id,
+                'quantity' => $product['quantity'],
                 'status' => 'Not Returned',
                 'user_id' => $request->user()->id,
             ]);

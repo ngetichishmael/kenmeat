@@ -30,6 +30,7 @@ class ReconcilationController extends Controller
             ->where('returnables.user_id', '=', $user_id)
             ->select(
                 'product_information.product_name as product_name',
+                'product_information.sku_code as sku_code',
                 'product_price.buying_price as buying_price',
                 'product_price.selling_price as selling_price',
                 'returnables.quantity as quantity'
