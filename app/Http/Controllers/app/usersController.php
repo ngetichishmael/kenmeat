@@ -139,7 +139,7 @@ class usersController extends Controller
             "merchanizing" => $merchanizing,
          ]
       );
-      Session()->flash('success', 'User Created Successfully, Default Password is Phone_number');
+      Session()->flash('success', 'User Created Successfully');
       return redirect('/users');
 
    }
