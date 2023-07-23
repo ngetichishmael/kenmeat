@@ -55,8 +55,8 @@
                 <tbody>
                     @foreach ($comments as $count => $comment)
                         <td>{{ $count + 1 }}</td>
-                        <td>{{ $comment->Customer->customer_name }}</td>
-                        <td>{{ $comment->User->name }}</td>
+                        <td>{{ $comment->Customer->customer_name ?? ''}}</td>
+                        <td>{{ $comment->User->name ?? ''}}</td>
                         <td>{{ $comment->date }}</td>
                         <td>{{ $comment->comment }}</td>
 
