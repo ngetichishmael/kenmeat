@@ -21,6 +21,7 @@ class Dashboard extends Component
     public $search = null;
     public $selectedDate;
     public $selectedMonth;
+    public $isLoading = false; 
 
     public function mount()
     {
@@ -38,6 +39,7 @@ class Dashboard extends Component
     public function data()
     {
    
+        $this->isLoading = true;
 
         $searchTerm = '%' . $this->search . '%';
         $query = User::leftJoin('customer_checkin', function ($join) {
@@ -77,7 +79,7 @@ class Dashboard extends Component
             $visit->last_visit_time = \Carbon\Carbon::parse($visit->last_visit_date)->format('Y-m-d H:i:s');
         }
     
-    
+        $this->isLoading = false;
 
         return $visits;
     }
