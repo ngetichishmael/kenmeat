@@ -264,7 +264,7 @@
                         </a>
                     </li>
                     <li style="padding-left: 50px">
-                        <a class="d-flex align-items-center {!! Nav::isResource('survey') !!}" href="{!! route('SurveryResponses') !!}">
+                        <a class="d-flex align-items-center {!! Nav::isResource('survey') !!}" href="{!! route('activity.sales') !!}">
                             <span class="menu-item text-truncate">Sales Logs</span>
                         </a>
                     </li>

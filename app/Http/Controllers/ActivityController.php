@@ -23,6 +23,10 @@ class ActivityController extends Controller
       return view('livewire.activity.layout');
    }
 
+   public function sales()
+   {
+      return view('app.activity.sales');
+   }
     /**
      * Store a newly created resource in storage.
      *
