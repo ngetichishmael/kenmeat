@@ -1,6 +1,6 @@
 <div>
     <!-- Spinner while fetching data -->
-    <div wire:loading>
+    <div wire:loading wire:target="data">
         <div class="d-flex justify-content-center align-items-center" style="height: 300px;">
             <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
@@ -8,8 +8,35 @@
         </div>
     </div>
 
+    <style>
+        /* public/css/app.css or in your preferred CSS file */
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.3);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+    </style>
+    @if ($isLoading)
+        <div class="spinner"></div>
+    @endif
+
     <!-- Content when data is loaded -->
-    <div wire:loading.remove>
+    <div wire:loading.remove wire:target="data">
         <div class="card">
             <h5 class="card-header"></h5>
             <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -47,11 +74,13 @@
                 <div class="pt-0 card-datatable">
                     <table class="table table-striped table-bordered zero-configuration table-responsive">
                         <thead>
-                            <th width="1%">#</th>
-                            <th>Sales Associate</th>
-                            <th>Visit Count</th>
-                            <th>Last Visit</th>
-                            <th>View</th>
+                            <tr>
+                                <th width="1%">#</th>
+                                <th>Sales Associate</th>
+                                <th>Visit Count</th>
+                                <th>Last Visit</th>
+                                <th>View</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @if ($visits->count() > 0)
@@ -61,17 +90,17 @@
                                         <td>{!! $visit->name !!}</td>
                                         <td>{!! $visit->visit_count !!} </td>
                                         <td>
-                                        @if ($visit->last_visit_date)
-                                            {{ \Carbon\Carbon::parse($visit->last_visit_date)->format('j M, Y') }}
-                                            @if ($visit->last_visit_time)
-                                                <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->last_visit_time)->format('h:i A') }} </div>
+                                            @if ($visit->last_visit_date)
+                                                {{ \Carbon\Carbon::parse($visit->last_visit_date)->format('j M, Y') }}
+                                                @if ($visit->last_visit_time)
+                                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->last_visit_time)->format('h:i A') }} </div>
+                                                @else
+                                                    - N/A
+                                                @endif
                                             @else
-                                                - N/A
+                                                N/A
                                             @endif
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
+                                        </td>
                                         <td>
                                             <a href="{{ route('UsersVisits.show', ['user' => $visit->user_code]) }}" class="btn btn-primary btn-sm">View</a>
                                         </td>
