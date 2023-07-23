@@ -9,7 +9,7 @@
     </div>
 
     <!-- Content when data is loaded -->
-    <div wire:loading.remove>
+  
         <div class="card">
             <h5 class="card-header"></h5>
             <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -45,6 +45,7 @@
         <div class="card card-default">
             <div class="card-body">
                 <div class="pt-0 card-datatable">
+                  <div wire:loading.remove>
                     <table class="table table-striped table-bordered zero-configuration table-responsive">
                         <thead>
                             <th width="1%">#</th>
@@ -85,11 +86,13 @@
                         </tbody>
                     </table>
 
+                    </div>
+
                     <div class="mt-1">
                         {{ $visits->links() }}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+   
 </div>
