@@ -38,6 +38,7 @@ class Dashboard extends Component
     public function data()
     {
 
+
         $searchTerm = '%' . $this->search . '%';
         $query = User::leftJoin('customer_checkin', function ($join) {
             $join->on('users.user_code', '=', 'customer_checkin.user_code')

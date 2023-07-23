@@ -2,7 +2,7 @@
     <!-- Spinner while fetching data -->
     <div wire:loading>
         <div class="d-flex justify-content-center align-items-center" style="height: 300px;">
-            <div class="spinner-border text-success" role="status">
+            <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
@@ -32,6 +32,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="validationTooltip02">Month</label>
@@ -43,17 +44,7 @@
 
         <div class="card card-default">
             <div class="card-body">
-                <!-- Show the loading spinner inside the table -->
-                <div wire:loading>
-                    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Table content -->
-                <div class="pt-0 card-datatable" wire:loading.remove>
+                <div class="pt-0 card-datatable">
                     <table class="table table-striped table-bordered zero-configuration table-responsive">
                         <thead>
                             <th width="1%">#</th>
