@@ -22,12 +22,20 @@
                         </select>
                     </div>
                 </div>
-       
 
-             <div class="col-md-3">
-                 <a href="{!! route('warehousing.create') !!}" class="btn btn-primary btn-sm"><i class="fa fa-user-plus"></i> Add Wirehouse</a>
-                 <a href="{!! route('warehousing.import') !!}" class="btn btn-info btn-sm"><i class="fa fa-file-upload"></i> Import </a>
-             </div>
+
+             <div class="col-md-6 d-flex justify-content-end">
+   
+
+   <div class="demo-inline-spacing">
+   <a href="{!! route('warehousing.create') !!}" class="btn btn-outline-secondary">Add Warehouse</a>
+  
+   <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
+       wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel">
+       <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="20" height="20"
+           data-toggle="tooltip" data-placement="top" title="Export Excel">Export
+   </button>
+ </div>
              
             </div>
         </div>
