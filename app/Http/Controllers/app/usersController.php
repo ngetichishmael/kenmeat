@@ -87,11 +87,18 @@ class usersController extends Controller
    public function store(Request $request)
    {
       $this->validate($request, [
-         'email' => 'required',
+         'email' => 'required|email|unique:users,email',
          'name' => 'required',
          'phone_number' => 'required',
          'account_type' => 'required',
       ]);
+
+      if ($validator->fails()) {
+         return redirect()->back()
+             ->withErrors($validator)
+             ->withInput();
+     }
+     
       $user_code = rand(100000, 999999);
       //save user
       $code = rand(100000, 999999);
