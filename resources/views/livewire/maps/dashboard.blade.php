@@ -46,12 +46,52 @@
             height: 800px;
         }
     </style>
+     <style>
+    /* Style for the customer list */
+    #customer-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Style for each customer item */
+    .customer-item {
+        padding: 5px;
+        padding-left: 10px;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .customer-item:hover {
+        background-color: #f2f2f2;
+    }
+
+    /* Style for the customer list container */
+    #customer-list-container {
+        max-height: 900px; /* Adjust this value to set the maximum height of the customer list */
+        max-width: 200px;
+        overflow-y: auto;
+    }
+
+    #toggleButton {
+        float: right;
+        margin-top: 5px;
+    }
+
+    #customer-counter {
+        float: right;
+        margin-top: 4px;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+</style>
     <div class="card">
         <h5 class="card-header">Search Filter</h5>
         <div id="map-container">
             <div id="customer-list-container" style="none">
                 <div style="position: relative; background-color: transparent;" class="ml-2">
-                    <div class="form-group" style="padding:10px">
+                    <div class="form-group" style="padding:8px">
                         <input id="search-input" class="form-control form-control-sm" type="text"
                             placeholder="Search customer" />
                         <!-- <span id="customer-counter"></span> -->
@@ -62,6 +102,7 @@
                     <ul id="customer-list">
                     </ul>
                 </div>
+
             </div>
             <div id="map"></div>
         </div>
@@ -258,4 +299,4 @@
 
         initCustomerList();
     </script>
-    content: `
+  <br>

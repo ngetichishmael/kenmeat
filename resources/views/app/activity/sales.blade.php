@@ -1,6 +1,6 @@
 @extends('layouts.app3')
 {{-- page header --}}
-@section('title', 'Activity Logs')
+@section('title', 'Sales Logs')
 {{-- page styles --}}
 @section('stylesheets')
 
@@ -10,7 +10,7 @@
 {{-- content section --}}
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
-    @livewire('activity.dashboard')
+    @livewire('activity.sales')
     <!-- Dashboard Ecommerce ends -->
 @endsection
 {{-- page scripts --}}

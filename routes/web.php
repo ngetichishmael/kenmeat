@@ -442,6 +442,7 @@ Route::group(['middleware' => ['verified']], function () {
     //activity logs
     Route::get('activity', ['uses' => 'ActivityController@index', 'as' => 'activity.index']);
     Route::get('activity/show/{id}', ['uses' => 'ActivityController@show', 'as' => 'activity.show']);
+    Route::get('sales/activity', ['uses' => 'ActivityController@sales', 'as' => 'activity.sales']);
 
     //chats endpoints
     Route::get('socket/index', [SocketsController::class, 'index'])->name('socket.index');

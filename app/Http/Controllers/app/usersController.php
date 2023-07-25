@@ -58,6 +58,8 @@ class usersController extends Controller
         return view('app.users.admin', compact('admins'));
     }
 
+
+
     //create
     public function create()
     {
@@ -83,7 +85,7 @@ class usersController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|unique:users,email',
+            'email' => 'required|unique:users,email|email|unique:users,email',
             'name' => 'required',
             'phone_number' => 'required',
             'account_type' => 'required',
@@ -96,7 +98,14 @@ class usersController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user_code = rand(100000, 999999);
+  
+      if ($validator->fails()) {
+         return redirect()->back()
+             ->withErrors($validator)
+             ->withInput();
+     }
+     
+      $user_code = rand(100000, 999999);
         //save user
         $code = rand(100000, 999999);
         User::updateOrCreate(
@@ -143,7 +152,7 @@ class usersController extends Controller
                 "merchanizing" => $merchanizing,
             ]
         );
-        Session()->flash('success', 'User Created Successfully, Default Password is Phone_number');
+        Session()->flash('success', 'User Created Successfully');
         return redirect('/users');
 
     }

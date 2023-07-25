@@ -12,18 +12,31 @@ class Dashboard extends Component
     public $customerListVisible = true;
     public $mapMarkers = [];
     public $selectedDate;
+    public $search = null;
 
-// A method to set the selected date (you can call this method when the date changes)
+    // A method to set the selected date (you can call this method when the date changes)
     public function setDate($date)
     {
         $this->selectedDate = $date;
     }
+
     public function render()
     {
         $initialMarkers = [];
         $information = CurrentDeviceInformation::orderBy('id', 'ASC')->get();
         $data = $information->groupBy('user_code');
         $markersByTitle = [];
+
+        // Get the search term from the $search property
+        $searchTerm = trim($this->search);
+
+        // If a search term is provided, filter the $data collection based on the user name
+        if ($searchTerm) {
+            $data = $data->filter(function ($value) use ($searchTerm) {
+                $userName = User::where('user_code', $value->first()->user_code)->pluck('name')->implode('');
+                return str_contains(strtolower($userName), strtolower($searchTerm));
+            });
+        }
 
         foreach ($data as $value) {
             foreach ($value as $info) {
@@ -48,7 +61,6 @@ class Dashboard extends Component
                 if (!array_key_exists($array['title'], $markersByTitle)) {
                     $markersByTitle[$array['title']][] = $array;
                 }
-                // $markersByTitle[$array['title']] = [];
             }
         }
 
@@ -57,6 +69,9 @@ class Dashboard extends Component
             'markersByTitle' => $markersByTitle,
         ]);
     }
+
+    // ... (other methods)
+
     public function toggleCustomerList()
     {
         $this->customerListVisible = !$this->customerListVisible;

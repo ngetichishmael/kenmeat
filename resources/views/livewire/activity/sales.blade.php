@@ -74,34 +74,21 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Source</th>
-                        <th>Section</th>
-                        <th>User Name</th>
-                        <th>Activity</th>
+                       
+                        <th>Customer</th>
+                        <th>Uploaded By</th>
+                        <th>Route</th>
+                        <th>Expiry Date</th>
                         <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($activities as $key => $activity)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $activity->source }}</td>
-                            <td>{{ $activity->section }}</td>
-                            <td>{{ $activity->user->name ?? 'NA' }}</td>
-                            <td>{{ Str::limit($activity->activity, 20) ?? '' }}</td>
-                            <td>{!! $activity->created_at ?? now() !!}</td>
-                            <td>
-                                <a href="{{ route('activity.show', $activity->id) }}" style="color:#629be7">
-                                    <i data-feather="eye"></i>&nbsp; View
-                                </a>
-                            </td>
-                        </tr>
-                    @empty
+                 
                         <tr>
                             <td colspan="7" style="text-align: center;"> No Record Found </td>
                         </tr>
-                    @endforelse
+                 
                 </tbody>
             </table>
             <div class="mt-1">{{ $activities->links() }}</div>

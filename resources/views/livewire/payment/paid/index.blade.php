@@ -1,6 +1,6 @@
 @extends('layouts.app3')
 {{-- page header --}}
-@section('title', 'Paid')
+@section('title', 'Payments')
 
 {{-- content section --}}
 @section('content')
@@ -8,7 +8,7 @@
         <div class="mb-2 content-header-left col-md-12 col-12">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="mb-0 content-header-title float-start">Paid </h2>
+                    <h2 class="mb-0 content-header-title float-start">Payments </h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="sokoflowadmin">Home</a></li>
