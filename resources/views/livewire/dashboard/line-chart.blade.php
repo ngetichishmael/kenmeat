@@ -1,5 +1,3 @@
-
-
 <div class="card">
     <canvas id="lineChartTotalOrderSale" width="800" height="400"></canvas>
 
@@ -15,11 +13,12 @@
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Completed orders',
+                        label: 'Sales',
                         data: totalOrderSale,
                         borderColor: 'rgb(0, 153, 204)',
-                       borderWidth: 1, // Set the line thickness here
+                        borderWidth: 1, // Set the line thickness here
                         fill: false,
+                        tension: 0, // Set tension to zero for a straight line
                     },
                 ],
             },
