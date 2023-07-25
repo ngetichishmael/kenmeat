@@ -46,7 +46,7 @@ class customersController extends Controller
         $subregion = Subregion::where('region_id', $region->id)->pluck('id');
         $areas = Area::whereIn('subregion_id', $subregion)->pluck('id');
 
-        $query = customers::whereIn('route_code', $areas)->get();
+        $query = customers::get();
 
         return response()->json([
             "user" => $user,
