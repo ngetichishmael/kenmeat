@@ -98,7 +98,7 @@ class usersController extends Controller
              ->withErrors($validator)
              ->withInput();
      }
-     
+
       $user_code = rand(100000, 999999);
       //save user
       $code = rand(100000, 999999);
@@ -291,7 +291,7 @@ class usersController extends Controller
    }
    public function Merchandizer()
    {
-      $Merchandizer = User::where('account_type', 'Merchandizer');
+      $Merchandizer = User::where('account_type', 'Merchandiser');
       return view('app.users.Merchandizer', compact('Merchandizer'));
    }
    public function hr()
