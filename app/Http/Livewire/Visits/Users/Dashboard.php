@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Visits\Users;
 
-use App\Exports\UsersVisitsExport;
+use App\Exports\CustomerVisitExport;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +104,6 @@ class Dashboard extends Component
 
     public function export()
     {
-        return Excel::download(new UsersVisitsExport($this->data()), 'visits.xlsx');
+       return Excel::download(new CustomerVisitExport, 'Visits.xlsx');
     }
 }
