@@ -12,10 +12,6 @@ class FormResponseController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'out_of_stock_prods' => 'required|array',
-            'out_of_stock_prods.*.product_id' => 'required|integer',
-            'out_of_stock_prods.*.qty' => 'required|integer',
-
             'interested_in_new_order' => 'required|string|in:Yes,No',
             'stock_replenishment' => 'nullable|string',
             'expiry_date_update' => 'nullable|date_format:Y-m-d',
