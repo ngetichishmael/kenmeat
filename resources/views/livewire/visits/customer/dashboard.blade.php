@@ -21,6 +21,15 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
+                        wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel" width="25" height="15">
+                        <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="15" height="15"
+                            data-toggle="tooltip" data-placement="top" title="Export Excel">Export
+                    </button>
+                </div>
+
              
             </div>
         </div>

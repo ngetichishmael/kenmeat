@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Customers;
 
-use App\Exports\customers as ExportsCustomers;
+use App\Exports\CustomersExport;
+
 use App\Models\Area;
 use App\Models\customers;
 use App\Models\Subregion;
@@ -24,10 +25,13 @@ class Dashboard extends Component
          'contacts' => $this->getCustomer()
       ]);
    }
+
    public function export()
    {
-      return Excel::download(new ExportsCustomers, 'customers.xlsx');
+       return Excel::download(new CustomersExport(), 'customers.xlsx');
    }
+   
+
    public function deactivate($id)
    {
       customers::whereId($id)->update(

@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Visits\Customer;
 
-
+use App\Exports\CustomerVisitExport;
 use App\Models\customer\checkin;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Dashboard extends Component
 {
@@ -28,5 +29,10 @@ class Dashboard extends Component
       return view('livewire.visits.customer.dashboard', [
          'visits' => $visits,
       ]);
+   }
+
+   public function export()
+   {
+      return Excel::download(new CustomerVisitExport, 'Visits.xlsx');
    }
 }
