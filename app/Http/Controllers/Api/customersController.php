@@ -79,7 +79,6 @@ class customersController extends Controller
             "contact_person" => "required",
             "business_code" => "required",
             "created_by" => "required",
-            "phone_number" => "required|unique:customers",
             "latitude" => "required",
             "longitude" => "required",
             "image" => 'required|image|mimes:jpg,png,jpeg,gif,svg',
