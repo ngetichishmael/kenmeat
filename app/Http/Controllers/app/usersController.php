@@ -93,11 +93,7 @@ class usersController extends Controller
          'account_type' => 'required',
       ]);
 
-      if ($validator->fails()) {
-         return redirect()->back()
-             ->withErrors($validator)
-             ->withInput();
-     }
+
 
       $user_code = rand(100000, 999999);
       //save user

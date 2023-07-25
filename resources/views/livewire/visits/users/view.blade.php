@@ -54,7 +54,7 @@
                             <th>Customer Name</th>
                             <th>Start/Stop Time</th>
                             <th>Duration</th>
-                            <th>Distance</th>
+                          
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -72,7 +72,7 @@
                             <td>
                                 <div class="badge badge-pill badge-dark">{{ $this->formatDuration($visit->duration_seconds) ?? '' }}</div>
                             </td>
-                            <td>5KM</td>
+                            
                             <td>{{ $visit->formatted_date }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">

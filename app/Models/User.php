@@ -137,10 +137,10 @@ class User extends Authenticatable implements MustVerifyEmail
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-   public function Region(): BelongsTo
-   {
-      return $this->belongsTo(Region::class,  'route_code', 'id');
-   }
+   // public function Region(): BelongsTo
+   // {
+   //    return $this->belongsTo(Region::class,  'route_code', 'id');
+   // }
 
 
    public function conversations()
@@ -155,5 +155,20 @@ class User extends Authenticatable implements MustVerifyEmail
    public function receivesBroadcastNotificationsOn(): string
    {
       return 'users.' . $this->id;
+   }
+
+   public function region()
+   {
+      return $this->belongsTo(Region::class);
+   }
+
+   public function subregion()
+   {
+      return $this->belongsTo(Subregion::class);
+   }
+
+   public function area()
+   {
+      return $this->belongsTo(Area::class, 'route_code', 'id');
    }
 }
