@@ -45,18 +45,21 @@
                             <td> {{ $visit->Customer->customer_name??'' }}</td>
                            
                           
-                            @if (isset($visit->stop_time))
-                                <td>
-                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->start_time)->format('h:i A') }}</div>
-                                    <b> - </b>
-                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->stop_time)->format('h:i A') }}</div>
-                                </td>
-                            @else
-                                <td>
+                            @if ($visit->stop_time === null)
+                            <td>
                                     <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->start_time)->format('h:i A') }}</div>
                                     <b> - </b>
                                     <span class="badge badge-pill badge-light-info mr-1">Visit Active</span>
                                 </td>
+
+                       
+                            @else
+                            <td>
+                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->start_time)->format('h:i A') }}</div>
+                                    <b> - </b>
+                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->stop_time)->format('h:i A') }}</div>
+                                </td>
+
                             @endif
                            
                             <td>
