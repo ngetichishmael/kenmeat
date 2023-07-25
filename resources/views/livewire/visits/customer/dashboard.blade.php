@@ -24,24 +24,6 @@
              
             </div>
         </div>
-
-    <!-- <div class="mb-1 row">
-        <div class="col-md-10">
-            <label for="">Search</label>
-            <input type="text" wire:model="search" class="form-control"
-                placeholder="Search by User, Customer Name or Region">
-        </div>
-        <div class="col-md-2">
-            <label for="">Items Per</label>
-            <select wire:model="perPage" class="form-control">`
-                <option value="10" selected>10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-        </div>
-    </div> -->
-
         <div class="card card-default">
         <div class="card-body">
             <div class="pt-0 card-datatable">
@@ -51,8 +33,9 @@
                         <th>Zone</th>
                         <th>User</th>
                         <th>Customer</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
+                        <th>Start/End Time</th>
+                        <th>Duration</th>
+                        <th>Date</th>
                     </thead>
                     <tbody>
                         @foreach ($visits as $count => $visit)
@@ -60,15 +43,46 @@
                             <td>{!! $visit->User->Region->name??'' !!}</td>
                             <td>{!! $visit->User->name??'' !!} </td>
                             <td> {{ $visit->Customer->customer_name??'' }}</td>
-                            <td>{{ $visit->start_time??'' }}</td>
-                          
-                                @if(isset($visit->stop_time))
-                                <td> {{ $visit->stop_time }}  </td>
-                                @else
-                                <td>    <span class="badge badge-pill badge-light-info mr-1">User Within</span>  </td>
-                                @endif
                            
+                          
+                            @if (isset($visit->stop_time))
+                                <td>
+                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->start_time)->format('h:i A') }}</div>
+                                    <b> - </b>
+                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->stop_time)->format('h:i A') }}</div>
+                                </td>
+                            @else
+                                <td>
+                                    <div class="badge badge-pill badge-secondary">{{ \Carbon\Carbon::parse($visit->start_time)->format('h:i A') }}</div>
+                                    <b> - </b>
+                                    <span class="badge badge-pill badge-light-info mr-1">Visit Active</span>
+                                </td>
+                            @endif
+                           
+                            <td>
+                                @if (isset($visit->stop_time))
+                                    @php
+                                    $start = \Carbon\Carbon::parse($visit->start_time);
+                                    $stop = \Carbon\Carbon::parse($visit->stop_time);
+                                    $durationInSeconds = $start->diffInSeconds($stop);
+                                    @endphp
 
+                                    @if ($durationInSeconds < 60)
+                                        <div class="badge badge-pill badge-dark"> {{ $durationInSeconds }} secs</div>
+                                        
+                                    @elseif ($durationInSeconds < 3600)
+                                        <div class="badge badge-pill badge-dark">  {{ floor($durationInSeconds / 60) }} mins</div>
+                                       
+                                    @else
+                                    <div class="badge badge-pill badge-dark">  {{ floor($durationInSeconds / 3600) }} hrs </div>
+                                        
+                                    @endif
+                                @else
+                                <span class="badge badge-pill badge-light-info mr-1">Visit Active</span>
+                                @endif
+                            </td>
+
+                                <td>{{ $visit->created_at->format('d-m-Y') }}</td>
 
                             </tr>
                         @endforeach
