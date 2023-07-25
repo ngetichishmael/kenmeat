@@ -92,6 +92,7 @@
     <!-- Add a date picker or any other method to set the date -->
     <!-- <input id="datePicker" type="date" wire:change="setDate($event.target.value)"> -->
 
+
     <div class="card">
         <h5 class="card-header">Search Filter</h5>
         <div id="map-container">
