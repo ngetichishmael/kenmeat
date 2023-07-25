@@ -8,7 +8,7 @@ use App\Models\Cart;
 use App\Models\Customer\Checkin;
 use App\Models\Orders as Order;
 use App\Models\Order_items;
-use App\Models\Products\product_information;
+use App\Models\ProductInformation;
 use App\Models\StockLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +24,7 @@ class CheckingSaleOrderController extends Controller
         $total = 0;
 
         foreach ($requestData as $value) {
-            $product = Product_information::with('ProductPrice')
+            $product = ProductInformation::with('ProductPrice')
                 ->where('id', $value["productID"])
                 ->where('business_code', $checkin->business_code)
                 ->first();
@@ -43,7 +43,7 @@ class CheckingSaleOrderController extends Controller
         $total = 0;
 
         foreach ($requestData[0]['cartItem'] as $value) {
-            $product = product_information::where('id', $value["productID"])->first();
+            $product = ProductInformation::where('id', $value["productID"])->first();
             $price_total = $value["qty"] * $value["price"];
             $total += $price_total;
 
@@ -139,7 +139,7 @@ class CheckingSaleOrderController extends Controller
         $total = 0;
 
         foreach ($requestData as $value) {
-            $product = product_information::where('id', $value["productID"])->first();
+            $product = ProductInformation::where('id', $value["productID"])->first();
             $price_total = $value["qty"] * $value["price"];
             $total += $price_total;
 
@@ -206,7 +206,7 @@ class CheckingSaleOrderController extends Controller
                 ->increment('AchievedOrdersTarget', $value["qty"]);
 
             (new Activity)(
-                "New Sales for product " . $product->product_name,
+                "New Sales for product {$product->product_name}",
                 "New Sale",
                 'Conduct a New Sales',
                 $request->user()->id,
