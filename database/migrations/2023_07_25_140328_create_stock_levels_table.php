@@ -1,13 +1,12 @@
 <?php
 
-use App\Models\customer\customers;
 use App\Models\products\product_information;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReturnablesTable extends Migration
+class CreateStockLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,15 +15,11 @@ class CreateReturnablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('returnables', function (Blueprint $table) {
+        Schema::create('stock_levels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('customer_id');
-            $table->integer('quantity')->default(0);
-            $table->enum('status', ['Not Returned', 'Returned'])->default('Not Returned');
-            $table->date('expiry_date')->nullable();
-            $table->foreignIdFor(customers::class);
             $table->foreignIdFor(product_information::class);
+            $table->unsignedInteger('stock_level'); // Change to an appropriate numerical data type
+            $table->string('lpo_number')->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
@@ -37,6 +32,6 @@ class CreateReturnablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('returnables');
+        Schema::dropIfExists('stock_levels');
     }
 }
