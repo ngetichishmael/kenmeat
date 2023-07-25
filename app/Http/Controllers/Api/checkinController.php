@@ -77,7 +77,7 @@ class checkinController extends Controller
         $checkin->user_code = $request->user_code;
         $checkin->ip = Helper::get_client_ip();
         $checkin->start_time = $startTime;
-        $checkin->stop_time = $startTime;
+        $checkin->stop_time = null;        
         $checkin->business_code = $customer->business_code;
         $checkin->save();
 
