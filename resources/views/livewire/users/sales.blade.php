@@ -41,8 +41,10 @@
             <th width="1%">#</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone Number</th>
             <th>Region</th>
-            <th>Phone</th>
+            <th>Sub-Reg</th>
+            <th>Area</th>
             <th>Status</th>
             <th width="12%">Actions</th>
         </tr>
@@ -58,8 +60,10 @@
                     <td>{!! $key + 1 !!}</td>
                     <td>{!! $user->name !!}</td>
                     <td>{!! $user->email !!}</td>
-                    <td>{!! $user->Region->name ?? '' !!}</td>
                     <td>{!! $user->phone_number !!}</td>
+                    <td>{!! $user->Region->name ?? '' !!}</td>
+                    <td>{{ $user->subregion->name ?? ''}}</td> 
+                    <td>{{ $user->area->name ?? ''}}</td>
                     <td>
                         @if ($user->status == 'Active')
                             <span class="badge badge-pill badge-light-success mr-1">Active</span>
