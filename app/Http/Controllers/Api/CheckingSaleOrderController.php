@@ -67,8 +67,8 @@ class CheckingSaleOrderController extends Controller
             foreach ($requestData['stock_levels'] as $stockLevel) {
                 StockLevel::create([
                     'product_information_id' => $stockLevel['productID'],
-                    'stock_level' => $stockLevel['stock_level'],
-                    'lpo_number' => $requestData[0]['lpo_number'],
+                    'stock_level' => $stockLevel['qty'],
+                    'lpo_number' => $requestData['lpo_number'],
                     'user_id' => $user_id,
                 ]);
             }
