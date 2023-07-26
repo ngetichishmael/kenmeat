@@ -23,12 +23,23 @@
                 </div>
 
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
-                        wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel" width="25" height="15">
-                        <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="15" height="15"
-                            data-toggle="tooltip" data-placement="top" title="Export Excel">Export
-                    </button>
-                </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" wire:loading.attr="disabled">
+            <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">
+            Export
+        </button>
+        <div class="dropdown-menu">
+            <button class="dropdown-item" wire:click="export(null)">All</button>
+            <button class="dropdown-item" wire:click="export('today')">Today</button>
+            <button class="dropdown-item" wire:click="export('yesterday')">Yesterday</button>
+            <button class="dropdown-item" wire:click="export('this_week')">This Week</button>
+            <button class="dropdown-item" wire:click="export('this_month')">This Month</button>
+            <button class="dropdown-item" wire:click="export('this_year')">This Year</button>
+        </div>
+    </div>
+</div>
+
 
              
             </div>
