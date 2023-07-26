@@ -31,8 +31,9 @@ class Dashboard extends Component
       ]);
    }
 
-   public function export()
+   public function export($timeInterval = null)
    {
-      return Excel::download(new CustomerVisitExport, 'Visits.xlsx');
+       return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.xlsx');
    }
+   
 }

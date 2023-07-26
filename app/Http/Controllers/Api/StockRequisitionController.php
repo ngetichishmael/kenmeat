@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Imports\products;
 use App\Models\products\product_information;
 use App\Models\RequisitionProduct;
 use App\Models\StockRequisition;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class StockRequisitionController extends Controller
 {

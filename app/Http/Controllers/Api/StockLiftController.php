@@ -82,8 +82,6 @@ class StockLiftController extends Controller
          "sales_person" => $user_code,
          "status" => "Waiting acceptance",
          "created_by" => $user_code,
-         "created_by" => $user_code,
-
       ]);
       info("checkeddd");
       info($checkeddd);

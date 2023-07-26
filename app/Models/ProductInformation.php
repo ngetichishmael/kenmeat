@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Models\products;
+namespace App\Models;
 
-use App\Models\warehousing;
+use App\Models\products\ProductSku;
+use App\Models\products\product_inventory;
+use App\Models\products\product_price;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class product_information extends Model
+class ProductInformation extends Model
 {
+    use HasFactory;
     protected $table = 'product_information';
     protected $guarded = [];
 

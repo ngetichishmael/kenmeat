@@ -162,13 +162,14 @@ class User extends Authenticatable implements MustVerifyEmail
       return $this->belongsTo(Region::class);
    }
 
-   public function subregion()
-   {
-      return $this->belongsTo(Subregion::class);
-   }
-
    public function area()
    {
-      return $this->belongsTo(Area::class, 'route_code', 'id');
+       return $this->belongsTo(Area::class, 'route_code', 'id');
+   }
+   
+   public function subregion()
+   {
+       return $this->belongsTo(Subregion::class, 'area_id', 'id');
+
    }
 }

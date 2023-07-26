@@ -91,8 +91,20 @@ class usersController extends Controller
             'account_type' => 'required',
         ]);
 
-
-
+        if ($validator->fails()) {
+            // If validation fails, redirect back with error messages and old input
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+  
+      if ($validator->fails()) {
+         return redirect()->back()
+             ->withErrors($validator)
+             ->withInput();
+     }
+     
       $user_code = rand(100000, 999999);
         //save user
         $code = rand(100000, 999999);
@@ -276,26 +288,26 @@ class usersController extends Controller
         return view('app.users.tsr', compact('tsr'));
     }
 
-   public function ac()
-   {
-      $ac = User::where('account_type', 'Account Manager');
-      return view('app.users.accountmanager', compact('ac'));
-   }
-   public function Merchandizer()
-   {
-      $Merchandizer = User::where('account_type', 'Merchandiser');
-      return view('app.users.Merchandizer', compact('Merchandizer'));
-   }
-   public function hr()
-   {
-      $hr = User::where('account_type', 'HR');
-      return view('app.users.hr', compact('hr'));
-   }
-   public function rsm()
-   {
-      $rsm = User::where('account_type', 'Manager');
-      return view('app.users.rsm', compact('rsm'));
-   }
+    public function ac()
+    {
+        $ac = User::where('account_type', 'Account Manager');
+        return view('app.users.accountmanager', compact('ac'));
+    }
+    public function Merchandizer()
+    {
+        $Merchandizer = User::where('account_type', 'Merchandizer');
+        return view('app.users.Merchandizer', compact('Merchandizer'));
+    }
+    public function hr()
+    {
+        $hr = User::where('account_type', 'HR');
+        return view('app.users.hr', compact('hr'));
+    }
+    public function rsm()
+    {
+        $rsm = User::where('account_type', 'Manager');
+        return view('app.users.rsm', compact('rsm'));
+    }
 
     public function HorecaSales()
     {
