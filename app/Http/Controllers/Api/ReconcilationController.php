@@ -24,10 +24,14 @@ class ReconcilationController extends Controller
                 ->sum('amount');
             $result[$method] = $totalAmount;
         }
+        Returnable::where('user_id', $user_id)
+            ->where('status', 'Not Returned')
+            ->update(['status' => 'Returned']);
 
         $returnables = Returnable::join('product_information', 'returnables.product_information_id', '=', 'product_information.id')
             ->join('product_price', 'product_price.productID', '=', 'returnables.product_information_id')
             ->where('returnables.user_id', '=', $user_id)
+            ->where('returnables.status', 'Not Returned')
             ->select(
                 'product_information.product_name as product_name',
                 'product_information.sku_code as sku_code',
