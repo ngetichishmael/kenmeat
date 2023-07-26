@@ -25,7 +25,7 @@ class CheckingSaleOrderController extends Controller
 
         foreach ($requestData as $value) {
             $product = ProductInformation::with('ProductPrice')
-                ->where('id', $value["product_id"])
+                ->where('id', $value["productID"])
                 ->where('business_code', $checkin->business_code)
                 ->first();
             $total_amount = $value["qty"] * $value["price"];
@@ -44,14 +44,14 @@ class CheckingSaleOrderController extends Controller
         info($requestData);
         if (isset($requestData['cartItem']) && is_array($requestData['cartItem'])) {
             foreach ($requestData[0]['cartItem'] as $value) {
-                $product = ProductInformation::where('id', $value["product_id"])->first();
+                $product = ProductInformation::where('id', $value["productID"])->first();
                 $price_total = $value["qty"] * $value["price"];
                 $total += $price_total;
 
                 $this->updateOrCreateCartItem($random, $value, $user_code, $product);
 
                 DB::table('inventory_allocated_items')
-                    ->where('product_code', $value["product_id"])
+                    ->where('product_code', $value["productID"])
                     ->decrement('allocated_qty', $value["qty"], [
                         'updated_at' => now(),
                     ]);
@@ -66,7 +66,7 @@ class CheckingSaleOrderController extends Controller
         if (isset($requestData['stock_levels']) && is_array($requestData['stock_levels'])) {
             foreach ($requestData['stock_levels'] as $stockLevel) {
                 StockLevel::create([
-                    'product_information_id' => $stockLevel['product_id'],
+                    'product_information_id' => $stockLevel['productID'],
                     'stock_level' => $stockLevel['stock_level'],
                     'lpo_number' => $requestData[0]['lpo_number'],
                     'user_id' => $user_id,
@@ -89,7 +89,7 @@ class CheckingSaleOrderController extends Controller
                 "order_code" => $random,
             ],
             [
-                'productID' => $value["product_id"],
+                'productID' => $value["productID"],
                 "product_name" => $product->product_name,
                 "qty" => $value["qty"],
                 "price" => $value["price"],
@@ -128,7 +128,7 @@ class CheckingSaleOrderController extends Controller
     {
         Order_items::create([
             'order_code' => $random,
-            'productID' => $value["product_id"],
+            'productID' => $value["productID"],
             'product_name' => $product->product_name,
             'quantity' => $value["qty"],
             'sub_total' => $value["qty"] * $value["price"],
