@@ -43,7 +43,7 @@ class CheckingSaleOrderController extends Controller
         $total = 0;
         info($requestData);
         if (isset($requestData['cartItem']) && is_array($requestData['cartItem'])) {
-            foreach ($requestData[0]['cartItem'] as $value) {
+            foreach ($requestData['cartItem'] as $value) {
                 $product = ProductInformation::where('id', $value["productID"])->first();
                 $price_total = $value["qty"] * $value["price"];
                 $total += $price_total;
