@@ -63,13 +63,15 @@ class CheckingSaleOrderController extends Controller
                 $this->logActivity($product->product_name, $orderType, 'Conduct a ' . $orderType, $user_id, $user_code, $request->ip() ?? "127.0.0.1", "App");
             }
         }
-        foreach ($requestData['stock_levels'] as $stockLevel) {
-            StockLevel::create([
-                'product_information_id' => $stockLevel['product_id'],
-                'stock_level' => $stockLevel['stock_level'],
-                'lpo_number' => $requestData[0]['lpo_number'],
-                'user_id' => $user_id,
-            ]);
+        if (isset($requestData['stock_levels']) && is_array($requestData['stock_levels'])) {
+            foreach ($requestData['stock_levels'] as $stockLevel) {
+                StockLevel::create([
+                    'product_information_id' => $stockLevel['product_id'],
+                    'stock_level' => $stockLevel['stock_level'],
+                    'lpo_number' => $requestData[0]['lpo_number'],
+                    'user_id' => $user_id,
+                ]);
+            }
         }
 
         return response()->json([
