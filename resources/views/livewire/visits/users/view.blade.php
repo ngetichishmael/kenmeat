@@ -33,6 +33,13 @@
                     <input wire:model="end" name="endDate" type="date" class="form-control" id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
                 </div>
             </div>
+            <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
+                        wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel" width="25" height="15">
+                        <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="15" height="15"
+                            data-toggle="tooltip" data-placement="top" title="Export Excel">Export
+                    </button>
+                </div>
         </div>
     </div>
 
@@ -47,7 +54,7 @@
                             <th>Customer Name</th>
                             <th>Start/Stop Time</th>
                             <th>Duration</th>
-                            <th>Distance</th>
+                          
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -65,7 +72,7 @@
                             <td>
                                 <div class="badge badge-pill badge-dark">{{ $this->formatDuration($visit->duration_seconds) ?? '' }}</div>
                             </td>
-                            <td>5KM</td>
+                            
                             <td>{{ $visit->formatted_date }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">

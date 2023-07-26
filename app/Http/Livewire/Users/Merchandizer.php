@@ -21,7 +21,7 @@ class Merchandizer extends Component
     public function render()
     {
        $searchTerm = '%' . $this->search . '%';
-       $merchandizer =  User::where('account_type', ['Merchandizer'])->whereLike([
+       $merchandizer =  User::where('account_type', ['Merchandiser'])->whereLike([
           'Region.name', 'name', 'email', 'phone_number',
        ], $searchTerm)
           ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
