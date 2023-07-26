@@ -42,7 +42,7 @@ class CheckingSaleOrderController extends Controller
         $requestData = $request->json()->all();
         $total = 0;
         info($requestData);
-        if (isset($requestData[0]['cartItem']) && is_array($requestData[0]['cartItem'])) {
+        if (isset($requestData['cartItem']) && is_array($requestData['cartItem'])) {
             foreach ($requestData[0]['cartItem'] as $value) {
                 $product = ProductInformation::where('id', $value["productID"])->first();
                 $price_total = $value["qty"] * $value["price"];
@@ -63,7 +63,7 @@ class CheckingSaleOrderController extends Controller
                 $this->logActivity($product->product_name, $orderType, 'Conduct a ' . $orderType, $user_id, $user_code, $request->ip() ?? "127.0.0.1", "App");
             }
         }
-        foreach ($requestData[0]['stock_levels'] as $stockLevel) {
+        foreach ($requestData['stock_levels'] as $stockLevel) {
             StockLevel::create([
                 'product_information_id' => $stockLevel['product_id'],
                 'stock_level' => $stockLevel['stock_level'],
