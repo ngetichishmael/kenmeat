@@ -41,27 +41,28 @@ class CheckingSaleOrderController extends Controller
         $user_id = $request->user()->id;
         $requestData = $request->json()->all();
         $total = 0;
+        info($requestData);
+        if (isset($requestData[0]['cartItem']) && is_array($requestData[0]['cartItem'])) {
+            foreach ($requestData[0]['cartItem'] as $value) {
+                $product = ProductInformation::where('id', $value["productID"])->first();
+                $price_total = $value["qty"] * $value["price"];
+                $total += $price_total;
 
-        foreach ($requestData[0]['cartItem'] as $value) {
-            $product = ProductInformation::where('id', $value["productID"])->first();
-            $price_total = $value["qty"] * $value["price"];
-            $total += $price_total;
+                $this->updateOrCreateCartItem($random, $value, $user_code, $product);
 
-            $this->updateOrCreateCartItem($random, $value, $user_code, $product);
+                DB::table('inventory_allocated_items')
+                    ->where('product_code', $value["productID"])
+                    ->decrement('allocated_qty', $value["qty"], [
+                        'updated_at' => now(),
+                    ]);
 
-            DB::table('inventory_allocated_items')
-                ->where('product_code', $value["productID"])
-                ->decrement('allocated_qty', $value["qty"], [
-                    'updated_at' => now(),
-                ]);
+                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType);
 
-            $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType);
+                $this->createOrderItem($random, $value, $product);
 
-            $this->createOrderItem($random, $value, $product);
-
-            $this->logActivity($product->product_name, $orderType, 'Conduct a ' . $orderType, $user_id, $user_code, $request->ip() ?? "127.0.0.1", "App");
+                $this->logActivity($product->product_name, $orderType, 'Conduct a ' . $orderType, $user_id, $user_code, $request->ip() ?? "127.0.0.1", "App");
+            }
         }
-
         foreach ($requestData[0]['stock_levels'] as $stockLevel) {
             StockLevel::create([
                 'product_information_id' => $stockLevel['product_id'],
