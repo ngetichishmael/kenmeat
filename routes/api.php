@@ -8,12 +8,14 @@ use App\Http\Controllers\Api\CurrentDeviceInformationController;
 use App\Http\Controllers\Api\CustomersProductsController;
 use App\Http\Controllers\Api\CustomerVisitsOrders;
 use App\Http\Controllers\Api\DeliveriesController;
+use App\Http\Controllers\Api\FormResponseController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OutletTypesController;
 use App\Http\Controllers\Api\productCategoriesController;
 use App\Http\Controllers\Api\ReconcilationController;
 use App\Http\Controllers\Api\ReconciledProductsController;
 use App\Http\Controllers\Api\ReportsController;
+use App\Http\Controllers\Api\ReturnableController;
 use App\Http\Controllers\Api\StockRequisitionController;
 use App\Http\Controllers\Api\SurveryAnswersController;
 use App\Http\Controllers\Api\surveyController;
@@ -221,7 +223,7 @@ Route::group(['namespace' => 'Api'], function () {
      * Post Device data
      */
     Route::post('/current/device/information', [CurrentDeviceInformationController::class, "postCurrentDeviceInformation"])->middleware('auth:sanctum');
-    Route::get('getMarkers/{userCode}/{date}', [CurrentDeviceInformationController::class, "getUserCoordinates"])->name('getUserCoordinates');
+    Route::get('getMarkers/{userCode}/{date}', [CurrentDeviceInformationController::class, "getUserCoordinates"]);
 
     /**
      * Get Outlet Types
@@ -255,5 +257,14 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('support/{ticket_id}/messages/reply', 'SupportTicketController@replyToMessage')->middleware('auth:sanctum');
     Route::get('support/{ticket_id}/messages', 'SupportTicketController@getMessages')->middleware('auth:sanctum');
     Route::get('/support/{id}', 'SupportTicketController@show')->middleware('auth:sanctum');
+
+    // Reconcilation and returanable routes
+
+    Route::post('/products/returns', [ReturnableController::class, 'returnProducts'])->middleware('auth:sanctum');
+    Route::post('/reconcile/payments', [ReturnableController::class, 'reconcilePayment'])->middleware('auth:sanctum');
+    Route::get('/reconcile/products/{customer_id}', [ReturnableController::class, 'reconcileProductWithPayment'])->middleware('auth:sanctum');
+
+    // Forms validation
+    Route::post('/form/responses', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
 
 });
