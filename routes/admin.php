@@ -124,8 +124,11 @@ Route::middleware(['auth'])->group(function () {
     ]);
     Route::resource('visits/customer', CustomerVisitController::class)->names([
         'index' => 'CustomerVisits',
-        'show' => 'CustomerVisits.show',
+        'update' => 'CustomerVisits.update',
     ]);
+
+    Route::get('visit/details/{id}', 'CustomerVisitController@show')->name('visit.details');
+
     Route::resource('customer/comment', CustomerCommentController::class)->names([
         'index' => 'CustomerComment',
     ]);

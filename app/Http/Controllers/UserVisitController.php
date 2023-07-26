@@ -64,6 +64,12 @@ class UserVisitController extends Controller
       //
    }
 
+   public function viewDetails($visitId)
+   {
+       $visitDetails = CustomerCheckin::findOrFail($visitId);
+       return view('livewire.visits.users.view-details', compact('visitDetails'));
+   }
+
    /**
     * Update the specified resource in storage.
     *

@@ -2,7 +2,7 @@
     <div class="card">
         <h5 class="card-header"></h5>
         <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-            <div class="col-md-4 user_role">
+            <div class="col-md-3 user_role">
                 <div class="input-group input-group-merge">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i data-feather="search"></i></span>
@@ -75,7 +75,7 @@
                             
                             <td>{{ $visit->formatted_date }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">
+                                <a href="{{ route('visit.details', ['id' => $visit->id]) }}" class="btn btn-sm" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">
                                     <i data-feather="eye"></i>
                                 </a>
                             </td>
