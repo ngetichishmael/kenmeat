@@ -102,7 +102,7 @@ class CheckingSaleOrderController extends Controller
 
     private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number)
     {
-        Order::updateOrCreate(
+        $result = Order::updateOrCreate(
             [
                 'order_code' => $random,
             ],
@@ -123,6 +123,8 @@ class CheckingSaleOrderController extends Controller
                 'updated_at' => now(),
             ]
         );
+        info('Order');
+        info($result);
     }
 
     private function createOrderItem($random, $value, $product)
