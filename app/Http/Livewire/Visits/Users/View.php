@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Visits\Users;
 
-use App\Exports\CustomerVisitExport;
+use App\Exports\CustomerViewVisitExport;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -66,6 +66,7 @@ class View extends Component
             ->where('customers.customer_name', 'LIKE', '%' . $this->search . '%')
             ->whereRaw('customer_checkin.start_time <= customer_checkin.stop_time') // Condition to ensure start_time <= stop_time
             ->select(
+                'customer_checkin.id as id', 
                 'users.name as name',
                 'customers.customer_name AS customer_name',
                 DB::raw("DATE_FORMAT(customer_checkin.start_time, '%h:%i %p') AS start_time"),
@@ -92,6 +93,39 @@ class View extends Component
 
     public function export()
     {
-       return Excel::download(new CustomerVisitExport, 'Visits.xlsx');
+        // Fetch filtered data using the data method
+        $data = $this->data();
+
+        // Transform the $data collection to an array for export
+        $exportData = $data->map(function ($item) {
+            return [
+                'Sales Associate' => $item->name,
+                'Customer Name' => $item->customer_name,
+                'Start Time' => $item->start_time,
+                'Stop Time' => $item->stop_time,
+                'Duration' => $this->formatDuration($item->duration_seconds),
+                'Date' => $item->formatted_date,
+            ];
+        });
+
+        // Provide column headings for the Excel file
+        $headings = [
+            'Sales Associate',
+            'Customer Name',
+            'Start Time',
+            'Stop Time',
+            'Duration',
+            'Date',
+        ];
+
+        // Add the username as the first row in the exported data
+        $exportData->prepend([$this->username]);
+
+        // Create a collection with column headings and data
+        $exportData = collect([$headings])->merge($exportData);
+
+        return Excel::download(new CustomerViewVisitExport($exportData, $this->username), 'Visits_' . $this->username . '.xlsx');
     }
+    
+    
 }
