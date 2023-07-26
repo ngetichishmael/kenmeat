@@ -25,7 +25,7 @@ class CheckingSaleOrderController extends Controller
 
         foreach ($requestData as $value) {
             $product = ProductInformation::with('ProductPrice')
-                ->where('id', $value["productID"])
+                ->where('id', $value["product_id"])
                 ->where('business_code', $checkin->business_code)
                 ->first();
             $total_amount = $value["qty"] * $value["price"];
@@ -44,14 +44,14 @@ class CheckingSaleOrderController extends Controller
         info($requestData);
         if (isset($requestData['cartItem']) && is_array($requestData['cartItem'])) {
             foreach ($requestData[0]['cartItem'] as $value) {
-                $product = ProductInformation::where('id', $value["productID"])->first();
+                $product = ProductInformation::where('id', $value["product_id"])->first();
                 $price_total = $value["qty"] * $value["price"];
                 $total += $price_total;
 
                 $this->updateOrCreateCartItem($random, $value, $user_code, $product);
 
                 DB::table('inventory_allocated_items')
-                    ->where('product_code', $value["productID"])
+                    ->where('product_code', $value["product_id"])
                     ->decrement('allocated_qty', $value["qty"], [
                         'updated_at' => now(),
                     ]);
@@ -89,7 +89,7 @@ class CheckingSaleOrderController extends Controller
                 "order_code" => $random,
             ],
             [
-                'productID' => $value["productID"],
+                'productID' => $value["product_id"],
                 "product_name" => $product->product_name,
                 "qty" => $value["qty"],
                 "price" => $value["price"],
@@ -128,7 +128,7 @@ class CheckingSaleOrderController extends Controller
     {
         Order_items::create([
             'order_code' => $random,
-            'productID' => $value["productID"],
+            'productID' => $value["product_id"],
             'product_name' => $product->product_name,
             'quantity' => $value["qty"],
             'sub_total' => $value["qty"] * $value["price"],
