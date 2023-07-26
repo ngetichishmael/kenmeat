@@ -56,7 +56,7 @@ class CheckingSaleOrderController extends Controller
                         'updated_at' => now(),
                     ]);
 
-                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType);
+                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $requestData['lpo_number']);
 
                 $this->createOrderItem($random, $value, $product);
 
@@ -100,7 +100,7 @@ class CheckingSaleOrderController extends Controller
         );
     }
 
-    private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType)
+    private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number)
     {
         Order::updateOrCreate(
             [
@@ -108,6 +108,7 @@ class CheckingSaleOrderController extends Controller
             ],
             [
                 'user_code' => $user_code,
+                'lpo_number' => $lpo_number,
                 'customerID' => $checkinCode,
                 'price_total' => $total,
                 'balance' => $total,
