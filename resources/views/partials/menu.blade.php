@@ -247,6 +247,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item {!! Nav::isResource('reports') !!}">
+                <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i
+                        data-feather='file-text'></i><span class="menu-title text-truncate" data-i18n="Invoice">All
+                        Reports</span></a>
+            </li>
+
             <li class="nav-item {!! Nav::isResource('SalesActivity') !!}">
                 <a class="d-flex align-items-center" href="{!! route('activity.sales') !!}">
                 <i data-feather='alert-octagon'></i>
