@@ -23,18 +23,21 @@ class CustomerVisitExport implements FromView
  
      public function view(): View
      {
-         $query = checkin::orderBy('created_at', 'DESC'); // Order by created_at in descending order (most recent first)
+         $query = checkin::select('customer_checkin.*', 'users.name')
+                        ->join('users', 'customer_checkin.user_code', '=', 'users.user_code')
+                        ->orderBy('customer_checkin.user_code') // Order by user_code (users' codes) in ascending order
+                        ->orderBy('users.name'); // Order users' names in alphabetical order
  
          if ($this->timeInterval === 'today') {
-             $query->whereDate('created_at', today());
+             $query->whereDate('customer_checkin.created_at', today());
          } elseif ($this->timeInterval === 'yesterday') {
-             $query->whereDate('created_at', today()->subDay());
+             $query->whereDate('customer_checkin.created_at', today()->subDay());
          } elseif ($this->timeInterval === 'this_week') {
-             $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+             $query->whereBetween('customer_checkin.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
          } elseif ($this->timeInterval === 'this_month') {
-             $query->whereYear('created_at', now()->year)->whereMonth('created_at', now()->month);
+             $query->whereYear('customer_checkin.created_at', now()->year)->whereMonth('checkins.created_at', now()->month);
          } elseif ($this->timeInterval === 'this_year') {
-             $query->whereYear('created_at', now()->year);
+             $query->whereYear('customer_checkin.created_at', now()->year);
          }
  
          $checkin = $query->get();
