@@ -79,7 +79,7 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label for="">Filter By User: </label>
+                <label for="">Perpage: </label>
                 <select wire:model="perPage" class="form-control">
                     <option value="10">10</option>
                     <option value="20">20</option>

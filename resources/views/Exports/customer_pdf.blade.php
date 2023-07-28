@@ -50,7 +50,7 @@
             <tr>
                 <th>Name</th>
                 <th>Number</th>
-                <th">Address</th>
+                <th width="20%">Address</th>
                 <th>Zone/Region</th>
                 <th>Route</th>
                 <th>Created By</th>
@@ -85,7 +85,7 @@
                         {!! $contact->Creator->name ?? '' !!}
                     </td>
                     <td>
-                        {!! $contact->Creator->created_at ?? '' !!}
+                    {!! $contact->created_at ? $contact->created_at->format('Y-m-d h:i A') : '' !!}
                     </td>
                 </tr>
             @endforeach
