@@ -1,21 +1,20 @@
-@extends('layouts.app')
-{{-- page header --}}
+@extends('layouts.app3')
+
 @section('title','Inventory')
 
-{{-- content section --}}
 @section('content')
    <!-- begin breadcrumb -->
    <div class="row mb-2">
       <div class="col-md-8">
-         <h2 class="page-header"><i data-feather="list"></i> Inventory for Warehouse {!! $warehouse->name !!} </h2>
+         <h2 class="page-header"> Inventory for Warehouse : <b> {!! $warehouse->name !!} </b></h2>
       </div>
-         <div class="col-md-4">
+         <!-- <div class="col-md-4">
             <center>
                <a href="{!! route('products.create') !!}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add New Products</a>
                <a href="{!! route('products.import') !!}" class="btn btn-success btn-sm"><i class="fas fa-sync-alt"></i> Import Products</a>
 
             </center>
-         </div>
+         </div> -->
    </div>
    <!-- end breadcrumb -->
    <!-- begin page-header -->
@@ -23,21 +22,53 @@
    <!-- end page-header -->
    @include('partials._messages')
    <div>
-      <div class="row mb-1">
-         <div class="col-md-9">
-            <label for=""></label>
-            <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Search Product">
-         </div>
-            <div class="col-md-3">
-               <label for="">Items Per</label>
-               <select wire:model="perPage" class="form-control">`
-                  <option value="10" selected>10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-               </select>
+
+   <div class="card">
+        <h5 class="card-header"></h5>
+        <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
+            <div class="col-md-4 user_role">
+                <div class="input-group input-group-merge">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i data-feather="search"></i></span>
+                    </div>
+                    <input wire:model.debounce.300ms="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
+                        placeholder="Search" />
+                </div>
             </div>
-      </div>
+            <div class="col-md-2 user_role">
+                <div class="form-group">
+                    <label for="selectSmall">Per Page</label>
+                    <select wire:model="perPage" class="form-control form-control-sm" id="selectSmall">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4 d-flex justify-content-end">
+                <div class="demo-inline-spacing">
+                    <a href="{!! route('products.create') !!}" class="btn btn-outline-secondary">Add Product</a>
+
+                    <div class="btn-group">
+                    
+                    <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" wire:loading.attr="disabled" >
+                        <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">
+                        Export
+                    </button>
+                    <div class="dropdown-menu">
+                            <a class="dropdown-item" wire:click="export" id="exportExcelBtn">Excel</a>
+                            <a class="dropdown-item"  wire:click="exportCSV" id="exportPdfBtn"> CSV</a>
+                            <a class="dropdown-item" wire:click="exportPDF" id="exportCsvBtn">PDF</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      
       <div class="card card-default">
          <div class="card-body">
             <table class="table table-striped table-bordered" style="font-size: small">
@@ -74,16 +105,20 @@
                         <td>{{ $product->updated_at->format('d/m/Y') }}</td>
                         <td>{{ $product->updated_at->format('H:i:s') }}</td>
                         <td>
-                            <div class="dropdown" >
-                             <button style="background-color: #24B263;color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                                <i data-feather="settings"></i>
-                             </button>
-                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a href="{{ route('products.restock', $product->id) }}" type="button" class="dropdown-item btn btn-sm" style="color: #858685;font-weight: bold"><i data-feather="plus"></i> &nbsp;Re-stock</a>
-{{--                                <a href="#" type="button" class="dropdown-item btn btn-sm" style="color: #868888; font-weight: bold"><i data-feather="eye"></i>&nbsp; View</a>--}}
-                             </div>
-                          </div>
-
+                        <div class="dropdown">
+                                        <button type="button" class="btn btn-sm dropdown-toggle show-arrow " data-toggle="dropdown" style="background-color: #089000; color:white" >
+                                        <i data-feather="settings"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ route('products.restock', $product->id) }}">
+                                                <i data-feather="plus-circle" class="mr-50"></i>
+                                                <span>Re Stock</span>
+                                            </a>
+                                   
+                              
+                                    
+                                        </div>
+                                    </div>
 
                         </td>
                     </tr>

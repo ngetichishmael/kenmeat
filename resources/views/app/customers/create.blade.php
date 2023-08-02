@@ -1,205 +1,96 @@
+
 @extends('layouts.app3')
 {{-- page header --}}
-@section('title', 'New Customer')
-{{-- page styles --}}
+@section('title', 'Customer')
+
+@section('vendor-style')
+  <!-- Vendor css files -->
+  <link rel="stylesheet" href="{{ asset('vendors/css/forms/wizard/bs-stepper.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
+
+
+  <link rel="stylesheet" href="{{ asset('vendors/css/vendors.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendors/css/ui/prism.min.css') }}" />
+
+<!-- Vendor css files -->
+<link rel="stylesheet" href="{{ asset('vendors/css/forms/wizard/bs-stepper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/core.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/base/core/menu/menu-types/vertical-menu.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('css/base/core/colors/palette-gradient.css') }}"> -->
+
+<!-- Page css files -->
+<link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommerce.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-pickadate.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-wizard.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-number-input.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/overrides.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
+@endsection
+
+@section('page-style')
+  <!-- Page css files -->
+  <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommerce.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-pickadate.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-wizard.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-number-input.css') }}">
+@endsection
+
 
 
 {{-- content section --}}
 @section('content')
     <!-- begin breadcrumb -->
-    <div class="mb-2 row" style="padding-left:5%; padding-right:5%">
+    <div class="row mb-2">
         <div class="col-md-8">
-            <h2 class="page-header"><i data-feather="users"></i> Customers </h2>
+            <h2 class="page-header">New Customer</h2>
         </div>
         <div class="col-md-4">
-
-
+            <center>
+                 <!-- <a href="{!! route('customer.create') !!}" class="btn btn-primary btn-sm"><i class="fa fa-user-plus"></i> Add a
+                    Customer</a>
+                <a href="{{ route('user-import') }}" class="btn btn-info btn-sm"><i class="fa fa-file-upload"></i> Import
+                    Customer</a>
+               <a href="" class="btn btn-warning btn-sm"><i class="fal fa-file-download"></i> Export Customer</a> -->
+            </center>
         </div>
     </div>
-    <!-- Basic multiple Column Form section start -->
-    <section id="multiple-column-form" style="padding-left:5%; padding-right:5%">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Customers</h4>
-                    </div>
-                    <div class="card-body">
-                        <form class="form" method="POST" action="{{ route('customer.store') }}">
-                            @method('POST')
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="first-name-column">Customer Names</label>
-                                        <input type="text" id="first-name-column" class="form-control"
-                                            placeholder="Customer Name" name="customer_name" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="last-name-column">Account</label>
-                                        <input type="text" id="last-name-column" class="form-control"
-                                            placeholder="Account" name="account" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="city-column">Manufacturer Number</label>
-                                        <input type="text" id="city-column" class="form-control" placeholder="City"
-                                            name="manufacturer_number" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="country-floating">VAT number</label>
-                                        <input type="text" id="country-floating" class="form-control" name="vat_number"
-                                            placeholder="VAT number" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="company-column">Delivery Time</label>
-                                        <input type="text" id="company-column" class="form-control" name="delivery_time"
-                                            placeholder="Delivery Time" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="email-id-column">Address</label>
-                                        <input type="text" id="email-id-column" class="form-control" name="address"
-                                            placeholder="address" />
-                                    </div>
-                                </div>
+    <!-- end breadcrumb -->
 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="first-name-column">City</label>
-                                        <input type="text" id="first-name-column" class="form-control" placeholder="City"
-                                            name="city" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="last-name-column">Province</label>
-                                        <input type="text" id="last-name-column" class="form-control"
-                                            placeholder="Province" name="province" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="city-column">Postal Code</label>
-                                        <input type="text" id="city-column" class="form-control"
-                                            placeholder="Postal Code" name="postal_code" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="country-floating">Country</label>
-                                        <input type="text" id="country-floating" class="form-control" name="country"
-                                            placeholder="Country" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="company-column">Latitude</label>
-                                        <input type="text" id="company-column" class="form-control" name="latitude"
-                                            placeholder="Latitude" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="email-id-column">Longitude</label>
-                                        <input type="email" id="email-id-column" class="form-control" name="longitude"
-                                            placeholder="Longitude" />
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="first-name-column">Contact Person</label>
-                                        <input type="text" id="first-name-column" class="form-control"
-                                            placeholder="Contact Person" name="contact_person" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="last-name-column">Telephone</label>
-                                        <input type="text" id="last-name-column" class="form-control"
-                                            placeholder="Telephone" name="telephone" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="city-column">Customer Group</label>
-                                        <input type="text" id="city-column" class="form-control"
-                                            placeholder="Customer Group" name="customer_group" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="country-floating">Customer Secondary Group</label>
-                                        <input type="text" id="country-floating" class="form-control"
-                                            name="customer_secondary_group" placeholder="Customer Secondary Group" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="company-column">Price Group</label>
-                                        <input type="text" id="company-column" class="form-control"
-                                            name="price_group" placeholder="Price Group" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="email-id-column">Route</label>
-                                        <input type="text" id="email-id-column" class="form-control" name="route"
-                                            placeholder="Route" />
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="first-name-column">Branch</label>
-                                        <input type="text" id="first-name-column" class="form-control"
-                                            placeholder="Branch" name="branch" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="last-name-column">Email</label>
-                                        <input type="email" id="last-name-column" class="form-control"
-                                            placeholder="Email" name="email" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="city-column">Phone Number</label>
-                                        <input type="text" id="city-column" class="form-control"
-                                            placeholder="Phone Number" name="phone_number" />
-                                    </div>
-                                </div>
-                                @livewire('customers.region')
-                            </div>
-                            <div class="mt-2 col-12 d-flex flex-sm-row flex-column justify-content-center" style="gap: 20px;">
-                                <button type="submit" class="mr-1 btn btn-primary">Submit</button>
-                                <a href="{{ route('customer') }}" class="btn btn-outline-secondary">Cancel</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Basic Floating Label Form section end -->
+    @livewire('customers.create-customer')
+ 
 @endsection
-{{-- page scripts --}}
-@section('scripts')
+
+@section('vendor-script')
+  <!-- Vendor js files -->
+  <script src="{{ asset('vendors/js/forms/wizard/bs-stepper.min.js') }}"></script>
+  <script src="{{ asset('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+  <script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-ecommerce-checkout.js') }}"></script>
+
+
+  <script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+<script src="{{ asset('vendors/js/ui/prism.min.js') }}"></script>
+
+<!-- Vendor js files -->
+<script src="{{ asset('vendors/js/forms/wizard/bs-stepper.min.js') }}"></script>
+<script src="{{ asset('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+<script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
+
+<script src="{{ asset('js/core/app-menu.js') }}"></script>
+<script src="{{ asset('js/core/app.js') }}"></script>
+<script src="{{ asset('js/scripts/customizer.js') }}"></script>
+
+<!-- Page js files -->
+<script src="{{ asset('js/scripts/pages/app-ecommerce-checkout.js') }}"></script>
 
 @endsection
+

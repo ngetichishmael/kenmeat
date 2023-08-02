@@ -13,6 +13,7 @@ $(function () {
   var bootstrapForm = $('.needs-validation'),
     jqForm = $('#jquery-val-form'),
     picker = $('#dob'),
+    dtPicker = $('#dob-bootstrap-val'),
     select = $('.select2');
 
   // select2
@@ -32,6 +33,8 @@ $(function () {
   // Picker
   if (picker.length) {
     picker.flatpickr({
+      allowInput: true,
+      monthSelectorType: 'static',
       onReady: function (selectedDates, dateStr, instance) {
         if (instance.isMobile) {
           $(instance.mobileInput).attr('step', null);
@@ -39,6 +42,19 @@ $(function () {
       }
     });
   }
+
+  if (dtPicker.length) {
+    dtPicker.flatpickr({
+      allowInput: true,
+      monthSelectorType: 'static',
+      onReady: function (selectedDates, dateStr, instance) {
+        if (instance.isMobile) {
+          $(instance.mobileInput).attr('step', null);
+        }
+      }
+    });
+  }
+
   // Bootstrap Validation
   // --------------------------------------------------------------------
   if (bootstrapForm.length) {
@@ -49,18 +65,7 @@ $(function () {
         }
         form.classList.add('was-validated');
         event.preventDefault();
-        // if (inputGroupValidation) {
-        //   inputGroupValidation(form);
-        // }
       });
-      // bootstrapForm.find('input, textarea').on('focusout', function () {
-      //   $(this)
-      //     .removeClass('is-valid is-invalid')
-      //     .addClass(this.checkValidity() ? 'is-valid' : 'is-invalid');
-      //   if (inputGroupValidation) {
-      //     inputGroupValidation(this);
-      //   }
-      // });
     });
   }
 

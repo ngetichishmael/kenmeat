@@ -1,49 +1,94 @@
-@extends('layouts.app')
+
+@extends('layouts.app3')
 {{-- page header --}}
-@section('title', 'Restock Product')
+@section('title', 'Re Stock Products')
+
+@section('vendor-style')
+  <!-- Vendor css files -->
+  <link rel="stylesheet" href="{{ asset('vendors/css/forms/wizard/bs-stepper.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
 
 
-{{-- content section --}}
+  <link rel="stylesheet" href="{{ asset('vendors/css/vendors.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendors/css/ui/prism.min.css') }}" />
+
+<!-- Vendor css files -->
+<link rel="stylesheet" href="{{ asset('vendors/css/forms/wizard/bs-stepper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/core.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/base/core/menu/menu-types/vertical-menu.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('css/base/core/colors/palette-gradient.css') }}"> -->
+
+<!-- Page css files -->
+<link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommerce.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-pickadate.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-wizard.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-number-input.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/overrides.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
+@endsection
+
+@section('page-style')
+  <!-- Page css files -->
+  <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommerce.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-pickadate.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-wizard.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-number-input.css') }}">
+@endsection
+
+
+
+
 @section('content')
-    <!-- begin page-header -->
-    <style>
-       /* CSS styles */
-       table {
-          width: 100%;
-          border-collapse: collapse;
-       }
 
-       th, td {
-          padding: 8px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
-       }
+<div class="bs-stepper checkout-tab-steps">
+  <div class="bs-stepper-header">
+    <div class="step" data-target="#customer-details">
+      <button type="button" class="step-trigger">
+        <span class="bs-stepper-box">
+          <i data-feather='globe' class="font-medium-3"></i>
+        </span>
+        <span class="bs-stepper-label">
+          <span class="bs-stepper-title">Restock <b>{{$product_information->product_name ?? ''}}</b> </span>
+          <span class="bs-stepper-subtitle">Stock Information</span>
+        </span>
+      </button>
+    </div>
 
-       .sku-field input {
-          width: 100%;
-          padding: 8px;
-          box-sizing: border-box;
-       }
 
-       .sku-field .remove-sku {
-          color: #fff;
-          background-color: #24B263;
-          border: none;
-          padding: 8px 12px;
-          cursor: pointer;
-       }
+  
+  </div>
 
-       .sku-field .remove-sku:hover {
-          background-color: #24B263;
-       }
-    </style>
-    <h3 class="page-header"> Restock <b>{{$product_information->product_name ?? ''}}</b> Products </h3>
-    <!-- end page-header -->
-    <form class="needs-validation responsive mt-3 mb-3" action="{{ route('products.updatestock', [
-        'id' => $id]) }}" method="POST"
-          enctype="multipart/form-data" id="restock-form">
-       @csrf
-       <table id="sku-table responsive">
+
+  <div wire:ignore.self class="bs-stepper-content">
+  <div id="customer-details" class="content">
+      <form action="{{ route('products.updatestock', ['id' => $id]) }}" method="POST" enctype="multipart/form-data" id="restock-form" class="list-view product-checkout">
+        @csrf
+        <div class="card">
+          <div class="card-header flex-column align-items-start">
+            <h4 class="card-title">Product information</h4>
+            <p class="card-text text-muted mt-25">Be sure to enter correct information</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+               <style>
+                  /* Custom styles for readonly inputs */
+                     input[readonly] {
+                        background-color: #f5f5f5; /* Light grey background */
+                        border-color: #ddd; /* Lighter border */
+                     }
+
+               </style>
+
+            <table id="sku-table responsive">
           <thead>
           <tr>
              <th>Product SKU Code</th>
@@ -53,38 +98,41 @@
           </thead>
           <tbody id="sku-fields">
           <tr class="sku-field ">
-             <td><input for="fp-date-time" type="text" class="form-control col-lg-1 col-md-3" name="sku_codes[]" value="{{$product_information->sku_code}}"  readonly required></td>
-             <td><input for="fp-date-time" type="number" class="form-control col-lg-1 col-md-3" value="{{$product_information->inventory->current_stock}}" readonly ></td>
-             <td><input for="fp-date-time" type="number" class="form-control col-lg-1 col-md-3" name="quantities[]" required></td>
-{{--             <td><button for="fp-date-time"  type="button" class="remove-sku form-control btn btn-sm btn-outline-danger" style="width: fit-content">--}}
-{{--                   <i data-feather="trash-2" class="mr-25"></i><span> &nbsp;Delete</span></button>--}}
-{{--             </td>--}}
+             <td><input for="fp-date-time" type="text" class="form-control-sm" name="sku_codes[]" value="{{$product_information->sku_code}}"  readonly required></td>
+             <td><input for="fp-date-time" type="number" class="form-control-sm" value="{{$product_information->inventory->current_stock}}" readonly ></td>
+             <td><input for="fp-date-time" type="number" class="form-control-sm" name="quantities[]" required></td>
           </tr>
           </tbody>
        </table>
-{{--       <div class="row">--}}
-{{--          <div class="col-md-12 m-2">--}}
-{{--             <button wire:click.prevent="addTargets" type="button" id="add-sku" class="btn btn-outline-primary">--}}
-{{--                <i data-feather="plus" class="mr-25 font-medium bold"></i>--}}
-{{--                <span>Add New Row</span>--}}
-{{--             </button>--}}
-{{--          </div>--}}
-{{--       </div>--}}
-       <div class=" col-l-1 mt-3 pe-4 text-right">
-          <button wire:click.prevent="submit()" type="submit"
-                  class="btn btn-primary data-submit w-10">Submit</button>
-       </div>
-    </form>
+     
+              <hr class="my-2" />
+              <div class="col-12 d-flex justify-content-center" >
+                  <button wire:click.prevent="submit()" type="submit" class="btn btn-primary btn-next delivery-address mr-2"> Save</button>
+                  <a href="{{ url('/warehousing') }}" class="btn btn-outline-secondary">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <script>
+
+   
+      </form>
+    </div>
+   
+
+   
+  </div>
+</div>
+
+<script>
        // Add SKU field
        document.getElementById('add-sku').addEventListener('click', function() {
           var skuFields = document.getElementById('sku-fields');
           var newField = document.createElement('tr');
           newField.classList.add('sku-field');
           newField.innerHTML = `
-            <td><input for="fp-date-time" type="text" class="form-control col-lg-3 col-md-6" name="sku_codes[]" required></td>
-             <td><input for="fp-date-time" type="number" class="form-control col-lg-1 col-md-3" name="quantities[]" required></td>
+            <td><input for="fp-date-time" type="text" class="form-control-sm" name="sku_codes[]" required></td>
+             <td><input for="fp-date-time" type="number" class="form-control-sm" name="quantities[]" required></td>
              <td><button for="fp-date-time"  type="button" class="remove-sku form-control btn btn-sm btn-outline-danger" style="width: fit-content">
                     <i class="fas fa-trash mr-25"></i><span> &nbsp;Delete</span></button>
              </td>
@@ -100,7 +148,31 @@
           }
        });
     </script>
+
 @endsection
-{{-- page scripts --}}
-@section('scripts')
+
+@section('vendor-script')
+  <!-- Vendor js files -->
+  <script src="{{ asset('vendors/js/forms/wizard/bs-stepper.min.js') }}"></script>
+  <script src="{{ asset('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+  <script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-ecommerce-checkout.js') }}"></script>
+
+
+  <script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+<script src="{{ asset('vendors/js/ui/prism.min.js') }}"></script>
+
+<!-- Vendor js files -->
+<script src="{{ asset('vendors/js/forms/wizard/bs-stepper.min.js') }}"></script>
+<script src="{{ asset('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+<script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
+
+<script src="{{ asset('js/core/app-menu.js') }}"></script>
+<script src="{{ asset('js/core/app.js') }}"></script>
+<script src="{{ asset('js/scripts/customizer.js') }}"></script>
+
+<!-- Page js files -->
+<script src="{{ asset('js/scripts/pages/app-ecommerce-checkout.js') }}"></script>
+
 @endsection
+

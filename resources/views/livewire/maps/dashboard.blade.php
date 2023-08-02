@@ -69,7 +69,7 @@
 
     /* Style for the customer list container */
     #customer-list-container {
-        max-height: 900px; /* Adjust this value to set the maximum height of the customer list */
+        max-height: 800px; /* Adjust this value to set the maximum height of the customer list */
         max-width: 200px;
         overflow-y: auto;
     }
@@ -250,7 +250,7 @@
                 initialMarkers.forEach((markerData, index) => {
                     const customerName = markerData.customer_name.toLowerCase();
 
-                    if (customerName.includes(searchText) && count < 15) {
+                    if (customerName.includes(searchText) && count < 100) {
                         const listItem = document.createElement("li");
                         listItem.classList.add("list-group-item");
                         listItem.textContent = markerData.customer_name;

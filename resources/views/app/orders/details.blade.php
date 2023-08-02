@@ -46,7 +46,12 @@
                 <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">Status:</p>
                
-                <p class="invoice-date">   <span class="badge badge-pill badge-light-warning mr-1"> {!! $order->order_status ?? ''!!} </span> </p>
+                <p class="invoice-date"> 
+                @if ($order->payment_status === 'PAID')
+                     <span class="badge badge-pill badge-light-success mr-1"> {{ $order->payment_status ?? '' }} </span>
+                @else
+                     <span class="badge badge-pill badge-light-warning mr-1">{{ $order->payment_status ?? '' }}</span>
+                @endif
               </div>
             </div>
           </div>
