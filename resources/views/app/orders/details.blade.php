@@ -26,22 +26,23 @@
               <div class="logo-wrapper">
 
               </div>
-              <p class="card-text mb-25">Office 149, Kenmeat</p>
+              <p class="card-text mb-25">Main Office, Kenmeat</p>
               <p class="card-text mb-25">Nairobi Kenya</p>
               <p class="card-text mb-0">+254 (123) 456 7891 </p>
+              <p class="card-text mb-0"> <b> Order Status </b> :  <span class="badge badge-pill badge-light-success mr-1"> {{ $order->order_status ?? '' }} </span> </p>
             </div>
             <div class="mt-md-0 mt-2">
               <h4 class="invoice-title">
                 Invoice
-                <span class="invoice-number">#{!! $order->id !!}</span>
+                <span class="invoice-number">#{!! $order->order_code !!}</span>
               </h4>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">Date Issued:</p>
-                <p class="invoice-date">{!! $order->created_at !!}</p>
+                <p class="invoice-date">{{ $order->created_at->format('Y-m-d h:i A') }}</p>
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">Due Date:</p>
-                <p class="invoice-date"> {!! $order->created_at !!} </p>
+                <p class="invoice-date">{{ $order->created_at->format('Y-m-d h:i A') }}</p>
               </div>
                 <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">Status:</p>

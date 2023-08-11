@@ -66,35 +66,34 @@
                         <th>Actions</th>
                     </thead>
                     <tbody>
-                        @foreach ($pendingorders as $count => $order)
+                    @forelse ($pendingorders as $count => $order)
                             <tr>
-                                <td> {{ $order->order_code }} </td>
+                                <td>{{ $order->order_code }}</td>
                                 <td title="{{ $order->Customer->customer_name ?? null }}">
                                     {{ Str::limit($order->Customer->customer_name ?? null, 30) }}</td>
                                 <td title="{{ $order->User->name ?? null }}">
                                     {{ Str::limit($order->User->name ?? null, 20) }}</td>
                                 <td>{{ number_format($order->price_total) }}</td>
-                                 <td>
-                                   @if ($order->payment_status === 'PAID')
-                                       <span class="badge badge-pill badge-light-success mr-1"> {{ $order->payment_status ?? '' }} </span>
+                                <td>
+                                    @if ($order->payment_status === 'PAID')
+                                        <span class="badge badge-pill badge-light-success mr-1">{{ $order->payment_status ?? '' }}</span>
                                     @else
                                         <span class="badge badge-pill badge-light-warning mr-1">{{ $order->payment_status ?? '' }}</span>
                                     @endif
-                                 </td>
-                              <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
-
-
+                                </td>
+                                <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                 <td>
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-sm dropdown-toggle show-arrow " data-toggle="dropdown" style="background-color: #089000; color:white" >
-                                        <i data-feather="settings"></i>
+                                        <button type="button" class="btn btn-sm dropdown-toggle show-arrow" data-toggle="dropdown"
+                                            style="background-color: #089000; color:white">
+                                            <i data-feather="settings"></i>
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="{!! route('orders.details', $order->order_code) !!}">
                                                 <i data-feather="eye" class="mr-50"></i>
                                                 <span>View</span>
                                             </a>
-                                   
+
                                             @if ($order->order_status === 'CANCELLED')
                                                 <a wire:click.prevent="activate({{ $order->id }})"
                                                     onclick="confirm('Are you sure you want to REINSTATE this Order by id {{ $order->order_code }}?')||event.stopImmediatePropagation()"
@@ -110,16 +109,17 @@
                                                     <span>Cancel</span>
                                                 </a>
                                             @endif
-                                    
+
                                         </div>
                                     </div>
-                                </td>   
-
-                                
-                            
-
+                                </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center">No pending orders available.</td>
+                            </tr>
+                        @endforelse
+
                     </tbody>
                 </table>
             </div>
