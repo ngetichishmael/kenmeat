@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dashboard;
 
 use App\Models\customer\checkin;
 use App\Models\Orders;
+use App\Models\customers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -44,27 +45,45 @@ class Dashboard extends Component
    }
    public function render()
    {
-
-
-
-      $vansales = Orders::where('order_type', 'Van sales')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->where('order_status', 'DELIVERED')
-         ->sum('price_total');
+      $vansalesCount = Orders::where('order_type', 'Van sales');
+                
+      if (empty($this->start) && empty($this->end)) {
+          $currentMonth = now()->startOfMonth();
+          $vansalesCount->whereBetween('updated_at', [$currentMonth, now()]);
+      } else {
+          if (!empty($this->start)) {
+              $vansalesCount->where('updated_at', '>=', $this->start);
+          }
+          if (!empty($this->end)) {
+              $vansalesCount->where('updated_at', '<=', $this->end);
+          }
+      }
+  
+      $Vansalescount = $vansalesCount->count();
+      
 
       $salesTotal = Orders::with('user', 'customer')
         
          ->orderByDesc('updated_at') // Order by updated_at in descending order (most recent first)
          ->paginate($this->perVansale);
 
-      $preorder = Orders::where('order_type', 'Pre Order')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->where('order_status', 'DELIVERED')
-         ->sum('price_total');
+
+
+      $preorderCount = Orders::where('order_type', 'Pre Order');
+                
+      if (empty($this->start) && empty($this->end)) {
+          $currentMonth = now()->startOfMonth();
+          $preorderCount->whereBetween('created_at', [$currentMonth, now()]);
+      } else {
+          if (!empty($this->start)) {
+              $preorderCount->where('created_at', '>=', $this->start);
+          }
+          if (!empty($this->end)) {
+              $preorderCount->where('created_at', '<=', $this->end);
+          }
+      }
+  
+      $preordersCount = $preorderCount->count();
 
       $preorderTotal = Orders::with('user', 'customer')
          ->where('order_type', 'Pre Order')
@@ -74,11 +93,18 @@ class Dashboard extends Component
          ->where('order_status', 'DELIVERED')
          ->paginate($this->perPreorder);
 
-      $orderfullment = Orders::where('order_status', 'DELIVERED')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->count();
+      // $orderfullment = Orders::where('order_status', 'DELIVERED')
+      //    ->where(function (Builder $query) {
+      //       $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      //    })
+      //    ->count();
+
+      $orderfullment = Orders::whereIn('order_status', ['DELIVERED', 'Partial Delivery'])
+      ->where('order_type', 'Pre Order')
+      ->where(function (Builder $query) {
+          $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      })
+      ->count();
 
       $orderfullmentTotal = Orders::with('user', 'customer')
          ->where('order_status', 'DELIVERED')
@@ -107,10 +133,15 @@ class Dashboard extends Component
       ->get();
 
 
-      $strike = checkin::where(function (Builder $query) {
-         $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-      })
-         ->count();
+      $strikeCount = Checkin::query();
+
+      if (!empty($this->start) || !empty($this->end)) {
+          $strikeCount->where(function (Builder $query) {
+              $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+          });
+      }
+  
+      $strikeCount = $strikeCount->count();
          
          $visitsTotal = checkin::with('user', 'customer')
          ->orderBy('created_at', 'desc') // Order by the latest visits first
@@ -163,11 +194,29 @@ class Dashboard extends Component
          ->sum('amount');
 
 
-      $customersCount = Orders::distinct('customerID')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->count();
+      // $customersCount = Orders::distinct('customerID')
+      //    ->where(function (Builder $query) {
+      //       $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      //    })
+      //    ->count();
+      $customersCount = customers::query();
+
+         if (empty($this->start) && empty($this->end)) {
+             $currentMonth = Carbon::now()->startOfMonth();
+             $customersCount->whereBetween('created_at', [$currentMonth, Carbon::now()]);
+         } else {
+             if (!empty($this->start)) {
+                 $customersCount->where('created_at', '>=', $this->start);
+             }
+             if (!empty($this->end)) {
+                 $customersCount->where('created_at', '<=', $this->end);
+             }
+         }
+     
+         $customersCount = $customersCount->count();
+
+
+
       $customersCountTotal = Orders::with('user', 'customer')
          ->groupBy('customerID')
          ->distinct('customerID')
@@ -181,12 +230,12 @@ class Dashboard extends Component
          'Cheque' => $cheque,
          'sales' => $sales,
          'total' => $bank,
-         'vansales' => $vansales,
-         'preorder' => $preorder,
+         'vansales' => $Vansalescount,
+         'preorder' => $preordersCount,
          'orderfullment' => $orderfullment,
          'activeUser' => $activeUser,
          'activeAll' => $activeAll,
-         'strike' => $strike,
+         'strike' => $strikeCount,
          'customersCount' => $customersCount,
          'salesTotal' => $salesTotal,
          'preorderTotal' => $preorderTotal,
