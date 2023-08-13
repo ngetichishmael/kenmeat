@@ -77,8 +77,8 @@ class DeliveryController extends Controller
                   'customerID' => $delivery->customer,
                   'price_total' => ($checker->quantity - $value["qty"]) * $checker->ProductPrice->selling_price,
                   'balance' => ($checker->quantity - $value["qty"]) * $checker->ProductPrice->selling_price,
-                  'order_status' => 'Pending Delivery',
-                  'payment_status' => 'Pending Payment',
+                  'order_status' => 'Partial Delivery',
+                  'payment_status' => 'PAID',
                   'qty' => $value["qty"],
                   'checkin_code' => $checker->checkin_code,
                   'order_type' => 'Van sales',
@@ -146,6 +146,11 @@ class DeliveryController extends Controller
             ->update([
                "delivery_quantity" => $value["qty"]
             ]);
+
+         Orders::where('order_code', $order_code->order_code)
+            ->update([
+               'order_status' => "DELIVERED",
+            ]);
          $total += product_price::whereId($value["productID"])->pluck('buying_price')->implode(" ") * $value["qty"];
       }
       return response()->json([
@@ -208,6 +213,12 @@ class DeliveryController extends Controller
       $order_code = Delivery::where('delivery_code', $delivery_code)->first();
       Order_items::where('order_code', $order_code->order_code)
          ->update(["delivery_quantity" => "0"]);
+
+      Orders::where('order_code', $order_code->order_code)
+            ->update([
+               'order_status' => "CANCELLED",
+            ]);
+
       return response()->json([
          "success" => true,
          "message" => "Delivery Cancelled Successfully",

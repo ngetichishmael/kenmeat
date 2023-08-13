@@ -47,14 +47,16 @@
                         Export
                     </button>
                     <div class="dropdown-menu">
-                        <button class="dropdown-item" wire:click="export(null)">All</button>
-                        <button class="dropdown-item" wire:click="export('today')">Today</button>
-                        <button class="dropdown-item" wire:click="export('yesterday')">Yesterday</button>
-                        <button class="dropdown-item" wire:click="export('this_week')">This Week</button>
-                        <button class="dropdown-item" wire:click="export('this_month')">This Month</button>
-                        <button class="dropdown-item" wire:click="export('this_year')">This Year</button>
+                        <a class="dropdown-item" wire:click="export(null)">All</a>
+                        <a class="dropdown-item" wire:click="export('today')">Today</a>
+                        <a class="dropdown-item" wire:click="export('yesterday')">Yesterday</a>
+                        <a class="dropdown-item" wire:click="export('this_week')">This Week</a>
+                        <a class="dropdown-item" wire:click="export('this_month')">This Month</a>
+                        <a class="dropdown-item" wire:click="export('this_year')">This Year</a>
                     </div>
                 </div>
+
+                
             </div>
             
         </div>

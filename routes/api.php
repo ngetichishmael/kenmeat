@@ -267,4 +267,7 @@ Route::group(['namespace' => 'Api'], function () {
     // Forms validation
     Route::post('/form/responses', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
 
+    Route::get('/get/targets/{type}', [TargetsController::class, "getTarget"])->name('getUITargets');
+
+
 });

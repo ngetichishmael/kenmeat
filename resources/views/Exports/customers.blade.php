@@ -7,6 +7,8 @@
                 <th>Address</th>
                 <th>Zone/Region</th>
                 <th>Route</th>
+                <th>Created By</th>
+                <th>Created At</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +27,12 @@
                     </td>
                     <td>
                         {{ $contact->Area->name ?? '' }}
+                    </td>
+                    <td>
+                         {!! $contact->Creator->name ?? '' !!}
+                     </td>
+                     <td>
+                         {!! $contact->created_at ? $contact->created_at->format('Y-m-d h:i A') : '' !!}
                     </td>
                 </tr>
             @endforeach

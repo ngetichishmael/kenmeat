@@ -2,7 +2,10 @@
 
 namespace App\Exports;
 
-use App\Models\customer\customers;
+// use App\Models\customer\customers;
+use App\Models\Area;
+use App\Models\customers;
+use App\Models\Subregion;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -15,11 +18,12 @@ class CustomersExport implements FromView, WithMapping
             $customer->customer_name,
             $customer->phone_number,
             $customer->address,
+            $customer->creator->name,
             optional($customer->Area->Subregion->Region)->name,
             optional($customer->Area->Subregion)->name,
             optional($customer->Area)->name,
             optional($customer->Creator)->name,
-            optional($customer->Creator)->created_at,
+            optional($customer)->created_at,
         ];
     }
 
