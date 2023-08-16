@@ -18,9 +18,9 @@
                         <tr>
                             <td><a href="{{ route('delivery.reports') }}" style="color: black">Delivery </a></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td><a href="{{ route('supplier.reports') }}" style="color: black">Suppliers </a></td>
-                        </tr>
+                        </tr> --}}
                         {{-- <tr>
                             <td><a href="{{ route('distributor.reports') }}" style="color: black">Distributors
                                 </a></td>

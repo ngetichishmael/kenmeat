@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'New Customer')
 {{-- page styles --}}
@@ -7,7 +7,7 @@
 {{-- content section --}}
 @section('content')
     <!-- begin breadcrumb -->
-    <div class="mb-2 row">
+    <div class="mb-2 row" style="padding-left:5%; padding-right:5%">
         <div class="col-md-8">
             <h2 class="page-header"><i data-feather="users"></i> Customers </h2>
         </div>
@@ -17,9 +17,9 @@
         </div>
     </div>
     <!-- Basic multiple Column Form section start -->
-    <section id="multiple-column-form">
+    <section id="multiple-column-form" style="padding-left:5%; padding-right:5%">
         <div class="row">
-            <div class="col-8">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Customers</h4>
@@ -187,7 +187,7 @@
                                 </div>
                                 @livewire('customers.region')
                             </div>
-                            <div class="my-1 col-sm-9 offset-sm-3">
+                            <div class="mt-2 col-12 d-flex flex-sm-row flex-column justify-content-center" style="gap: 20px;">
                                 <button type="submit" class="mr-1 btn btn-primary">Submit</button>
                                 <a href="{{ route('customer') }}" class="btn btn-outline-secondary">Cancel</a>
                             </div>

@@ -45,7 +45,7 @@
                                 <td>{!! $admin->status !!}</td>
                                 <td>
                                    <div class="dropdown" >
-                                      <button style="background-color: #B6121B;color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                      <button style="background-color: #027333; color:white" class="btn btn-md dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-trigger="click" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                          <i data-feather="settings"></i>
                                       </button>
                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -74,4 +74,5 @@
             <div class="mt-1">{!! $admins->links() !!}</div>
         </div>
     </div>
+    <br>
 </div>

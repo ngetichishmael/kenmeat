@@ -33,7 +33,7 @@ class LineChart extends Component
            12 => 'Dec',
        ];
    
-       $totalOrderSale = Orders::where('order_status', 'DELIVERED')
+       $totalOrderSale = Orders::where('payment_status', 'PAID')
            ->selectRaw('MONTH(updated_at) as month, SUM(price_total) as total_sale')
            ->groupBy('month')
            ->pluck('total_sale', 'month')

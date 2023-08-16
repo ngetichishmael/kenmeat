@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
 use App\Models\customer\customers;
 use App\Models\Delivery;
@@ -69,14 +70,24 @@ class deliveryController extends Controller
    public function acceptDelivery(Request $request)
    {
       $data = $request->all();
-
+      $order_code = "";
       foreach ($data as $value) {
          Delivery::where('delivery_code', $value["delivery_code"])->update([
             'delivery_status' => 'pending',
             'Note' => $value["note"],
             'updated_by' => $request->user()->user_code,
          ]);
+         $order_code = $value["delivery_code"];
       }
+      (new Activity)(
+         "Accepted Delivery for order " . $order_code,
+         "Delivery Code: " . $order_code,
+         'Deliveries',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
+      );
       return response()->json(
          [
             "status" => 200,
@@ -95,7 +106,17 @@ class deliveryController extends Controller
             'Note' => $value["note"],
             'updated_by' => $request->user()->user_code,
          ]);
+         $order_code = $value["delivery_code"];
       }
+      (new Activity)(
+         "Rejected Delivery for order " . $order_code,
+         "Delivery Code: " . $order_code,
+         'Deliveries',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
+      );
       return response()->json(
          [
             "status" => 200,

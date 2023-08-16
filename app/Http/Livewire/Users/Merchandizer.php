@@ -34,7 +34,7 @@ class Merchandizer extends Component
        User::whereId($id)->update(
           ['status' => "Suspended"]
        );
-       return redirect()->to('/users');
+       return redirect()->to('/users/merchandizer');
     }
     public function activate($id)
     {
@@ -42,7 +42,17 @@ class Merchandizer extends Component
           ['status' => "Active"]
        );
  
-       return redirect()->to('/users');
+       return redirect()->to('/users/merchandizer');
+    }
+
+    public function destroy($id)
+    {
+        if ($id) {
+            $user = User::where('id', $id);
+            $user ->delete();
+
+            return redirect()->to('/users/merchandizer');
+        }
     }
 
 }

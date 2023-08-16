@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -46,7 +47,15 @@ class PaymentController extends Controller
       DB::table('sales_targets')
          ->where('user_code', $user_code)
          ->increment('AchievedSalesTarget', $amount);
-
+      (new Activity)(
+         "Payment for order " . $orderID,
+         "Payment ",
+         'Payment',
+         $request->user()->id,
+         $request->user()->user_code,
+         $request->ip() ?? "127.0.0.1",
+         "App"
+      );
       return response()->json([
          "success" => true,
          "message" => "Successfully",

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'User Visits')
 
@@ -12,7 +12,7 @@
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('app.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{!! route('users.index') !!}">Users</a></li>
+                            <li class="breadcrumb-item"><a href="">Users</a></li>
                             <li class="breadcrumb-item active">List</li>
                         </ol>
                     </div>
@@ -22,5 +22,6 @@
     </div>
     @include('partials._messages')
     @livewire('visits.users.dashboard')
+    <br>
 @endsection
 {{-- page scripts --}}

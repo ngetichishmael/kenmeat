@@ -15,3 +15,5 @@ yarn-error.log
 /.idea
 /.vscode
 git.bash
+/storage/framework/laravel-excel/
+git.sh

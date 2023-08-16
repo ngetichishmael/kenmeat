@@ -39,7 +39,7 @@ class Dashboard extends Component
       if (!is_null($start) && Carbon::parse($start)->isSameDay(Carbon::parse($end))) {
          return $query->where($column, '=', $start);
       }
-
+      $end = $end == null ? Carbon::now()->endOfMonth()->format('Y-m-d') : $end;
       return $query->whereBetween($column, [$start, $end]);
    }
    public function render()
@@ -54,12 +54,9 @@ class Dashboard extends Component
          ->where('order_status', 'DELIVERED')
          ->sum('price_total');
 
-      $vansalesTotal = Orders::with('user', 'customer')
-         ->where('order_type', 'Van sales')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->where('order_status', 'DELIVERED')
+      $salesTotal = Orders::with('user', 'customer')
+        
+         ->orderByDesc('updated_at') // Order by updated_at in descending order (most recent first)
          ->paginate($this->perVansale);
 
       $preorder = Orders::where('order_type', 'Pre Order')
@@ -90,32 +87,49 @@ class Dashboard extends Component
          })
          ->paginate($this->perOrderFulfilment);
 
-      $activeUser = checkin::where(function (Builder $query) {
-         $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-      })
-         ->distinct('user_code')
-         ->count();
+      // $activeUser = checkin::where(function (Builder $query) {
+      //    $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      // })
+      //    ->distinct('user_code')
+      //    ->count();
 
-      $activeUserTotal = checkin::with('user', 'customer')
-         ->distinct('user_code')
-         ->groupBy('user_code')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->paginate($this->perActiveUsers);
+      $activeUser = User::where('status', 'Active')->count();
+
+      // $activeUserTotal = checkin::with('user', 'customer')
+      //    ->distinct('user_code')
+      //    ->groupBy('user_code')
+      //    ->where(function (Builder $query) {
+      //       $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+      //    })
+      //    ->paginate($this->perActiveUsers);
+      $activeUserTotal = User::orderBy('created_at', 'desc') // Order by the recently added users first
+      ->take(10) // Limit the query to get only the latest 10 users
+      ->get();
+
 
       $strike = checkin::where(function (Builder $query) {
          $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
       })
          ->count();
-
-      $visitsTotal = checkin::with('user', 'customer')
-         ->groupBy('customer_id')
-         ->where(function (Builder $query) {
-            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
-         })
-         ->paginate($this->perVisits);
-
+         
+         $visitsTotal = checkin::with('user', 'customer')
+         ->orderBy('created_at', 'desc') // Order by the latest visits first
+         ->take(10) // Limit the query to get only the latest 10 visits
+         ->get();
+     
+     // Calculate the duration for each visit and update the $visitsTotal collection
+     foreach ($visitsTotal as $visit) {
+         if ($visit->stop_time === null) {
+             // Visit is active, calculate the duration from 'created_at' to now
+             $duration = Carbon::parse($visit->created_at)->diffForHumans(null, true);
+         } else {
+             // Visit is complete, calculate the duration from 'created_at' to 'stop_time'
+             $duration = Carbon::parse($visit->created_at)->diffForHumans($visit->stop_time, true);
+         }
+     
+         // Update the 'duration' attribute of the visit with the calculated duration
+         $visit->duration = $duration;
+     }
 
 
 
@@ -142,6 +156,11 @@ class Dashboard extends Component
             $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
          })
          ->sum('amount');
+      $bank = OrderPayment::where('payment_method', 'PaymentMethods.BankTransfer')
+         ->where(function (Builder $query) {
+            $this->whereBetweenDate($query, 'updated_at', $this->start, $this->end);
+         })
+         ->sum('amount');
 
 
       $customersCount = Orders::distinct('customerID')
@@ -161,7 +180,7 @@ class Dashboard extends Component
          'Mpesa' => $mpesa,
          'Cheque' => $cheque,
          'sales' => $sales,
-         'total' => $cash + $cheque + $mpesa,
+         'total' => $bank,
          'vansales' => $vansales,
          'preorder' => $preorder,
          'orderfullment' => $orderfullment,
@@ -169,7 +188,7 @@ class Dashboard extends Component
          'activeAll' => $activeAll,
          'strike' => $strike,
          'customersCount' => $customersCount,
-         'vansalesTotal' => $vansalesTotal,
+         'salesTotal' => $salesTotal,
          'preorderTotal' => $preorderTotal,
          'activeUserTotal' => $activeUserTotal,
          'orderfullmentTotal' => $orderfullmentTotal,

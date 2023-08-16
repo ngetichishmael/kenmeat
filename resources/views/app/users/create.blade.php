@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'Create User')
 {{-- page styles --}}
@@ -13,7 +13,7 @@
 
     <div class="content-header row">
         <div class="mb-2 content-header-left col-md-12 col-12">
-            <div class="row breadcrumbs-top">
+            <div class="row breadcrumbs-top" style="padding-left:5%; padding-right:5%">
                 <div class="col-12">
                     <h2 class="mb-0 content-header-title float-start">Users </h2>
                     <div class="breadcrumb-wrapper">
@@ -27,8 +27,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-10">
+    <div class="row" style="padding-left:5%; padding-right:5%">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <form method="POST" action="{!! route('user.store') !!}" style="gap: 20px;">
@@ -69,19 +69,36 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label for="select-country">Sales Team Category</label>
+                                                    <label for="select-country"> Account Type</label>
                                                     <select class="form-control select2" id="select-country"
                                                         name="account_type" required>
-                                                        <option value="">Select Category</option>
+                                                        <option value="Merchandizer"> </option>
                                                         <option value="Admin">Administator</option>
                                                         <option value="Manager">Manager</option>
                                                         <option value="HR">HR</option>
                                                         <option value="Account Manager">Account Manager</option>
                                                         <option value="Merchandiser">Merchandiser</option>
                                                         <option value="Sales">Sales Agent</option>
+                                                        <option value="Sales">Merchandizer</option>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="select-country">Zone</label>
+                                                    <select class="form-control select2" id="select-country" name="route[]"
+                                                        required multiple>
+                                                        <option value="">Zone</option>
+                                                        <option value="0">General</option>
+                                                        @foreach ($routes as $value)
+                                                            <option value="{{ $value->id }}">{{ $value->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -167,12 +184,11 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
-                                            <button type="submit" class="mb-1 mr-0 btn btn-primary mb-sm-0 mr-sm-1">Save
-                                                Changes</button>
-                                            <a href="{{ route('users.index') }}" type="reset"
-                                                class="btn btn-outline-secondary">Cancel</a>
+                                        <div class="mt-2 col-12 d-flex flex-sm-row flex-column justify-content-center text-center" style="gap: 20px;">
+                                            <button type="submit" class="mb-1 mr-0 btn btn-primary mb-sm-0 mr-sm-1">Save</button>
+                                            <a href="{{ route('users.list') }}" type="reset" class="btn btn-outline-secondary">Cancel</a>
                                         </div>
+
                                     </div>
                                 </form>
                                 <!-- users edit account form ends -->

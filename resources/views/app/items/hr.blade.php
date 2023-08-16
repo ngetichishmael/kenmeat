@@ -1,6 +1,6 @@
 @extends('layouts.app')
 {{-- page header --}}
-@section('title','nsm')
+@section('title','HR')
 
 {{-- content section --}}
 @section('content')
@@ -8,7 +8,7 @@
       <div class="content-header-left col-md-12 col-12 mb-2">
          <div class="row breadcrumbs-top">
             <div class="col-12">
-               <h2 class="content-header-title float-start mb-0">NSM | Details</h2>
+               <h2 class="content-header-title float-start mb-0">	HR | Details</h2>
                <div class="breadcrumb-wrapper">
                   <ol class="breadcrumb">
                      {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
@@ -34,13 +34,13 @@
                     </tr>
                  </thead>
                  <tbody>
-                  @foreach ($nsms as $key => $nsm)
+                  @foreach ($hrs as $key => $hr)
                   <tr>
                      <td>{{ $key+1 }}</td>
-                     <td>{{ $nsm->name }}</td>
+                     <td>{{ $hr->name }}</td>
                      <td></td>
-                     <td>{{ $nsm->Region->name??'Not found' }}</td>
-                     <td>{{ $nsm->Subregion->name??'Not found' }}</td>
+                     <td>{{ $hr->Region->name??'Not found' }}</td>
+                     <td>{{ $hr->Subregion->name??'Not found' }}</td>
                  </tr>
                   @endforeach
                    

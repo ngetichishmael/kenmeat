@@ -1,3 +1,10 @@
+<style>
+    /* Add custom CSS styles for the main-menu container */
+    .main-menu-container {
+        max-height: calc(100vh - 100px); /* Set a max height with some padding at the bottom */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+</style>
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header mb-3 mt-0">
         <ul class="nav navbar-nav flex-row " style="padding-top:10px;">
@@ -24,19 +31,35 @@
             <li class="nav-item {!! Nav::isResource('customer') !!}">
                 <a class="d-flex align-items-center" href="#">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo">
-                        Customers Managements</span>
+                        Customers</span>
                 </a>
                 <ul class="menu-content">
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
+                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer') !!}"
                             href="{{ route('customer') }}">
-                            <span class="menu-item text-truncate">Customers</span></a>
+                            <span class="menu-item text-truncate">List</span></a>
                     </li>
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
+                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('outlets') !!}"
                             href="{{ route('outlets') }}"><span class="menu-item text-truncate">Outlets</span></a>
                     </li>
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
+                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('comment') !!}"
                             href="{{ route('CustomerComment') }}"><span
                                 class="menu-item text-truncate">Comments</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item {!! Nav::isResource('regions') !!}">
+                <a class="d-flex align-items-center" href="#"><i data-feather="globe"></i><span
+                        class="menu-title text-truncate" data-i18n="Invoice">Maps</span></a>
+                <ul class="menu-content">
+                    <li class="nav-item {!! Nav::isResource('maps') !!}">
+                        <a class="d-flex align-items-center" href="{!! route('maps') !!}">
+                            <i data-feather="user"></i><span class="menu-item text-truncate">Customers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {!! Nav::isResource('current-information') !!}">
+                        <a class="d-flex align-items-center" href="{!! route('current-information') !!}">
+                            <i data-feather="user"></i><span class="menu-item text-truncate">Sales Agents</span>
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -80,23 +103,14 @@
                 </ul>
             </li>
             <li class="nav-item {!! Nav::isRoute('payment') !!}">
-                <a class="d-flex align-items-center" href="#">
+                <a class="d-flex align-items-center" href="{{ route('PaidPayment') }}">
                     <i data-feather="credit-card"></i><span class="menu-title text-truncate" data-i18n="Todo">
-                        Payment Management</span>
+                        Payments</span>
                 </a>
-                <ul class="menu-content">
-                    <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer.*') !!}"
-                            href="{{ route('PaidPayment') }}"><span class="menu-item text-truncate">Payments</span></a>
-                    </li>
-                    {{-- <li style="padding-left: 50px"><a class="d-flex align-items-center {!! Nav::isRoute('customer*') !!}"
-                         href="{{ route('PendingPayment') }}"><span
-                             class="menu-item text-truncate">Creditors Payment</span></a>
-                 </li> --}}
-                </ul>
             </li>
             <li class="nav-item {!! Nav::isResource('warehousing') !!}">
                 <a class="d-flex align-items-center" href="#"><i data-feather='archive'></i><span
-                        class="menu-title text-truncate" data-i18n="Invoice"> Warehousing Management</span></a>
+                        class="menu-title text-truncate" data-i18n="Invoice"> Warehousing</span></a>
                 <ul class="menu-content">
                     <li style="padding-left: 50px"><a class="d-flex align-items-center"
                             href="{!! route('warehousing.index') !!}">
@@ -173,8 +187,7 @@
                             href="{{ route('areas') }}">
                             <span class="menu-item text-truncate">Routes</span></a>
                     </li>
-
-                    <li class="nav-item {!! Nav::isResource('maps') !!}">
+                    <!-- <li class="nav-item {!! Nav::isResource('maps') !!}">
                         <a class="d-flex align-items-center" href="#"><span class="menu-title text-truncate"
                                 data-i18n="Invoice">Maps</span></a>
                         <ul class="menu-content">
@@ -191,7 +204,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
             <li class="nav-item {!! Nav::isResource('routes') !!}">
@@ -239,12 +252,26 @@
                         data-feather='file-text'></i><span class="menu-title text-truncate" data-i18n="Invoice">All
                         Reports</span></a>
             </li>
-            <li class="nav-item {!! Nav::isResource('activity') !!}">
-                <a class="d-flex align-items-center" href="{!! route('activity.index') !!}">
-                    <i data-feather='activity'></i><span class="menu-title text-truncate" data-i18n="Todo"> Activity
-                        Logs </span>
+
+            <li class="nav-item {!! Nav::isResource('Activity') !!}">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="activity"></i><span class="menu-title text-truncate">Logs</span>
                 </a>
+                <ul class="menu-content">
+                    <li style="padding-left: 50px">
+                        <a class="d-flex align-items-center" href="{!! route('activity.index') !!}">
+                            <span class="menu-item text-truncate">Activity Logs</span>
+                        </a>
+                    </li>
+                    <li style="padding-left: 50px">
+                        <a class="d-flex align-items-center {!! Nav::isResource('survey') !!}" href="{!! route('activity.sales') !!}">
+                            <span class="menu-item text-truncate">Sales Logs</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+           
         </ul>
+     
     </div>
 </div>

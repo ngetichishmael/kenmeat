@@ -34,7 +34,7 @@ class Sales extends Component
        User::whereId($id)->update(
           ['status' => "Suspended"]
        );
-       return redirect()->to('/users');
+       return redirect()->to('/users/sales');
     }
     public function activate($id)
     {
@@ -42,7 +42,17 @@ class Sales extends Component
           ['status' => "Active"]
        );
  
-       return redirect()->to('/users');
+       return redirect()->to('/users/sales');
+    }
+
+    public function destroy($id)
+    {
+        if ($id) {
+            $user = User::where('id', $id);
+            $user ->delete();
+
+            return redirect()->to('/users/sales');
+        }
     }
 
 }

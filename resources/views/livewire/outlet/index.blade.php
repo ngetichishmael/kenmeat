@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title', 'Regions')
 {{-- page styles --}}
@@ -12,7 +12,7 @@
         <div class="mb-2 content-header-left col-md-12 col-12">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="mb-0 content-header-title float-start">Regions</h2>
+                    <h2 class="mb-0 content-header-title float-start">Outlets</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -31,7 +31,7 @@
             <div class="card card-default">
                 <div class="card-body">
                     <div class="card-body">
-                        <h4 class="card-title">Add Outlet</h4>
+                        <!-- <h4 class="card-title">Add Outlet</h4> -->
 
                         <form class="form" method="POST" action="{{ route('outlets.store') }}">
                             @method('POST')

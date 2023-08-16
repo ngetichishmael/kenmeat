@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title','Update Category')
 
@@ -41,10 +41,31 @@
                            <td>{!! $all->name !!}</td>
 
                            {{-- <td>{!! Finance::products_by_category_count($all->id) !!}</td> --}}
-                           <td>
+                           <!-- <td>
                               <a href="{{ route('product.category.edit', $all->id) }}" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
                               <a href="{!! route('product.category.destroy', $all->id) !!}" class="btn btn-danger btn-sm delete"><i class="fas fa-trash"></i> Delete</a>
-                           </td>
+                           </td> -->
+
+                           <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle show-arrow " data-toggle="dropdown" style="background-color: #089000; color:white" >
+                                <i data-feather="settings"></i>
+                                </button>
+                                <div class="dropdown-menu">
+
+                                    <a class="dropdown-item" href="{{ route('product.category.edit', $all->id) }}">
+                                        <i data-feather='edit' class="mr-50"></i>
+                                        <span>Edit</span>
+                                    </a>
+                                
+                                    <a class="dropdown-item" href="{!! route('product.category.destroy', $all->id) !!}"
+                                        onclick="confirm('Are you sure you want to Delete the Category?')">
+                                        <i data-feather="trash" class="mr-50"></i>
+                                        <span>Delete</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>  
                         </tr>
                      @endforeach
                   </tbody>
@@ -64,7 +85,7 @@
                   </div>
                   <div class="form-group mt-4">
                      <center>
-                        <button type="submit" class="btn btn-success submit"><i class="fas fa-save"></i> Update Category</button>
+                        <button type="submit" class="btn btn submit" style="background-color: #089000; color:white" ><i class="fas fa-save"></i> Update Category</button>
                         <img src="{!! asset('assets/img/btn-loader.gif') !!}" class="submit-load none" alt="" width="25%">
                      </center>
                   </div>

@@ -35,7 +35,7 @@ class Admins extends Component
        User::whereId($id)->update(
           ['status' => "Suspended"]
        );
-       return redirect()->to('/users');
+       return redirect()->to('/users/admins');
     }
     public function activate($id)
     {
@@ -43,6 +43,16 @@ class Admins extends Component
           ['status' => "Active"]
        );
  
-       return redirect()->to('/users');
+       return redirect()->to('/users/admins');
+    }
+
+    public function destroy($id)
+    {
+        if ($id) {
+            $user = User::where('id', $id);
+            $user ->delete();
+
+            return redirect()->to('/users/admins');
+        }
     }
 }
