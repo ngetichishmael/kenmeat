@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Visits\Users;
 
 use App\Exports\CustomerViewVisitExport;
+use App\Models\SaleReport;
+use App\Models\FormResponse;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +68,8 @@ class View extends Component
             ->where('customers.customer_name', 'LIKE', '%' . $this->search . '%')
             ->whereRaw('customer_checkin.start_time <= customer_checkin.stop_time') // Condition to ensure start_time <= stop_time
             ->select(
-                'customer_checkin.id as id', 
+                'customer_checkin.id as id',
+                'customer_checkin.code as code',
                 'users.name as name',
                 'customers.customer_name AS customer_name',
                 DB::raw("DATE_FORMAT(customer_checkin.start_time, '%h:%i %p') AS start_time"),
@@ -90,6 +93,28 @@ class View extends Component
         $visits = $query->paginate($this->perPage);
         return $visits;
     }
+    public function getChecking($checking_code)
+    {
+        $result = FormResponse::where('checking_code', $checking_code)->first();
+    
+        if ($result) {
+            return [
+                "interested_in_new_order" => $result->interested_in_new_order,
+                "pricing_accuracy" => $result->pricing_accuracy,
+                "progress_status" => $result->progress_status,
+                "product_visible" => $result->product_visible,
+            ];
+        } else {
+            // Handle the case when no matching record is found
+            return [
+                "interested_in_new_order" => null,
+                "pricing_accuracy" => null,
+                "progress_status" => null,
+                "product_visible" => null,
+            ];
+        }
+    }
+    
 
     public function export()
     {
@@ -126,6 +151,5 @@ class View extends Component
 
         return Excel::download(new CustomerViewVisitExport($exportData, $this->username), 'Visits_' . $this->username . '.xlsx');
     }
-    
-    
+
 }
