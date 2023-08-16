@@ -19,7 +19,9 @@ class FormResponseController extends Controller
             'pricing_accuracy' => 'required|string|in:Yes,No',
             'incorrect_pricing_product_name' => 'nullable|string',
             'incorrect_pricing_current_price' => 'nullable|string',
-
+            'checking_code' => 'string',
+            'customer_id' => 'string',
+            'product_visible' => 'required|string|in:Yes,No',
             'progress_status' => 'required|string|in:Very poor,Average,Good,Very Good',
             'new_insights' => 'nullable|string',
             'product_visible' => 'required|string|in:Yes,No',
