@@ -27,7 +27,7 @@
 
                         <br><br><br>
 
-                        <h4 class="mb-1 card-title">Welcome to Sokoflow! 👋</h4>
+                        <h4 class="mb-1 card-title">Welcome to Ken Meat! 👋</h4>
                         <p class="mb-2 card-text">Please sign-in to your account</p>
 
                         @if ($errors->has('email'))
