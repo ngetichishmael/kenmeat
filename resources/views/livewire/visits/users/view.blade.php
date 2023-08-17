@@ -103,7 +103,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Products Visibility:</td>
-                                                        <td>{{ implode(', ', $checkingData['product_visible'] ?? []) }}
+                                                        <td>{{ $checkingData['product_visible'] }}
                                                         </td>
                                                     </tr>
 
