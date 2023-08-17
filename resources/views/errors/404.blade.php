@@ -1,16 +1,9 @@
 
-@php
-    $pageConfigs = ['blankPage' => true];
-@endphp
 
-@extends('layouts/fullLayoutMaster')
 
 @section('title', 'Error 404')
 
-@section('page-style')
-  {{-- Page Css files --}}
-  <link rel="stylesheet" href="{{ asset(mix('css/base/pages/page-misc.css')) }}">
-@endsection
+
 @section('content')
 <!-- Error page-->
 <div class="misc-wrapper">

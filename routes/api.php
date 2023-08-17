@@ -265,7 +265,8 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('/reconcile/products/{customer_id}', [ReturnableController::class, 'reconcileProductWithPayment'])->middleware('auth:sanctum');
 
     // Forms validation
-    Route::post('/form/responses', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
+    Route::post('/form/responses/{customer_id}/{checking_code}', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
+
 
     Route::get('/get/targets/{type}', [TargetsController::class, "getTarget"])->name('getUITargets');
 
