@@ -14,7 +14,7 @@ class pendingorders extends Component
 {
    use WithPagination;
    protected $paginationTheme = 'bootstrap';
-   public $perPage = 25;
+   public $perPage = 20;
    public ?string $search = null;
    public $orderBy = 'orders.id';
    public $orderAsc = false;
@@ -22,6 +22,7 @@ class pendingorders extends Component
 
    public $fromDate;
    public $toDate;
+
    public function render()
    {
       $searchTerm = '%' . $this->search . '%';
@@ -29,30 +30,31 @@ class pendingorders extends Component
       $pendingorders = Orders::with('Customer', 'user')
          ->where('order_status', '=', 'Pending Delivery')
          ->where(function ($query) use ($sokoflow) {
-            $query->whereNull('supplierID')
-               ->orWhere('supplierID', '')
-               ->orWhere('supplierID', $sokoflow->id);
+               $query->whereNull('supplierID')
+                  ->orWhere('supplierID', '')
+                  ->orWhere('supplierID', $sokoflow->id);
          })
-         
          ->where(function ($query) use ($searchTerm) {
-            $query->whereHas('Customer', function ($subQuery) use ($searchTerm) {
-               $subQuery->where('customer_name', 'like', $searchTerm);
-            })
-               ->orWhereHas('User', function ($subQuery) use ($searchTerm) {
-                  $subQuery->where('name', 'like', $searchTerm);
-               });
+               $query->whereHas('Customer', function ($subQuery) use ($searchTerm) {
+                  $subQuery->where('customer_name', 'like', $searchTerm);
+               })
+                  ->orWhereHas('User', function ($subQuery) use ($searchTerm) {
+                     $subQuery->where('name', 'like', $searchTerm);
+                  })
+                  ->orWhere('order_code', 'like', $searchTerm); // Add this line for order_code search
          })
          ->when($this->fromDate, function ($query) {
-            $query->whereDate('created_at', '>=', $this->fromDate);
+               $query->whereDate('created_at', '>=', $this->fromDate);
          })
          ->when($this->toDate, function ($query) {
-            $query->whereDate('created_at', '<=', $this->toDate);
+               $query->whereDate('created_at', '<=', $this->toDate);
          })
          ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
          ->paginate($this->perPage);
 
       return view('livewire.orders.pendingorders', compact('pendingorders'));
    }
+
    public function export()
    {
       return Excel::download(new OrdersExport, 'orders.xlsx');

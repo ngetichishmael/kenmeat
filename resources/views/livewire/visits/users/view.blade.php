@@ -2,7 +2,7 @@
     <div class="card">
         <h5 class="card-header"></h5>
         <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-            <div class="col-md-4 user_role">
+            <div class="col-md-3 user_role">
                 <div class="input-group input-group-merge">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i data-feather="search"></i></span>
@@ -33,6 +33,13 @@
                     <input wire:model="end" name="endDate" type="date" class="form-control" id="validationTooltip01" placeholder="YYYY-MM-DD HH:MM" required />
                 </div>
             </div>
+            <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
+                        wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel" width="25" height="15">
+                        <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="15" height="15"
+                            data-toggle="tooltip" data-placement="top" title="Export Excel">Export
+                    </button>
+                </div>
         </div>
     </div>
 
@@ -47,7 +54,7 @@
                             <th>Customer Name</th>
                             <th>Start/Stop Time</th>
                             <th>Duration</th>
-                            <th>Distance</th>
+                          
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -65,10 +72,10 @@
                             <td>
                                 <div class="badge badge-pill badge-dark">{{ $this->formatDuration($visit->duration_seconds) ?? '' }}</div>
                             </td>
-                            <td>5KM</td>
+                            
                             <td>{{ $visit->formatted_date }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">
+                                <a href="{{ route('visit.details', ['id' => $visit->id]) }}" class="btn btn-sm" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">
                                     <i data-feather="eye"></i>
                                 </a>
                             </td>

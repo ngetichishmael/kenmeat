@@ -51,7 +51,7 @@
                                 <a href="{{ route('tsr') }}" class="btn btn-success btn-sm">View </a>
                               @elseif($list == 'HR')
                                 <a href="{{ route('hr') }}" class="btn btn-success btn-sm">View </a>
-                              @elseif($list == 'Merchandizer')
+                              @elseif($list == 'Merchandiser')
                                 <a href="{{ route('Merchandizer') }}" class="btn btn-success btn-sm">View</a>
                               @elseif($list == 'GT Sales')
                                 <a href="{{ route('GTSales') }}" class="btn btn-success btn-sm">View</a>

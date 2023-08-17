@@ -1,78 +1,159 @@
-@extends('layouts.app')
-{{-- page header --}}
-@section('title','Create Warehouse')
 
-{{-- content section --}}
+@extends('layouts.app3')
+{{-- page header --}}
+@section('title', 'Add Customer')
+
+@section('vendor-style')
+  <!-- Vendor css files -->
+  <link rel="stylesheet" href="{{ asset('vendors/css/forms/wizard/bs-stepper.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
+
+
+  <link rel="stylesheet" href="{{ asset('vendors/css/vendors.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendors/css/ui/prism.min.css') }}" />
+
+<!-- Vendor css files -->
+<link rel="stylesheet" href="{{ asset('vendors/css/forms/wizard/bs-stepper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/core.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/base/core/menu/menu-types/vertical-menu.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('css/base/core/colors/palette-gradient.css') }}"> -->
+
+<!-- Page css files -->
+<link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommerce.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-pickadate.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-wizard.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-number-input.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/overrides.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
+@endsection
+
+@section('page-style')
+  <!-- Page css files -->
+  <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommerce.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-pickadate.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-wizard.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/form-number-input.css') }}">
+@endsection
+
+
+
+
 @section('content')
-   <div class="content-header row">
-      <div class="content-header-left col-md-12 col-12 mb-2">
-         <div class="row breadcrumbs-top">
-            <div class="col-12">
-               <h2 class="content-header-title float-start mb-0">Add Warehouse </h2>
-               <div class="breadcrumb-wrapper">
-                  <ol class="breadcrumb">
-                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                     <li class="breadcrumb-item"><a href="{{route('warehousing.index')}}">Warehouse</a></li>
-                     <li class="breadcrumb-item active">Create</li>
-                  </ol>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   @include('partials._messages')
-   <div class="row">
-      <div class="col-md-8">
-         <div class="card">
-            <div class="card-body">
-               <form action="{!! route('warehousing.store') !!}" method="POST">
-                  @csrf
-                  <div class="form-group mb-1 col-md-8 ml-3">
-                     <label for="">Warehouse Name</label>
-                     {!! Form::text('name',null,['class'=>'form-control','required'=>'']) !!}
-                  </div>
-                  <div class="form-group mb-1 col-md-8 ml-3">
-                     <label for="">Generated Warehouse Code</label>
-                     {!! Form::text('warehouse_code',$warehouse_code,['class'=>'form-control','required'=>'', 'readonly' => 'readonly']) !!}
-                  </div>
-                  <div class="form-group mb-1 col-md-8 ml-3">
-                     <label for="region_id">Region:</label>
-                     <select id="region_id" class="form-control select2" name="region_id" required>
-                        <option value="">Select a region</option>
-                        @foreach($regions as $region)
+
+<div class="bs-stepper checkout-tab-steps">
+  <div class="bs-stepper-header">
+    <div class="step" data-target="#customer-details">
+      <button type="button" class="step-trigger">
+        <span class="bs-stepper-box">
+          <i data-feather='globe' class="font-medium-3"></i>
+        </span>
+        <span class="bs-stepper-label">
+          <span class="bs-stepper-title">New Warehouse</span>
+          <span class="bs-stepper-subtitle">Warehouse Information</span>
+        </span>
+      </button>
+    </div>
+
+
+  
+  </div>
+
+
+  <div wire:ignore.self class="bs-stepper-content">
+  <div id="customer-details" class="content">
+      <form action="{!! route('warehousing.store') !!}" method="POST" class="list-view product-checkout">
+        @csrf
+        <div class="card">
+          <div class="card-header flex-column align-items-start">
+            <h4 class="card-title">Warehouse information</h4>
+            <p class="card-text text-muted mt-25">Be sure to enter correct information</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-2">
+                  <label for="checkout-name">Warehouse Name:</label>
+                  {!! Form::text('name',null,['class'=>'form-control','required'=>'']) !!}
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-2">
+                  <label for="checkout-name">Warehouse Code (Autogenerated):</label>
+                  {!! Form::text('warehouse_code',$warehouse_code,['class'=>'form-control','required'=>'', 'readonly' => 'readonly']) !!}
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-2">
+                  <label for="add-type">Region:</label>
+                  <select id="region_id" class="form-control" name="region_id" required>
+                         <option>Select</option>
+                         @foreach($regions as $region)
                            <option value="{{ $region->id }}">{{ $region->name }}</option>
                         @endforeach
-                     </select>
+                  
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-2">
+                  <label for="add-type">Sub Region:</label>
+                  <select id="subregion_id" class="form-control" name="subregion_id">
+                       <option value=""></option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+              <div class="col-12 mb-2">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input"  id="accountSwitch1"  name="is_main"  value="Yes" />
+                    <label class="custom-control-label" for="accountSwitch1">
+                      Is Main Warehouse
+                    </label>
                   </div>
-                  <div class="form-group mb-1 col-md-8 ml-3">
-                     <label for="subregion_id">Subregion:</label>
-                     <select id="subregion_id" class="form-control select2" name="subregion_id">
-                        <option value=""></option>
-                     </select>
+                </div>
+                <div class="col-12 mb-2">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" checked id="accountSwitch2" name="status"  value="Active"  />
+                    <label class="custom-control-label" for="accountSwitch2">
+                      Is Active
+                    </label>
                   </div>
-                  <div class="row">
-                     <div class="col-md-6">
-                        <div class="form-check form-switch">
-                           <label class="form-check-label" for="customSwitch1">Is main warehouse</label>
-                           <input type="checkbox" class="form-check-input" name="is_main" id="customSwitch1" value="Yes" />
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="form-check form-switch">
-                           <label class="form-check-label mb-50" for="customSwitch4">Is Active</label>
-                           <input type="checkbox" class="form-check-input" name="status" id="customSwitch4" value="Active" />
-                        </div>
-                     </div>
+                </div>
+
                   </div>
-                  <center><button class="btn btn-success mt-2" type="submit"><i data-feather='save'></i> Save Information</button>
-                 <a href="{{ url('/warehousing') }}" class="btn btn-danger mt-2 align-content-center" type="back"><i data-feather='chevron-left'></i> Cancel</a>
-                  </center>
-               </form>
+
+     
+              <hr class="my-2" />
+              <div class="col-12 d-flex justify-content-center" >
+                  <button type="submit" class="btn btn-primary btn-next delivery-address mr-2"> Save</button>
+                  <a href="{{ url('/warehousing') }}" class="btn btn-outline-secondary">Cancel</a>
+              </div>
             </div>
-         </div>
-      </div>
-   </div>
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          </div>
+        </div>
+
+
+   
+      </form>
+    </div>
+   
+
+   
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script>
       $(document).ready(function() {
          $('#region_id').change(function() {
@@ -98,8 +179,31 @@
          });
       });
    </script>
-@endsection
-{{-- page scripts --}}
-@section('script')
 
 @endsection
+
+@section('vendor-script')
+  <!-- Vendor js files -->
+  <script src="{{ asset('vendors/js/forms/wizard/bs-stepper.min.js') }}"></script>
+  <script src="{{ asset('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+  <script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-ecommerce-checkout.js') }}"></script>
+
+
+  <script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+<script src="{{ asset('vendors/js/ui/prism.min.js') }}"></script>
+
+<!-- Vendor js files -->
+<script src="{{ asset('vendors/js/forms/wizard/bs-stepper.min.js') }}"></script>
+<script src="{{ asset('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+<script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
+
+<script src="{{ asset('js/core/app-menu.js') }}"></script>
+<script src="{{ asset('js/core/app.js') }}"></script>
+<script src="{{ asset('js/scripts/customizer.js') }}"></script>
+
+<!-- Page js files -->
+<script src="{{ asset('js/scripts/pages/app-ecommerce-checkout.js') }}"></script>
+
+@endsection
+

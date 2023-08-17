@@ -40,7 +40,7 @@
         <div class="card">
             <h5 class="card-header"></h5>
             <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-                <div class="col-md-4 user_role">
+                <div class="col-md-3 user_role">
                     <div class="input-group input-group-merge">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i data-feather="search"></i></span>
@@ -60,12 +60,39 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <div class="form-group">
                         <label for="validationTooltip02">Month</label>
                         <input wire:model="selectedMonth" name="month" type="month" class="form-control" id="validationTooltip02" required />
                     </div>
+                </div> -->
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="validationTooltip02">Start Date</label>
+                        <input wire:model="start" name="start" type="date" class="form-control" id="validationTooltip02" required />
+                    </div>
                 </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="validationTooltip03">End Date</label>
+                        <input wire:model="end" name="end" type="date" class="form-control" id="validationTooltip03" required />
+                        @if ($end && $start && $end < $start)
+                            <p class="text-danger">End date cannot be before the start date.</p>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
+                        wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel" width="25" height="15">
+                        <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="15" height="15"
+                            data-toggle="tooltip" data-placement="top" title="Export Excel">Export
+                    </button>
+                </div>
+
+
             </div>
         </div>
 
@@ -108,7 +135,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5" style="text-align: center; ">No visits found.</td>
+                                    <td colspan="5" style="text-align: center; ">No record found.</td>
                                 </tr>
                             @endif
                         </tbody>

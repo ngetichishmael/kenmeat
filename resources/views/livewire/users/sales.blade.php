@@ -2,7 +2,7 @@
     <div class="card">
             <h5 class="card-header"></h5>
             <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-                <div class="col-md-4 user_role">
+                <div class="col-md-2 user_role">
                     <div class="input-group input-group-merge">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i data-feather="search"></i></span>
@@ -21,6 +21,32 @@
                         </select>
                     </div>
                 </div>
+               
+                <div class="col-md-2 user_role">
+    <div class="form-group">
+        <label for="selectSubregion">Subregion</label>
+        <select wire:model="selectedSubregion" class="form-control form-control-sm" id="selectSubregion">
+            <option value="">All Subregions</option>
+            @foreach ($subregions as $subregion)
+                <option value="{{ $subregion->id }}">{{ $subregion->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<!-- <div class="col-md-2 user_role">
+    <div class="form-group">
+        <label for="selectArea">Area</label>
+        <select wire:model="selectedArea" class="form-control form-control-sm" id="selectArea">
+            <option value="">All Areas</option>
+            @if ($areas)
+                @foreach ($areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
+</div> -->
             
              <div class="col-md-2">
                 
@@ -41,8 +67,10 @@
             <th width="1%">#</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone Number</th>
             <th>Region</th>
-            <th>Phone</th>
+            <th>Sub-Reg</th>
+            <th>Area</th>
             <th>Status</th>
             <th width="12%">Actions</th>
         </tr>
@@ -58,8 +86,10 @@
                     <td>{!! $key + 1 !!}</td>
                     <td>{!! $user->name !!}</td>
                     <td>{!! $user->email !!}</td>
-                    <td>{!! $user->Region->name ?? '' !!}</td>
                     <td>{!! $user->phone_number !!}</td>
+                    <td>{!! $user->Region->name ?? '' !!}</td>
+                    <td>{{ $user->area->subregion->name ?? ''}}</td>
+                    <td>{{ $user->area->name ?? ''}}</td>
                     <td>
                         @if ($user->status == 'Active')
                             <span class="badge badge-pill badge-light-success mr-1">Active</span>

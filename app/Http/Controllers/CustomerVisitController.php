@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\customer\checkin;
+use App\Models\FormResponse;
+
 class CustomerVisitController extends Controller
 {
    /**
@@ -44,10 +47,13 @@ class CustomerVisitController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function show($id)
-   {
-      //
-   }
+    public function show($id)
+    {
+       
+        $visit = Checkin::with('formResponses')->findOrFail($id);
+
+        return view('livewire.visits.customer.detail', ['visit' => $visit]);
+    }
 
    /**
     * Show the form for editing the specified resource.

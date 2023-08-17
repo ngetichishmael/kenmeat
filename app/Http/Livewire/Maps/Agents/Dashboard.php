@@ -23,7 +23,7 @@ class Dashboard extends Component
     public function render()
     {
         $initialMarkers = [];
-        $information = CurrentDeviceInformation::orderBy('id', 'ASC')->get();
+        $information = CurrentDeviceInformation::orderBy('id', 'DESC')->get();
         $data = $information->groupBy('user_code');
         $markersByTitle = [];
 
