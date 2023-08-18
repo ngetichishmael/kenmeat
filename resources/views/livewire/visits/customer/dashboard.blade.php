@@ -82,13 +82,13 @@
 <div class="col-md-2">
     <div class="btn-group">
         <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('assets/img/pdf.png') }}" alt="Export PDF" width="15" height="15">
+            <img src="{{ asset('assets/img/excel.png') }}" alt="Export PDF" width="15" height="15">
             Export
         </button>
         <div class="dropdown-menu">
             <a class="dropdown-item parent-item" href="#">PDF</a>
             <div class="dropdown-submenu pdf-submenu">
-                <a class="dropdown-item" wire:click.prevent="exportPDF(null)">All</a>
+                <!-- <a class="dropdown-item" wire:click.prevent="exportPDF(null)">All</a> -->
                 <a class="dropdown-item" wire:click.prevent="exportPDF('today')">Today</a>
                 <a class="dropdown-item" wire:click.prevent="exportPDF('yesterday')">Yesterday</a>
                 <a class="dropdown-item" wire:click.prevent="exportPDF('this_week')">This Week</a>
@@ -98,7 +98,7 @@
             
             <a class="dropdown-item parent-item" href="#">CSV</a>
             <div class="dropdown-submenu csv-submenu">
-                <a class="dropdown-item" wire:click.prevent="exportCSV(null)">All</a>
+                <!-- <a class="dropdown-item" wire:click.prevent="exportCSV(null)">All</a> -->
                 <a class="dropdown-item" wire:click.prevent="exportCSV('today')">Today</a>
                 <a class="dropdown-item" wire:click.prevent="exportCSV('yesterday')">Yesterday</a>
                 <a class="dropdown-item" wire:click.prevent="exportCSV('this_week')">This Week</a>
@@ -108,7 +108,7 @@
             
             <a class="dropdown-item parent-item" href="#">EXCEL</a>
             <div class="dropdown-submenu excel-submenu">
-                <a class="dropdown-item" wire:click.prevent="exportExcel(null)">All</a>
+                <!-- <a class="dropdown-item" wire:click.prevent="exportExcel(null)">All</a> -->
                 <a class="dropdown-item" wire:click.prevent="exportExcel('today')">Today</a>
                 <a class="dropdown-item" wire:click.prevent="exportExcel('yesterday')">Yesterday</a>
                 <a class="dropdown-item" wire:click.prevent="exportExcel('this_week')">This Week</a>

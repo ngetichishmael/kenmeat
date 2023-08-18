@@ -51,7 +51,7 @@ class Dashboard extends Component
 
    public function exportCSV($timeInterval = null)
    {
-       return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.csv');
+       return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.xlsx');
    }
 
    public function exportExcel($timeInterval = null)
@@ -68,7 +68,7 @@ class Dashboard extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, 'Customers_checkins.pdf');
+        }, 'Visits.pdf');
     }
 
 
@@ -91,20 +91,7 @@ class Dashboard extends Component
            $query->whereYear('customer_checkin.created_at', now()->year);
        }
    
-       // Apply other filters based on the search, start, and end properties if needed
-       // Example:
-       // if ($this->search) {
-       //     $query->where('users.name', 'like', '%' . $this->search . '%')
-       //         ->orWhere('customer.customer_name', 'like', '%' . $this->search . '%');
-       // }
-       // if ($this->start && $this->end) {
-       //     $query->whereBetween('customer_checkin.created_at', [$this->start, $this->end]);
-       // } elseif ($this->start) {
-       //     $query->where('customer_checkin.created_at', '>=', $this->start);
-       // } elseif ($this->end) {
-       //     $query->where('customer_checkin.created_at', '<=', $this->end);
-       // }
-   
+    
        $checkinData = $query->get();
    
        return $checkinData;
