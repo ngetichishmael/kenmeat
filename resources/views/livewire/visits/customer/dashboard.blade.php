@@ -40,25 +40,90 @@
             </div>
 
             <div class="col-md-2">
-                <div class="btn-group">
-                    
-                    <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" wire:loading.attr="disabled" >
-                        <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">
-                        Export
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" wire:click="export(null)">All</a>
-                        <a class="dropdown-item" wire:click="export('today')">Today</a>
-                        <a class="dropdown-item" wire:click="export('yesterday')">Yesterday</a>
-                        <a class="dropdown-item" wire:click="export('this_week')">This Week</a>
-                        <a class="dropdown-item" wire:click="export('this_month')">This Month</a>
-                        <a class="dropdown-item" wire:click="export('this_year')">This Year</a>
-                    </div>
-                </div>
+{{--                <div class="btn-group">--}}
+{{--                    --}}
+{{--                    <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" wire:loading.attr="disabled" >--}}
+{{--                        <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">--}}
+{{--                        Export--}}
+{{--                    </button>--}}
+{{--                    <div class="dropdown-menu">--}}
+{{--                        <a class="dropdown-item" wire:click="export(null)">All</a>--}}
+{{--                        <a class="dropdown-item" wire:click="export('today')">Today</a>--}}
+{{--                        <a class="dropdown-item" wire:click="export('yesterday')">Yesterday</a>--}}
+{{--                        <a class="dropdown-item" wire:click="export('this_week')">This Week</a>--}}
+{{--                        <a class="dropdown-item" wire:click="export('this_month')">This Month</a>--}}
+{{--                        <a class="dropdown-item" wire:click="export('this_year')">This Year</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                
+{{--               <div class="btn-group">--}}
+{{--                  <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" wire:loading.attr="disabled">--}}
+{{--                     <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">--}}
+{{--                     Export--}}
+{{--                  </button>--}}
+{{--                  <div class="dropdown-menu">--}}
+{{--                     <a class="dropdown-item" href="#" wire:click="setExportType('excel')">Excel</a>--}}
+{{--                     <a class="dropdown-item" href="#" wire:click="setExportType('csv')">CSV</a>--}}
+{{--                     <a class="dropdown-item" href="#" wire:click="setExportType('pdf')">PDF</a>--}}
+{{--                  </div>--}}
+{{--                  <div class="dropdown-submenu">--}}
+{{--                     <a class="dropdown-item" href="#">Export Interval</a>--}}
+{{--                     <div class="dropdown-menu">--}}
+{{--                        <a class="dropdown-item" href="#" wire:click="export(null)">All</a>--}}
+{{--                        <a class="dropdown-item" href="#" wire:click="export('today')">Today</a>--}}
+{{--                        <a class="dropdown-item" href="#" wire:click="export('yesterday')">Yesterday</a>--}}
+{{--                        <a class="dropdown-item" href="#" wire:click="export('this_week')">This Week</a>--}}
+{{--                        <a class="dropdown-item" href="#" wire:click="export('this_month')">This Month</a>--}}
+{{--                        <a class="dropdown-item" href="#" wire:click="export('this_year')">This Year</a>--}}
+{{--                     </div>--}}
+{{--                  </div>--}}
+{{--               </div>--}}
+               <!-- Button to open the modal -->
+               <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" data-target="#exportModal">
+                  <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">
+                  Export
+               </button>
+
+               <!-- The modal -->
+               <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true" wire:ignore>                  <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="exportModalLabel">Select Export Type and Interval</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                        </div>
+                        <div class="modal-body">
+                           <div class="form-group">
+                              <label for="exportType">Export Type</label>
+                              <select class="form-control" wire:model="selectedExportType">
+                                 <option value="excel">Excel</option>
+                                 <option value="csv">CSV</option>
+                                 <option value="pdf">PDF</option>
+                              </select>
+                           </div>
+                           <div class="form-group">
+                              <label for="interval">Export Interval</label>
+                              <select class="form-control" wire:model="selectedInterval">
+                                 <option value="all">All</option>
+                                 <option value="today">Today</option>
+                                 <option value="yesterday">Yesterday</option>
+                                 <option value="this_week">This Week</option>
+                                 <option value="this_month">This Month</option>
+                                 <option value="this_year">This Year</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                           <button type="button" class="btn btn-primary" wire:click="export">Export</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
             </div>
-            
+
         </div>
     </div>
     <div class="card card-default">
@@ -117,7 +182,7 @@
                                 <td>{{ $visit->created_at->format('d-m-Y') }}</td>
                                 <td>
                                     <a href="{{ route('visit.details', ['id' => $visit->id]) }}" class="btn btn-sm"  style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">
-                                    
+
                                         <i data-feather="eye"></i>
                                     </a>
                                 </td>
@@ -136,5 +201,14 @@
             </div>
         </div>
     </div>
+   @push('scripts')
+      <script>
+         document.getElementById('submenuToggle').addEventListener('click', function() {
+            var submenu = this.nextElementSibling;
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+         });
+      </script>
+   @endpush
 </div>
+
 <br>
