@@ -12,7 +12,7 @@
                 <a class="" href="#">
                     <center>
                         <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Kenmeat" class="img"
-                            style="height: 80px; padding-left:15px;">
+                            style="height: 70px; padding-left:15px;">
                     </center>
 
                 </a>

@@ -9,18 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class FormResponseController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, $customer_id, $checking_code)
     {
         $validator = Validator::make($request->all(), [
             'interested_in_new_order' => 'required|string|in:Yes,No',
             'stock_replenishment' => 'nullable|string',
             'expiry_date_update' => 'nullable|date_format:Y-m-d',
-
             'pricing_accuracy' => 'required|string|in:Yes,No',
             'incorrect_pricing_product_name' => 'nullable|string',
             'incorrect_pricing_current_price' => 'nullable|string',
-            'checking_code' => 'string',
-            'customer_id' => 'string',
             'product_visible' => 'required|string|in:Yes,No',
             'progress_status' => 'required|string|in:Very poor,Average,Good,Very Good',
             'new_insights' => 'nullable|string',
@@ -30,19 +27,20 @@ class FormResponseController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
-        // Set the user_id from the authenticated user
-        $validatedData = $request->all();
-        $validatedData['user_id'] = $request->user()->id;
+        
+        $validatedData = array_merge($request->all(), [
+            'user_id' => $request->user()->id,
+            'checking_code' => $checking_code,
+            'customer_id' => $customer_id,
+        ]);
 
         // Handle image upload if exists
+        $imagePath = null;
         if ($request->hasFile('placement.image')) {
-            $image_path = $request->file('placement.image')->store('images', 'public');
-            $validatedData['placement']['image'] = $image_path;
-        } else {
-            $validatedData['placement']['image'] = null;
+            $imagePath = $request->file('placement.image')->store('images', 'public');
         }
-
+        $validatedData['placement']['image'] = $imagePath;
+        
         $formResponse = FormResponse::create($validatedData);
 
         return response()->json([
