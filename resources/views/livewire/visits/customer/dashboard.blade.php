@@ -203,14 +203,14 @@
             </div>
         </div>
     </div>
-   @push('scripts')
-      <script>
-         document.getElementById('submenuToggle').addEventListener('click', function() {
-            var submenu = this.nextElementSibling;
-            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+   <script>
+      document.addEventListener('livewire:load', function () {
+         Livewire.on('exportComplete', function () {
+            $('#exportModal').modal('hide');
          });
-      </script>
-   @endpush
+      });
+   </script>
+
 </div>
 
 <br>
