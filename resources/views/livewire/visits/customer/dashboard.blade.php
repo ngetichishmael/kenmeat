@@ -38,25 +38,88 @@
                     @endif
                 </div>
             </div>
+            <script>
+    $(document).ready(function() {
+        $('.dropdown-submenu').hide();
+        
+        $('.parent-item').on("click", function(e) {
+            var targetSubmenu = $(this).next('.dropdown-submenu');
+            
+            if (targetSubmenu.is(':visible')) {
+                $('.dropdown-submenu').hide();
+            } else {
+                $('.dropdown-submenu').hide();
+                targetSubmenu.show();
+            }
+            
+            e.stopPropagation();
+            e.preventDefault();
+        });
 
-            <div class="col-md-2">
-                <div class="btn-group">
-                    
-                    <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" wire:loading.attr="disabled" >
-                        <img src="{{ asset('assets/img/excel.png') }}" alt="Export Excel" width="15" height="15">
-                        Export
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" wire:click="export(null)">All</a>
-                        <a class="dropdown-item" wire:click="export('today')">Today</a>
-                        <a class="dropdown-item" wire:click="export('yesterday')">Yesterday</a>
-                        <a class="dropdown-item" wire:click="export('this_week')">This Week</a>
-                        <a class="dropdown-item" wire:click="export('this_month')">This Month</a>
-                        <a class="dropdown-item" wire:click="export('this_year')">This Year</a>
-                    </div>
-                </div>
+        $('.dropdown-submenu a').on("click", function(e) {
+            $('.dropdown-menu').hide();
+        });
+        
+        $(document).on("click", function(event) {
+            if (!$(event.target).closest('.dropdown-menu').length) {
+                $('.dropdown-submenu').hide();
+            }
+        });
+    });
 
-                
+    document.addEventListener("DOMContentLoaded", function() {
+        const submenuItems = document.querySelectorAll(".dropdown-submenu a");
+
+        submenuItems.forEach(item => {
+            item.addEventListener("click", function(event) {
+                event.stopPropagation();
+            });
+        });
+    });
+</script>
+
+
+<div class="col-md-2">
+    <div class="btn-group">
+        <button type="button" class="btn btn-icon btn-outline-success dropdown-toggle" data-toggle="dropdown">
+            <img src="{{ asset('assets/img/pdf.png') }}" alt="Export PDF" width="15" height="15">
+            Export
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item parent-item" href="#">PDF</a>
+            <div class="dropdown-submenu pdf-submenu">
+                <a class="dropdown-item" wire:click.prevent="exportPDF(null)">All</a>
+                <a class="dropdown-item" wire:click.prevent="exportPDF('today')">Today</a>
+                <a class="dropdown-item" wire:click.prevent="exportPDF('yesterday')">Yesterday</a>
+                <a class="dropdown-item" wire:click.prevent="exportPDF('this_week')">This Week</a>
+                <a class="dropdown-item" wire:click.prevent="exportPDF('this_month')">This Month</a>
+                <a class="dropdown-item" wire:click.prevent="exportPDF('this_year')">This Year</a>
+            </div>
+            
+            <a class="dropdown-item parent-item" href="#">CSV</a>
+            <div class="dropdown-submenu csv-submenu">
+                <a class="dropdown-item" wire:click.prevent="exportCSV(null)">All</a>
+                <a class="dropdown-item" wire:click.prevent="exportCSV('today')">Today</a>
+                <a class="dropdown-item" wire:click.prevent="exportCSV('yesterday')">Yesterday</a>
+                <a class="dropdown-item" wire:click.prevent="exportCSV('this_week')">This Week</a>
+                <a class="dropdown-item" wire:click.prevent="exportCSV('this_month')">This Month</a>
+                <a class="dropdown-item" wire:click.prevent="exportCSV('this_year')">This Year</a>
+            </div>
+            
+            <a class="dropdown-item parent-item" href="#">EXCEL</a>
+            <div class="dropdown-submenu excel-submenu">
+                <a class="dropdown-item" wire:click.prevent="exportExcel(null)">All</a>
+                <a class="dropdown-item" wire:click.prevent="exportExcel('today')">Today</a>
+                <a class="dropdown-item" wire:click.prevent="exportExcel('yesterday')">Yesterday</a>
+                <a class="dropdown-item" wire:click.prevent="exportExcel('this_week')">This Week</a>
+                <a class="dropdown-item" wire:click.prevent="exportExcel('this_month')">This Month</a>
+                <a class="dropdown-item" wire:click.prevent="exportExcel('this_year')">This Year</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+               
             </div>
             
         </div>

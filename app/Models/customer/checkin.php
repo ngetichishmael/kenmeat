@@ -67,6 +67,6 @@ class checkin extends Model
 
    public function formResponses()
    {
-       return $this->hasMany(FormResponse::class, 'checkin_id','id');
+       return $this->hasMany(FormResponse::class, 'checking_code','id');
    }
 }
