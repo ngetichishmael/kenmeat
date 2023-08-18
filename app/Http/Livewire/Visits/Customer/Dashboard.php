@@ -68,7 +68,7 @@ class Dashboard extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, 'Visits.pdf');
+        }, 'Customers_checkins.pdf');
     }
 
 
