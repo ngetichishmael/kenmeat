@@ -91,7 +91,7 @@
                     <th>IP Address</th>
                     <th>Start Time</th>
                     <th>Stop Time</th>
-                    <th>Duration</th>
+                    <th>Est. Duration</th>
                     <th>Date</th>
                 </tr>
             </thead>
