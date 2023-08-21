@@ -56,8 +56,7 @@
                         <tr>
                            <td colspan="10">No allocations found.</td>
                         </tr>
-                  @endforeach
-               @endforeach
+               @endforelse
                </tbody>
             </table>
             {{ $allocations->links()  }}
