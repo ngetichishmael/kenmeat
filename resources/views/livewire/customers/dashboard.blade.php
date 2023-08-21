@@ -35,7 +35,7 @@
                 </select>
             </div>
         </div>
-     
+
 
             <div class="col-md-2 d-flex justify-content-end">
                 <div class="demo-inline-spacing">
@@ -58,11 +58,11 @@
                             <a class="dropdown-item"  wire:click="exportCSV" id="exportPdfBtn"> CSV</a>
                             <a class="dropdown-item" wire:click="exportPDF" id="exportCsvBtn">PDF</a>
                             <!-- <a class="dropdown-item" wire:click="printAndRedirect" id="printBtn">Print</a> -->
-                          
+
                         </div>
                     </div>
-        </div>    
-    
+        </div>
+
     <div class="col-md-2">
             <div class="form-group">
                 <label for="validationTooltip01">Start Date</label>
@@ -165,6 +165,10 @@
                                                 <span>Approve</span>
                                             </a>
                                         @endif
+                                       <a class="dropdown-item" href="{{ route('customer.allocations', $contact->id) }}">
+                                          <i data-feather='list' class="mr-50"></i>
+                                          <span>Allocations</span>
+                                       </a>
                                     </div>
                                 </div>
                             </td>

@@ -55,6 +55,10 @@ class Delivery extends Model
    {
       return $this->belongsTo(User::class, 'allocated', 'user_code');
    }
+   public function createdBy(): BelongsTo
+   {
+      return $this->belongsTo(User::class, 'created_by', 'user_code');
+   }
    /**
     * Get the Order associated with the Delivery
     *
