@@ -31,8 +31,8 @@
 {{--               <th width="15%">Action</th>--}}
                </thead>
                <tbody>
-               @foreach ($allocations as $allocation)
-                  @foreach ($allocation->DeliveryItems as $count =>$deliveryItem)
+               @forelse ($allocations as $allocation)
+                  @forelse ($allocation->DeliveryItems as $count =>$deliveryItem)
                      <tr>
                         {{-- Display the common allocation-related columns --}}
                         <td>{{ ++$count}}</td>
@@ -45,6 +45,17 @@
                         <td>{{ $allocation->delivery_status }}</td>
                         <td>{{ $deliveryItem->created_at }}</td>
                      </tr>
+                     @empty
+                        <!-- Display a message for empty DeliveryItems -->
+                        <tr>
+                           <td colspan="10">No items found.</td>
+                        </tr>
+                     @endforelse
+                     @empty
+                        <!-- Display a message for empty allocations -->
+                        <tr>
+                           <td colspan="10">No allocations found.</td>
+                        </tr>
                   @endforeach
                @endforeach
                </tbody>
