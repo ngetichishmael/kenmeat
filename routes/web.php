@@ -88,6 +88,7 @@ Route::group(['middleware' => ['verified']], function () {
         'store' => 'customer.store',
     ]);
     Route::get('creditors', ['uses' => 'app\customer\customerController@creditor', 'as' => 'creditors']);
+    Route::get('customer/allocations/{customerid}', ['uses' => 'app\customer\customerController@allocations', 'as' => 'customer.allocations']);
     Route::get('approveCreditors', ['uses' => 'app\customer\customerController@approveCreditors', 'as' => 'approveCreditors']);
     Route::get('creditors/pending', ['uses' => 'app\customer\customerController@pendingcreditor', 'as' => 'pending.creditors']);
     Route::get('creditor/create', ['uses' => 'app\customer\customerController@createcreditor', 'as' => 'creditor.create']);

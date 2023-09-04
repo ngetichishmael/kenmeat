@@ -266,7 +266,6 @@ Route::group(['namespace' => 'Api'], function () {
 
     // Forms validation
     Route::post('/form/responses/{customer_id}/{checking_code}', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
-
     Route::get('/get/targets/{type}', [TargetsController::class, "getTarget"])->name('getUITargets');
 
 

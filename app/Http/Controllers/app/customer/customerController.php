@@ -4,6 +4,7 @@ namespace App\Http\Controllers\app\customer;
 
 use App\Helpers\Helper;
 use App\Models\activity_log;
+use App\Models\Delivery;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,14 +38,18 @@ class customerController extends Controller
    {
       return view('app.customers.index');
    }
+   public function allocations($customerid)
+   {
+      return view('app.customers.allocations_tracking', ['customerid'=>$customerid]);
+   }
    public function customergroups()
    {
       return view('livewire.customer-group.customergroup');
    }
 
-   public function creditor()
+   public function creditor($id)
    {
-      return view('app.creditors.index');
+      return view('app.customers.allocations_tracking');
    }
    public function approveCreditors()
    {

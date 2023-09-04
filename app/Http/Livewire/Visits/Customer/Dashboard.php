@@ -7,6 +7,7 @@ use App\Models\customer\checkin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class Dashboard extends Component
 {
@@ -48,10 +49,54 @@ class Dashboard extends Component
        ]);
    }
 
-
-   public function export($timeInterval = null)
+   public function exportCSV($timeInterval = null)
    {
        return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.xlsx');
    }
+
+   public function exportExcel($timeInterval = null)
+   {
+       return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.xlsx');
+   }
+
+
+   public function exportPDF($timeInterval = null)
+    {
+        $data = $this->getExportData($timeInterval);
+
+        $pdf = PDF::loadView('Exports.visits', ['data' => $data, 'timeInterval' => $timeInterval]);
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->output();
+        }, 'Customers_checkins.pdf');
+    }
+
+
+   protected function getExportData($timeInterval)
+   {
+        $query = checkin::select('customer_checkin.*', 'users.name')
+            ->join('users', 'customer_checkin.user_code', '=', 'users.user_code')
+            ->orderBy('customer_checkin.user_code') // Order by user_code (users' codes) in ascending order
+            ->orderBy('users.name'); // Order users' names in alphabetical order
+        
+       if ($timeInterval === 'today') {
+           $query->whereDate('customer_checkin.created_at', today());
+       } elseif ($timeInterval === 'yesterday') {
+           $query->whereDate('customer_checkin.created_at', today()->subDay());
+       } elseif ($timeInterval === 'this_week') {
+           $query->whereBetween('customer_checkin.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+       } elseif ($timeInterval === 'this_month') {
+           $query->whereYear('customer_checkin.created_at', now()->year)->whereMonth('customer_checkin.created_at', now()->month);
+       } elseif ($timeInterval === 'this_year') {
+           $query->whereYear('customer_checkin.created_at', now()->year);
+       }
+   
+    
+       $checkinData = $query->get();
+   
+       return $checkinData;
+   }
+   
+
    
 }
