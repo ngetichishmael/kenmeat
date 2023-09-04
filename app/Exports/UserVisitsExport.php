@@ -2,28 +2,30 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromView;
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class UserVisitsExport implements FromView
+
+class UserVisitsExport implements FromCollection, WithHeadings
 {
 
-   protected $array;
+   protected $data;
 
-   public function __construct($array)
+   public function __construct(Collection $data)
    {
-      $this->array = $array;
+       $this->data = $data;
    }
 
-
-   //  
-   /**
-    * @return \Illuminate\Support\Collection
-    */
-   public function view(): View
+   public function collection()
    {
-      return view('exports.uservisits', [
-         'visits' => $this->array
-      ]);
+       return $this->data;
+   }
+
+   public function headings(): array
+   {
+       // The column headings are already provided in the data collection,
+       // so there's no need to return headings separately here.
+       return [];
    }
 }

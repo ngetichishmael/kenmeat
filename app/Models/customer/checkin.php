@@ -3,6 +3,7 @@
 namespace App\Models\customer;
 
 use App\Models\User;
+use App\Models\FormResponse;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -62,5 +63,10 @@ class checkin extends Model
    public function Admin(): BelongsTo
    {
       return $this->belongsTo(customers::class, 'customer_id', 'id')->where('checkin_type', 'admin');
+   }
+
+   public function formResponses()
+   {
+       return $this->hasMany(FormResponse::class, 'checkin_id','id');
    }
 }

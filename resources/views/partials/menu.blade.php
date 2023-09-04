@@ -12,7 +12,7 @@
                 <a class="" href="#">
                     <center>
                         <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Kenmeat" class="img"
-                            style="height: 80px; padding-left:15px;">
+                            style="height: 70px; padding-left:15px;">
                     </center>
 
                 </a>
@@ -253,22 +253,15 @@
                         Reports</span></a>
             </li>
 
+            <li class="nav-item {!! Nav::isResource('SalesActivity') !!}">
+                <a class="d-flex align-items-center" href="{!! route('activity.sales') !!}">
+                <i data-feather='alert-octagon'></i>
+        <span class="menu-title text-truncate" data-i18n="Invoice">Sales Activity</span></a>
+            </li>
+
             <li class="nav-item {!! Nav::isResource('Activity') !!}">
-                <a class="d-flex align-items-center" href="#">
-                    <i data-feather="activity"></i><span class="menu-title text-truncate">Logs</span>
-                </a>
-                <ul class="menu-content">
-                    <li style="padding-left: 50px">
-                        <a class="d-flex align-items-center" href="{!! route('activity.index') !!}">
-                            <span class="menu-item text-truncate">Activity Logs</span>
-                        </a>
-                    </li>
-                    <li style="padding-left: 50px">
-                        <a class="d-flex align-items-center {!! Nav::isResource('survey') !!}" href="{!! route('activity.sales') !!}">
-                            <span class="menu-item text-truncate">Sales Logs</span>
-                        </a>
-                    </li>
-                </ul>
+                <a class="d-flex align-items-center" href="{!! route('activity.index') !!}"><i
+                        data-feather='file-text'></i><span class="menu-title text-truncate" data-i18n="Invoice">Activity Logs</span></a>
             </li>
            
         </ul>

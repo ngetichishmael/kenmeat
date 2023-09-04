@@ -87,7 +87,9 @@
                     content: `
                     <div id="content">
                      <div id="siteNotice"> </div>
-                     <img src="{{ asset('app-assets/images/logo2.jpeg') }}" alt="avatar" height="50" />
+                     <center>
+                          <img src="{{ asset('app-assets/images/logo.png') }}" alt="avatar" height="50" />
+                     </center>
                      <h1 id="firstHeading" class="firstHeading">${markerData.title}</h1>
                      <div id="bodyContent">
                         <p><b>Location: </b>${markerData.position.lat}, ${markerData.position.lng}</p>

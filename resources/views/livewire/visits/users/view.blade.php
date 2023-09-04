@@ -2,7 +2,7 @@
     <div class="card">
         <h5 class="card-header"></h5>
         <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-            <div class="col-md-4 user_role">
+            <div class="col-md-3 user_role">
                 <div class="input-group input-group-merge">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i data-feather="search"></i></span>
@@ -54,7 +54,6 @@
                             <th>Customer Name</th>
                             <th>Start/Stop Time</th>
                             <th>Duration</th>
-                          
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -62,6 +61,9 @@
                     <tbody>
                         @forelse ($visits as $count => $visit)
                         <tr>
+                                @php
+                                    $checkingData = $this->getChecking($visit->code);
+                                @endphp
                             <td>{!! $count + 1 !!}</td>
                             <td>{!! $visit->name !!}</td>
                             <td>{!! $visit->customer_name !!}</td>
@@ -74,12 +76,41 @@
                             </td>
                             
                             <td>{{ $visit->formatted_date }}</td>
-                            <td>
-                                <a href="#" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" style="background-color: #089000; color: white; font-size: 14px; padding: 5px 10px;">
-                                    <i data-feather="eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+
+                     
+                                    <td>
+                                        <a data-toggle="collapse" data-target="#details{{ $visit->code }}" class="btn btn-sm" style="background-color:  #089000; color: white; font-size: 14px; padding: 5px 10px;">
+                                            <i data-feather="eye"></i>
+                                        </a>
+                                    </td>
+                            
+                            </tr>
+                         
+                                    <tr id="details{{ $visit->code }}" class="collapse">
+                                        <td colspan="8" style="padding-left:20%; padding-right:20%">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <td>Interested in New Order:</td>
+                                                        <td>{{ $checkingData['interested_in_new_order'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Pricing Accuracy:</td>
+                                                        <td>{{ $checkingData['pricing_accuracy'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Progress Status:</td>
+                                                        <td>{{ $checkingData['progress_status'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Products Visibility:</td>
+                                                        <td>{{ $checkingData['product_visible'] }}
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                        </tr>
+            
                         @empty
                             <tr>
                                 <td colspan="8" style="text-align: center;">No Record found.</td>

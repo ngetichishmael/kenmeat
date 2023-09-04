@@ -13,6 +13,7 @@
   'creditors.approve' => 'App\\Http\\Livewire\\Creditors\\Approve',
   'creditors.dashboard' => 'App\\Http\\Livewire\\Creditors\\Dashboard',
   'customer-group.customergroup' => 'App\\Http\\Livewire\\CustomerGroup\\Customergroup',
+  'customers.create-customer' => 'App\\Http\\Livewire\\Customers\\CreateCustomer',
   'customers.dashboard' => 'App\\Http\\Livewire\\Customers\\Dashboard',
   'customers.index' => 'App\\Http\\Livewire\\Customers\\Index',
   'customers.order' => 'App\\Http\\Livewire\\Customers\\Order',

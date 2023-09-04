@@ -11,6 +11,7 @@ class FormResponse extends Model
     protected $fillable = [
         'user_id',
         'customer_id',
+        'checking_code',
         'region_or_route',
         'time_period',
         'image',
