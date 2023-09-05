@@ -2,46 +2,74 @@
 
 namespace App\Http\Livewire\Users;
 
-use Livewire\Component;
-
 use App\Models\User;
-use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class UserTypes extends Component
 {
-    public function render()
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    public $groupView = true; // Default to Group View
+    public $perPage = 10;
+    public $search = "";
+
+    public function toggleView()
     {
-        // $accountTypes = Role::pluck('name')->toArray();
-
-        // $lists = User::whereIn('account_type', $accountTypes)
-        //     ->distinct('account_type')
-        //     ->whereNotIn('account_type', ['Customer'])
-        //     ->groupBy('account_type')
-        //     ->pluck('account_type');
-
-        // $counts = User::join('roles', 'users.account_type', '=', 'roles.name')
-        //     ->whereIn('users.account_type', $accountTypes)
-        //     ->whereNotIn('users.account_type', ['Customer'])
-        //     ->groupBy('users.account_type')
-        //     ->selectRaw('users.account_type, count(*) as count')
-        //     ->pluck('count', 'users.account_type');
-
-        // $count = 1;
-
-        $accountTypes = Role::pluck('name')->toArray();
-
-        $lists = Role::pluck('name');
-
-        $counts = Role::leftJoin('users', 'roles.name', '=', 'users.account_type')
-            ->whereIn('roles.name', $accountTypes)
-            ->whereNotIn('roles.name', ['Customer'])
-            ->groupBy('roles.name')
-            ->selectRaw('roles.name, count(users.id) as count')
-            ->pluck('count', 'roles.name');
-
-        $count = 1;
-        
-        return view('livewire.users.user-types', compact('lists', 'counts', 'count'));
+        $this->groupView = !$this->groupView;
     }
 
+    public function render()
+    {
+        $groups = $this->getUserGroups();
+        $users = ($this->groupView) ? $this->getGroupUsers() : $this->getUsers();
+        $counting = 1;
+        return view('livewire.users.user-types', compact('groups', 'users', 'counting'));
+    }
+
+    private function buildBaseQuery()
+    {
+        $user = Auth::user();
+        $userRole = $user->account_type;
+        $userRouteCode = $user->route_code;
+
+        $query = User::query();
+
+        if ($userRole !== 'Admin') {
+            $query->where(function ($query) use ($userRouteCode) {
+                $query->where('route_code', $userRouteCode)
+                    ->orWhereNull('route_code');
+            });
+        }
+
+        return $query;
+    }
+
+    private function getUserGroups()
+    {
+        return $this->buildBaseQuery()
+            ->groupBy('account_type')
+            ->selectRaw('account_type, count(id) as count')
+            ->pluck('count', 'account_type');
+    }
+
+    private function getGroupUsers()
+    {
+        return $this->getUserGroups()
+            ->map(function ($count, $group) {
+                return $this->buildBaseQuery()
+                    ->where('account_type', $group)
+                    ->get();
+            })
+            ->collapse();
+    }
+
+    public function getUsers()
+    {
+        $searchTerm = '%' . $this->search . '%';
+        return $this->buildBaseQuery()
+            ->search($searchTerm)
+            ->paginate($this->perPage);
+    }
 }
