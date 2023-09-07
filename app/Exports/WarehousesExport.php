@@ -3,38 +3,60 @@
 namespace App\Exports;
 
 use App\Models\warehousing;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class WarehousesExport implements FromCollection, WithHeadings
+class WarehousesExport implements FromQuery, WithHeadings
 {
-    public function collection()
+    protected $orderBy;
+    protected $orderAsc;
+    protected $searchTerm;
+    protected $user;
+
+    public function __construct($orderBy, $orderAsc, $searchTerm)
     {
-        return warehousing::with('manager', 'region', 'subregion')
-            ->withCount('productInformation')
-            ->get()
-            ->map(function ($warehouse) {
-                return [
-                    '#',
-                    $warehouse->name,
-                    $warehouse->region->name ?? '',
-                    $warehouse->subregion->name ?? '',
-                    $warehouse->product_information_count > 0 ? $warehouse->product_information_count : '0',
-                    $warehouse->status === 'Active' ? 'Active' : 'Disabled',
-                ];
-            });
+        $this->orderBy = $orderBy;
+        $this->orderAsc = $orderAsc;
+        $this->searchTerm = $searchTerm;
+        $this->user = Auth::user();
     }
+
+    public function query()
+    {
+        $query = warehousing::with(['region:name', 'subregion:name'])
+            ->withCount('productInformation')
+            ->select([
+                'warehouse.id',
+                'warehouse.name',
+                'region.name as region', // Use 'region.name' from the related table
+                'subregion.name as sub_region', // Use 'subregion.name' from the related table
+                'warehouse.status',
+                // Add more columns here as needed
+            ]);
+    
+        if ($this->user->account_type === "Managers") {
+            $query->whereIn('region_id', $this->filter());
+        }
+    
+        if ($this->searchTerm) {
+            $query->where('warehouse.name', 'LIKE', '%' . $this->searchTerm . '%');
+        }
+    
+        return $query->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
+    }
+    
+    
 
     public function headings(): array
     {
         return [
-            '#',
+            'ID',
             'Name',
             'Region',
             'Sub Region',
-            'Products Count',
             'Status',
+            'Products Count',
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Models\customer\checkin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use PDF;
 
 class Dashboard extends Component
@@ -50,27 +51,36 @@ class Dashboard extends Component
    }
 
    public function exportCSV($timeInterval = null)
-   {
-       return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.xlsx');
-   }
-
-   public function exportExcel($timeInterval = null)
-   {
-       return Excel::download(new CustomerVisitExport($timeInterval), 'Customers_checkins.xlsx');
-   }
-
-
-   public function exportPDF($timeInterval = null)
     {
+        $currentDateTime = now()->format('F j, Y'); // Format the current date and time as "September 28, 2023"
+        $fileName = "Customers_checkins - {$currentDateTime}.csv";
+    
+        return Excel::download(new CustomerVisitExport($timeInterval), $fileName);
+    }
+    
+
+    public function exportExcel($timeInterval = null)
+    {
+        $currentDateTime = now()->format('F j, Y'); // Format the current date and time as "September 28, 2023"
+        $fileName = "Customers_checkins - {$currentDateTime}.xlsx";
+    
+        return Excel::download(new CustomerVisitExport($timeInterval), $fileName);
+    }
+    
+
+    public function exportPDF($timeInterval = null)
+    {
+        $currentDateTime = now()->format('F j, Y'); // Format the current date and time as "September 28, 2023"
+        $fileName = "Customers_checkins - {$currentDateTime}.pdf";
+    
         $data = $this->getExportData($timeInterval);
-
-        $pdf = PDF::loadView('Exports.visits', ['data' => $data, 'timeInterval' => $timeInterval]);
-
+    
+        $pdf = FacadePdf::loadView('Exports.visits', ['data' => $data, 'timeInterval' => $timeInterval]);
+    
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, 'Customers_checkins.pdf');
+        }, $fileName);
     }
-
 
    protected function getExportData($timeInterval)
    {
