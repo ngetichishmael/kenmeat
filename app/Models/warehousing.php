@@ -48,6 +48,11 @@ class warehousing extends Model
       return $this->hasMany(ReconciledProducts::class, 'warehouse_code','warehouse_code');
    }
 
+   public function stockRequisitions()
+   {
+      return $this->hasMany(StockRequisition::class, 'warehouse_code', 'warehouse_code');
+   }
+   
    public static function search($searchTerm)
    {
        return static::where(function ($query) use ($searchTerm) {

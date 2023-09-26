@@ -3,15 +3,14 @@
 namespace App\Http\Livewire\Warehousing;
 
 use App\Models\Region;
-use Livewire\Component;
-use App\Models\customers;
 use App\Models\warehousing;
-use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
-use PDF;
+use Livewire\Component;
+use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\View;
 use App\Exports\WarehousesExport;
-use Excel;
+use PDF;
 
 class Index extends Component
 {
@@ -20,64 +19,65 @@ class Index extends Component
     public $perPage = 10;
     public $orderBy = 'id';
     public $orderAsc = true;
-    public ?string $search = null;
+    public $search = null;
     public $user;
 
     public function __construct()
     {
         $this->user = Auth::user();
     }
-
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
-
-        $warehouses = warehousing::with('manager', 'region', 'subregion')
-            ->withCount('productInformation')
-            ->when($this->user->account_type === "RSM", function ($query) use ($searchTerm) {
-                $query->whereIn('region_id', $this->filter())
-                    ->where(function (Builder $query) use ($searchTerm) {
-                        $query->where('Region.name', 'like', $searchTerm)
-                            ->orWhere('name', 'like', $searchTerm);
-                    });
+        $warehouses = warehousing::with('region', 'subregion')->withCount('productInformation')
+            ->when($this->user->account_type === "Managers", function ($query) {
+                $query->whereIn('region_id', $this->filter());
             })
-            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
-            ->simplePaginate($this->perPage);
+            ->when($searchTerm, function ($query) use ($searchTerm) {
+                $query->where('name', 'LIKE', $searchTerm);
+            })
+            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')->simplePaginate($this->perPage);
 
-        $pdfData = [
+        return view('livewire.warehousing.index', [
             'warehouses' => $warehouses,
-        ];
-
-        return view('livewire.warehousing.index', $pdfData);
+            'searchTerm' => $searchTerm,
+        ]);
     }
 
     public function exportPDF()
     {
-        $pdfData = [
-            'warehouses' => warehousing::with('manager', 'region', 'subregion')
-                ->withCount('productInformation')
-                ->when($this->user->account_type === "RSM", function ($query) {
-                    $query->whereIn('region_id', $this->filter());
-                })
-                ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
-                ->get(),
-        ];
-
-        $pdf = PDF::loadView('Exports.warehouse_pdf', $pdfData);
-
-        // Add the following response headers
+        $warehouses = warehousing::with('region', 'subregion')
+            ->withCount('productInformation')
+            ->when($this->user->account_type === 'Managers', function ($query) {
+                $query->whereIn('region_id', $this->filter());
+            })
+            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
+            ->get();
+    
+        $pdf = PDF::loadView('Exports.warehousing.pdf_export', ['warehouses' => $warehouses]);
+    
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, 'warehouses.pdf');
+        }, 'Warehouses.pdf');
     }
 
     public function export()
     {
-        return Excel::download(new WarehousesExport, 'warehouses.xlsx');
+        return Excel::download(new WarehousesExport($this->orderBy, $this->orderAsc, $this->search), 'warehouses.xlsx');
     }
 
-    public function exportCSV()
+    public function filter(): array
     {
-        return Excel::download(new WarehousesExport, 'warehouses.csv');
+
+        $array = [];
+        $user_code = $this->user->region_id;
+        if (!$this->user->account_type === 'Managers') {
+            return $array;
+        }
+        $regions = Region::where('id', $user_code)->pluck('id');
+        if ($regions->isEmpty()) {
+            return $array;
+        }
+        return $regions->toArray();
     }
 }
