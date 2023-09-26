@@ -47,8 +47,8 @@
                <th>#</th>
                <th>Sales Agent</th>
                <th>Quantity</th>
-               <th>Region</th>
-               <th>Source</th>
+{{--               <th>Region</th>--}}
+{{--               <th>Source</th>--}}
                <th>Date</th>
                <th>Action</th>
             </tr>
@@ -61,7 +61,7 @@
                   {{-- <td>{{ $lifted->name }}</td> --}}
                   <td>{{ $lift->user_name }}</td>
                   <td>{{ $lift->total_qty ??'' }}</td>
-                  <td>{{ $lift->user_region??'' }}</td>
+{{--                  <td>{{ $lift->user_region??'' }}</td>--}}
                   <td>{{ $lift->date }}</td>
                   <td><a href="{{ URL('lifted/items/' . $lift->code) }}" class="btn btn-sm"
                          style="color:white;background-color:rgb(202, 50, 50)">View</a></td>
