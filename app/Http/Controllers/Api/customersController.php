@@ -336,6 +336,10 @@ class customersController extends Controller
             "Payment" => $payment,
         ]);
     }
+    public function creditorStatus()
+    {
+
+    }
 
     /**
      * New orders
