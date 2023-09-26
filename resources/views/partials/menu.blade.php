@@ -137,6 +137,18 @@
                     </li>
                 </ul>
             </li>
+           <li class="nav-item {!! Nav::isResource('stocklift') !!}">
+              <a class="d-flex align-items-center" href="{!! route('stock.lifts') !!}">
+                 <i data-feather="layers"></i>
+                 <span class="menu-title text-truncate" data-i18n="Invo">Stock Lifts</span>
+              </a>
+           </li>
+           <li class="nav-item {!! Nav::isResource('reconcilition') !!}">
+              <a class="d-flex align-items-center" href="{{ route('stock.recon') }}">
+                 <i data-feather="book"></i>
+                 <span class="menu-title text-truncate" data-i18n="voice">Stock Reconciliation</span>
+              </a>
+           </li>
             <li class="nav-item {!! Nav::isResource('users') !!}">
                 <a class="d-flex align-items-center" href="{!! route('users.list') !!}">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo"> Users</span>
@@ -259,8 +271,8 @@
                 <a class="d-flex align-items-center" href="{!! route('activity.index') !!}"><i
                         data-feather='file-text'></i><span class="menu-title text-truncate" data-i18n="Invoice">Activity Logs</span></a>
             </li>
-           
+
         </ul>
-     
+
     </div>
 </div>

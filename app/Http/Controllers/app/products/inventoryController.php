@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers\app\products;
 use App\Http\Controllers\Controller;
+use App\Models\warehousing;
 use Illuminate\Http\Request;
 use App\Models\products\product_information;
 use App\Models\products\product_inventory;
 use App\Models\products\product_price;
 use App\Models\Branches;
+use Illuminate\Support\Facades\DB;
 use Session;
 use Hr;
 use Illuminate\Support\Facades\Auth ;
@@ -48,6 +50,35 @@ class inventoryController extends Controller{
       Session::flash('success','Item inventory successfully updated');
 
       return redirect()->back();
+   }
+
+   public function stockrecon(){
+      return view('app.stocks.reconciliation');
+   }
+   public function salesperson($warehouse_code)
+   {
+      $sales = DB::table('reconciled_products')
+         ->join('product_information', 'reconciled_products.productID', '=', 'product_information.id')
+         ->join('users', 'reconciled_products.userCode', '=', 'users.user_code')
+         ->where('reconciled_products.warehouse_code', $warehouse_code)
+         ->select('users.name as user','reconciled_products.id as id','reconciled_products.created_at as date', DB::raw('SUM(reconciled_products.amount) as total_amount', ))
+         ->groupBy('users.name')
+         ->get();
+      $warehouse_name=warehousing::find($warehouse_code);
+      return view('app.items.salespersons', ['sales' => $sales, 'warehouse'=>$warehouse_code, 'warehouse_name'=>$warehouse_name]);
+   }
+   public function reconciled($reconciliation_id)
+   {
+      info("reconciled");
+      $reconciled = DB::table('reconciled_products')
+         ->join('product_information', 'reconciled_products.productID', '=', 'product_information.id')
+         ->join('users', 'reconciled_products.userCode', '=', 'users.user_code')
+         ->where('reconciled_products.id', $reconciliation_id)
+         ->select('product_information.product_name as name',
+            'reconciled_products.amount as amount','users.name as user','reconciled_products.updated_at as date')
+         ->get();
+
+      return view('app.items.reconciledproducts', ['reconciled' => $reconciled]);
    }
 
    /**
