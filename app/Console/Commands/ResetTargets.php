@@ -30,7 +30,7 @@ class ResetTargets extends Command
 
             // Get users meeting the criteria
             $users = User::where(function ($query) {
-                $query->whereIn('account_type', ['Lube Sales Executive', 'Lube Merchandizers'])
+                $query->whereIn('account_type', ['Sales', 'Merchandiser'])
                     ->where('status', 'Active');
             })->get();
 
