@@ -3,29 +3,43 @@
 namespace App\Http\Livewire\Target;
 
 use App\Models\User;
+use App\Models\LeadsTargets;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class Lead extends Component
 {
-   public $perPage = 10;
+   use WithPagination;
+   protected $paginationTheme = 'bootstrap';
+   public $perPage = 15;
    public $search = '';
    public $timeFrame = 'quarter';
 
    public function render()
    {
-
-      $targetsQuery = User::with('TargetLead');
+      // Create a query for the 'leads_targets' table
+      $targetsQuery = LeadsTargets::query()->with('User');
       $today = Carbon::now();
-      // $targetsQuery = SalesTarget::query();
+      
+      // Calculate the start and end dates of the current month
+      $currentMonthStart = Carbon::now()->startOfMonth();
+      $currentMonthEnd = Carbon::now()->endOfMonth();
+      
       // Apply search filter
       if (!empty($this->search)) {
-         $targetsQuery->where('name', 'LIKE', '%' . $this->search . '%');
+         $targetsQuery->whereHas('User', function ($query) {
+               $query->where('name', 'LIKE', '%' . $this->search . '%');
+         });
       }
-      // Apply time frame filter
-      $this->applyTimeFrameFilter($targetsQuery);
-      // Fetch targets
-      $targets = $targetsQuery->get();
+      
+      // Apply time frame filter to only include targets within the current month
+      $targetsQuery->whereBetween('Deadline', [$currentMonthStart, $currentMonthEnd]);
+      
+      // Fetch targets with pagination based on $this->perPage
+      $targets = $targetsQuery->paginate($this->perPage);
+   
       return view('livewire.target.lead', [
          'targets' => $targets,
          'today' => $today,

@@ -29,6 +29,10 @@ class Kernel extends ConsoleKernel
       // $schedule->command('inspire')->hourly();
       $schedule->call(MKOCustomerSchedule::class)->dailyAt('17:55');
       $schedule->call(CrystalCustomerSchedule::class)->dailyAt('10:30');
+      $schedule->command('logout:all')
+      ->dailyAt('00:00');
+      $schedule->command('reset:targets')
+      ->monthlyOn(1, '00:00');
    }
 
    /**
