@@ -26,6 +26,7 @@ class Order extends Component
      $currentMonthStart = Carbon::now()->startOfMonth();
      $currentMonthEnd = Carbon::now()->endOfMonth();
      
+     
      // Apply search filter
      if (!empty($this->search)) {
          $targetsQuery->whereHas('User', function ($query) {
