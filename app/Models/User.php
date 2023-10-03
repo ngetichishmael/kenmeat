@@ -51,7 +51,37 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
 
-
+   public function TargetSales(): HasMany
+   {
+       return $this->hasMany(SalesTarget::class, 'user_code', 'user_code');
+   }
+   /**
+    * Get all of the TargetLeads for the User
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+   public function TargetLeads(): HasMany
+   {
+       return $this->hasMany(LeadsTargets::class, 'user_code', 'user_code');
+   }
+   /**
+    * Get all of the TargetsOrder for the User
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+   public function TargetsOrders(): HasMany
+   {
+       return $this->hasMany(OrdersTarget::class, 'user_code', 'user_code');
+   }
+   /**
+    * Get all of the TargetsVisit for the User
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+   public function TargetsVisits(): HasMany
+   {
+       return $this->hasMany(VisitsTarget::class, 'user_code', 'user_code');
+   }
 
    /**
     * Get the last added TargetSales for the User.
@@ -60,8 +90,8 @@ class User extends Authenticatable implements MustVerifyEmail
     */
    public function TargetSale(): HasOne
    {
-      return $this->hasOne(SalesTarget::class, 'user_code', 'user_code')
-         ->latest('created_at');
+       return $this->hasOne(SalesTarget::class, 'user_code', 'user_code')
+           ->latest('created_at');
    }
 
    /**
@@ -71,8 +101,8 @@ class User extends Authenticatable implements MustVerifyEmail
     */
    public function TargetLead(): HasOne
    {
-      return $this->hasOne(LeadsTargets::class, 'user_code', 'user_code')
-         ->latest('created_at');
+       return $this->hasOne(LeadsTargets::class, 'user_code', 'user_code')
+           ->latest('created_at');
    }
 
    /**
@@ -80,10 +110,10 @@ class User extends Authenticatable implements MustVerifyEmail
     *
     * @return \Illuminate\Database\Eloquent\Relations\HasOne
     */
-   public function TargetOrder(): HasOne
+   public function TargetsOrder(): HasOne
    {
-      return $this->hasOne(OrdersTarget::class, 'user_code', 'user_code')
-         ->latest('created_at');
+       return $this->hasOne(OrdersTarget::class, 'user_code', 'user_code')
+           ->latest('created_at');
    }
 
    /**
@@ -91,46 +121,10 @@ class User extends Authenticatable implements MustVerifyEmail
     *
     * @return \Illuminate\Database\Eloquent\Relations\HasOne
     */
-   public function TargetVisit(): HasOne
+   public function TargetsVisit(): HasOne
    {
-      return $this->hasOne(VisitsTarget::class, 'user_code', 'user_code')
-         ->latest('created_at');
-   }
-   /**
-    * Get all of the Targets for the User
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-   public function TargetSales(): HasMany
-   {
-      return $this->hasMany(SalesTarget::class, 'user_code', 'user_code');
-   }
-   /**
-    * Get all of the TargetLeads for the User
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-   public function TargetLeads(): HasMany
-   {
-      return $this->hasMany(LeadsTargets::class, 'user_code', 'user_code');
-   }
-   /**
-    * Get all of the TargetsOrder for the User
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-   public function TargetsOrder(): HasMany
-   {
-      return $this->hasMany(OrdersTarget::class, 'user_code', 'user_code');
-   }
-   /**
-    * Get all of the TargetsVisit for the User
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-   public function TargetsVisit(): HasMany
-   {
-      return $this->hasMany(VisitsTarget::class, 'user_code', 'user_code');
+       return $this->hasOne(VisitsTarget::class, 'user_code', 'user_code')
+           ->latest('created_at');
    }
    /**
     * Get the Region that owns the User
@@ -171,5 +165,10 @@ class User extends Authenticatable implements MustVerifyEmail
    {
        return $this->belongsTo(Subregion::class, 'area_id', 'id');
 
+   }
+
+   public function Checkings(): HasMany
+   {
+       return $this->hasMany(checkin::class, 'user_code', 'user_code');
    }
 }
