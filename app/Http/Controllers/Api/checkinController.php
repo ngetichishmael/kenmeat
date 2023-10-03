@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\customer\checkin;
 use App\Models\customer\customers;
 use App\Models\inventory\allocations;
+use App\Models\CheckIn as ModelsCheckIn;
 use App\Models\Orders;
 use App\Models\Order_edit_reason;
 use App\Models\Order_items;
@@ -33,6 +34,26 @@ class checkinController extends Controller
         $currentDateTime = Carbon::now();
         $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
         return $formattedDateTime;
+    }
+
+    public function checkinUser(Request $request)
+    {
+        $checkin = ModelsCheckIn::create([
+            'user_id' => $request->user()->id,
+            'name' => $request->user()->name,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'time' => $request->time,
+        ]);
+
+        info('CheckinController: ' . $request->user()->name . ' Checked in at ' . now());
+
+        return response()->json([
+            "success" => true,
+            'status' => 200,
+            "message" => "Checking successfully",
+            "checking" => $checkin,
+        ]);
     }
 
     /**
