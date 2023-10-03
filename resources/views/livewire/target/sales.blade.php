@@ -55,7 +55,7 @@
                     @forelse ($targets as $key=>$target)
                         <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $target->User->name }}</td>
+                        <td>{{ $target->User->name  ?? ''}}</td>
                         <td>{{ $target->SalesTarget ?? 0 }}</td>
                         <td>{{ $target->AchievedSalesTarget ?? 0 }}</td>
                         <td>{{ $target->Deadline ?? '' }}</td>
