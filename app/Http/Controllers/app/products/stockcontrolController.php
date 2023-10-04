@@ -292,9 +292,9 @@ class stockcontrolController extends Controller
 		$contacts = contact_persons::where('supplierID',$lpo->vendorID)->where('businessID',Auth::user()->businessID)->get();
 
 		$products = lpo_products::where('lpoID',$lpo->lpoID)->get();
-		
+
 		$directory = base_path().'/storage/files/business/'.$lpo->primary_email.'/finance/lpo/';
-		
+
       //create directory if it doesn't exists
 		if (!file_exists($directory)) {
 			mkdir($directory, 0777,true);
@@ -325,7 +325,7 @@ class stockcontrolController extends Controller
 		//lpo information
 		$lpo = lpo::where('id',$request->lpoID)->where('businessID',Auth::user()->businessID)->first();
 
-		//client info		
+		//client info
 		$supplier = suppliers::where('suppliers.id',$lpo->supplierID)
 							->where('businessID',Auth::user()->businessID)
 							->first();
@@ -547,5 +547,11 @@ class stockcontrolController extends Controller
       Session::flash('success','Stock updated add marked as delivered');
 
       return redirect()->back();
+   }
+   public function restockHistory($id, $warehousecode)
+   {
+      $product = product_information::find($id);
+      $warehousecode = $warehousecode;
+      return view('app.warehousing.restockhistory', compact('product', 'warehousecode'));
    }
 }
