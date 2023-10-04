@@ -273,6 +273,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('warehousing/products/brand/{id}/edit', ['uses' => 'app\products\brandController@edit', 'as' => 'product.brand.edit']);
     Route::post('warehousing/product/brand/{id}/update', ['uses' => 'app\products\brandController@update', 'as' => 'product.brand.update']);
     Route::get('warehousing/products/brand/{id}/destroy', ['uses' => 'app\products\brandController@destroy', 'as' => 'product.brand.destroy']);
+   Route::get('warehousing/products/restock_history/{id}/{warehousecode}', ['uses' => 'app\products\stockcontrolController@restockHistory', 'as' => 'product.restock.history']);
 
     /* === users === */
     Route::get('user', ['uses' => 'app\usersController@index', 'as' => 'users.index']);

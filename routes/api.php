@@ -243,13 +243,15 @@ Route::group(['namespace' => 'Api'], function () {
      */
     Route::get('/get/company/routes', [CompanyRouteController::class, "getCompanyRoutes"])->middleware('auth:sanctum');
 
-    //stock requisition
-    Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
-    Route::post('/stock/create/request', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
-    Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
-    Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
+   //stock requisition
+   Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
+   Route::post('/stock/create/request/{warehouse}', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
+   Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
+   Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
+   Route::get('stock/requisitions/approved', [StockRequisitionController::class, "approved"])->middleware('auth:sanctum');
+   Route::post('/stock/accept', [StockRequisitionController::class, "accept"])->middleware('auth:sanctum');
 
-    Route::middleware(['auth'])->group(function () {
+   Route::middleware(['auth'])->group(function () {
     });
     Route::post('socket/connect', [SocketsController::class, 'connect']);
 
