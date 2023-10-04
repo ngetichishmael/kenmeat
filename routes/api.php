@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\StockRequisitionController;
 use App\Http\Controllers\Api\SurveryAnswersController;
 use App\Http\Controllers\Api\surveyController;
 use App\Http\Controllers\Api\TargetsController;
+use App\Http\Controllers\Api\WarehouseController;
 use App\Http\Controllers\Chat\SocketsController;
 use Illuminate\Support\Facades\Route;
 
