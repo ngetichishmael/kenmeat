@@ -59,9 +59,10 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('customers/order/{orderCode}/details', 'customersController@order_details')->middleware('auth:sanctum');
     Route::get('customers/{customerID}/new-order/', 'customersController@new_order')->middleware('auth:sanctum');
 
-    //products
-    Route::get('products/{businessCode}', 'productsController@index')->middleware('auth:sanctum');
-
+   //products
+   Route::get('products/{businessCode}', 'productsController@index')->middleware('auth:sanctum');
+   Route::get('products/warehouse/{warehouseCode}', 'productsController@index2')->middleware('auth:sanctum');
+   Route::get('products/regional', 'productsController@index3')->middleware('auth:sanctum');
     //product categories
     Route::get('products/categories/{businessCode}', 'productCategoriesController@index');
     Route::get('products/{categoryID}/category', 'productCategoriesController@products_by_category');
@@ -177,7 +178,9 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('/reconcile/products', [ReconciledProductsController::class, 'index'])->middleware('auth:sanctum');
     Route::get('/get/targets', [TargetsController::class, 'getSalespersonTarget'])->middleware('auth:sanctum');
 
-    /**
+   Route::get('/get/warehouses', [WarehouseController::class, 'index'])->middleware('auth:sanctum');
+
+   /**
      * Reports
      */
     Route::get('/get/reports', [ReportsController::class, 'getReports'])->middleware('auth:sanctum');
