@@ -277,7 +277,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('/get/targets/{type}', [TargetsController::class, "getTarget"])->name('getUITargets');
 
      // App Version
-    Route::get('/get/app/version', [SystemController::class, 'getAppVersion'])->middleware('auth:sanctum');
+    Route::get('/get/app/version', [SystemController::class, 'getAppVersion']);
     Route::get('/app/version/store', [SystemController::class, "getAppVersion"])->middleware('auth:sanctum');
 
 });
