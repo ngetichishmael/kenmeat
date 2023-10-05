@@ -11,13 +11,31 @@ class SystemController extends Controller
 {
     public function getAppVersion()
     {
-        $appVersion = AppVersion::latest()->first();
+        try {
+            $appVersion = AppVersion::latest()->first();
     
-        return response()->json([
-            'success' => true,
-            'message'=> 'App Version',
-            'version' => $appVersion ? $appVersion->version : null]);
+            if ($appVersion) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'App Version',
+                    'version' => $appVersion->version
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'App Version not found',
+                    'version' => null
+                ], 404); // Return a 404 Not Found status code
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving app version',
+                'version' => null
+            ], 500); // Return a 500 Internal Server Error status code
+        }
     }
+    
     
     public function storeAppVersion(Request $request)
     {
