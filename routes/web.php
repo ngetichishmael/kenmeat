@@ -185,6 +185,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('warehousing/products/upload', ['uses' => 'app\products\productController@upload', 'as' => 'products.upload']);
     Route::get('warehousing/products/{id}/edit', ['uses' => 'app\products\productController@edit', 'as' => 'products.edit']);
     Route::get('warehousing/products/{id}/restock', ['uses' => 'app\products\productController@restock', 'as' => 'products.restock']);
+   Route::get('warehousing/products/{id}/view', ['uses' => 'app\products\productController@singleview', 'as' => 'products.view']);
     Route::post('warehousing/products/{id}/update', ['uses' => 'app\products\productController@update', 'as' => 'products.update']);
     Route::post('warehousing/products/{id}/updatestock', ['uses' => 'app\products\productController@updatestock', 'as' => 'products.updatestock']);
     Route::get('warehousing/products/{id}/details', ['uses' => 'app\products\productController@details', 'as' => 'products.details']);
@@ -273,6 +274,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('warehousing/products/brand/{id}/edit', ['uses' => 'app\products\brandController@edit', 'as' => 'product.brand.edit']);
     Route::post('warehousing/product/brand/{id}/update', ['uses' => 'app\products\brandController@update', 'as' => 'product.brand.update']);
     Route::get('warehousing/products/brand/{id}/destroy', ['uses' => 'app\products\brandController@destroy', 'as' => 'product.brand.destroy']);
+   Route::get('warehousing/products/restock_history/{id}/{warehousecode}', ['uses' => 'app\products\stockcontrolController@restockHistory', 'as' => 'product.restock.history']);
 
     /* === users === */
     Route::get('user', ['uses' => 'app\usersController@index', 'as' => 'users.index']);

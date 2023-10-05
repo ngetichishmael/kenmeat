@@ -71,8 +71,6 @@
   'routes.index' => 'App\\Http\\Livewire\\Routes\\index',
   'sales.dashboard-view' => 'App\\Http\\Livewire\\Sales\\DashboardView',
   'sales.targets' => 'App\\Http\\Livewire\\Sales\\Targets',
-  'stock.reconciledproducts' => 'App\\Http\\Livewire\\Stock\\Reconciledproducts',
-  'stock.reconcileproducts' => 'App\\Http\\Livewire\\Stock\\Reconcileproducts',
   'stocks.index' => 'App\\Http\\Livewire\\Stocks\\Index',
   'stocks.lifted-stock' => 'App\\Http\\Livewire\\Stocks\\LiftedStock',
   'stocks.lifted-stock.index' => 'App\\Http\\Livewire\\Stocks\\LiftedStock\\Index',
@@ -111,4 +109,6 @@
   'visits.users.view' => 'App\\Http\\Livewire\\Visits\\Users\\View',
   'warehousing.assign-shop-attendee' => 'App\\Http\\Livewire\\Warehousing\\AssignShopAttendee',
   'warehousing.index' => 'App\\Http\\Livewire\\Warehousing\\Index',
+  'warehousing.products' => 'App\\Http\\Livewire\\Warehousing\\Products',
+  'warehousing.restockedhistory' => 'App\\Http\\Livewire\\Warehousing\\Restockedhistory',
 );
