@@ -91,19 +91,19 @@
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <td>Interested in New Order:</td>
-                                                        <td>{{ $checkingData['interested_in_new_order'] }}</td>
+                                                        <td>{{ $checkingData['interested_in_new_order'] ?? 'N/A' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Pricing Accuracy:</td>
-                                                        <td>{{ $checkingData['pricing_accuracy'] }}</td>
+                                                        <td>{{ $checkingData['pricing_accuracy'] ?? 'N/A' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Progress Status:</td>
-                                                        <td>{{ $checkingData['progress_status'] }}</td>
+                                                        <td>{{ $checkingData['progress_status'] ?? 'N/A'}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Products Visibility:</td>
-                                                        <td>{{ $checkingData['product_visible'] }}
+                                                        <td>{{ $checkingData['product_visible'] ?? 'N/A'}}
                                                         </td>
                                                     </tr>
 
