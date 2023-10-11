@@ -142,14 +142,16 @@
                                         <i data-feather="eye"></i>
                                     </button>
                                     <div class="dropdown-menu">
+                                        <a class="dropdown-item"
+                                                href="{{ route('customer.show', $contact->id) }}">
+                                                <i data-feather='eye' class="mr-50"></i>
+                                                <span>View</span>
+                                            </a>
                                         <a class="dropdown-item" href="{{ route('make.orders', ['id' => $contact->id]) }}">
-                                            <i data-feather="eye" class="mr-50"></i>
+                                            <i data-feather="cart" class="mr-50"></i>
                                             <span>Order</span>
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('customer.edit', $contact->id) }}">
-                                            <i data-feather='edit' class="mr-50"></i>
-                                            <span>Edit</span>
-                                        </a>
+                                    
                                         @if ($contact->approval === 'Approved')
                                             <a wire:click.prevent="deactivate({{ $contact->id }})"
                                                 onclick="confirm('Are you sure you want to DEACTIVATE this user?')||event.stopImmediatePropagation()"

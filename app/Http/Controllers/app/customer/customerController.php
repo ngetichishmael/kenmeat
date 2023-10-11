@@ -55,10 +55,14 @@ class customerController extends Controller
    {
       return view('app.creditors.approve');
    }
-   public function show()
-   {
-      return view('app.customers.index');
-   }
+   public function show($id)
+    {
+
+        return view('app.customers.view', [
+            'id' => $id,
+        ]);
+    }
+    
    public function groupstore(Request $request)
    {
       $customer = new customer_group;

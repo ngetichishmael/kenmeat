@@ -85,31 +85,41 @@
                                     </td>
                             
                             </tr>
-                         
-                                    <tr id="details{{ $visit->code }}" class="collapse">
-                                        <td colspan="8" style="padding-left:20%; padding-right:20%">
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <td>Interested in New Order:</td>
-                                                        <td>{{ $checkingData['interested_in_new_order'] ?? 'N/A' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Pricing Accuracy:</td>
-                                                        <td>{{ $checkingData['pricing_accuracy'] ?? 'N/A' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Progress Status:</td>
-                                                        <td>{{ $checkingData['progress_status'] ?? 'N/A'}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Products Visibility:</td>
-                                                        <td>{{ $checkingData['product_visible'] ?? 'N/A'}}
-                                                        </td>
-                                                    </tr>
+                            <tr id="details{{ $visit->code }}" class="collapse">
+    <td colspan="8">
+        <table class="table table-bordered">
+            <tr>
+                <td rowspan="5">
+              
+                    <?php
+                    $imageFileName = $checkingData['image'] ?? 'no-image.png'; // Default image if no image name is found
+                    $imagePath = '/images/responses/' . $imageFileName;
+                    $defaultImagePath = 'images/no-image.png'; // Default image path
+                    ?>
+                    <center> <img src="{{ file_exists(public_path($imagePath)) ? asset($imagePath) : asset($defaultImagePath) }}" alt="Image" height="100px"></center>
+                   
+             
+            </td> 
+          
+                <td>Interested in New Order:</td>
+                <td>{{ $checkingData['interested_in_new_order'] ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td>Pricing Accuracy:</td>
+                <td>{{ $checkingData['pricing_accuracy'] ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td>Progress Status:</td>
+                <td>{{ $checkingData['progress_status'] ?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td>Products Visibility:</td>
+                <td>{{ $checkingData['product_visible'] ?? 'N/A'}}</td>
+            </tr>
+        </table>
+    </td>
+</tr>
 
-                                                </table>
-                                            </td>
-                                        </tr>
             
                         @empty
                             <tr>

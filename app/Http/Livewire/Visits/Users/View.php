@@ -103,6 +103,8 @@ class View extends Component
                 "pricing_accuracy" => $result->pricing_accuracy,
                 "progress_status" => $result->progress_status,
                 "product_visible" => $result->product_visible,
+                "image" => $result->image,
+
             ];
         } else {
             // Handle the case when no matching record is found
@@ -111,6 +113,7 @@ class View extends Component
                 "pricing_accuracy" => null,
                 "progress_status" => null,
                 "product_visible" => null,
+                "image" => null,
             ];
         }
     }
