@@ -48,6 +48,17 @@ class customersController extends Controller
 
         $query = customers::get();
 
+        $defaultImageUrl = asset('images/no-image.png');
+
+        // Modify the image URLs
+        foreach ( $query as $customer) {
+            $imageFileName = $customer->image;
+            $imagePath = public_path('storage/' . $imageFileName);
+            $imageUrl = file_exists($imagePath) ? asset('storage/' . $imageFileName) : $defaultImageUrl;
+
+            $customer->image = $imageUrl;
+        }
+
         return response()->json([
             "user" => $user,
             "success" => true,
