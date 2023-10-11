@@ -27,20 +27,27 @@ class FormResponseController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/images/responses'), $imageName);
+        } else {
+            $imageName = null; 
+        }
+
         
         $validatedData = array_merge($request->all(), [
             'user_id' => $request->user()->id,
             'checking_code' => $checking_code,
             'customer_id' => $customer_id,
+            'image' => $imageName, // Store the image name in the database
+
         ]);
 
-        // Handle image upload if exists
-        $imagePath = null;
-        if ($request->hasFile('placement.image')) {
-            $imagePath = $request->file('placement.image')->store('images', 'public');
-        }
-        $validatedData['placement']['image'] = $imagePath;
         
+    
+
         $formResponse = FormResponse::create($validatedData);
 
         return response()->json([
