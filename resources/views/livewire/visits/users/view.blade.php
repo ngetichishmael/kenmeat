@@ -93,7 +93,7 @@
               
                     <?php
                     $imageFileName = $checkingData['image'] ?? 'no-image.png'; // Default image if no image name is found
-                    $imagePath = '/images/responses/' . $imageFileName;
+                    $imagePath = '/storage/images/responses/' . $imageFileName;
                     $defaultImagePath = 'images/no-image.png'; // Default image path
                     ?>
                     <center> <img src="{{ file_exists(public_path($imagePath)) ? asset($imagePath) : asset($defaultImagePath) }}" alt="Image" height="100px"></center>

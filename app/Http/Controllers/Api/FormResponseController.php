@@ -31,9 +31,9 @@ class FormResponseController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/responses'), $imageName);
+            $image->move(public_path('storage/images/responses'), $imageName);
         } else {
-            $imageName = null; // No image provided
+            $imageName = null; 
         }
 
         

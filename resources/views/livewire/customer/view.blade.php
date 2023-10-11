@@ -8,7 +8,7 @@
                  <!-- User Profile image with name -->
                 <div class="header-profile-sidebar text-center">
                     <div class="avatar box-shadow-1 avatar-border avatar-xl">
-                    <img src="{{ asset('storage/images/' . $customer->image) }}" 
+                    <img src="{{ asset('storage/image/' . $customer->image) }}" 
                         alt="user_avatar" 
                         height="70" 
                         width="70" 
