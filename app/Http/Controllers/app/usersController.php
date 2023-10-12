@@ -98,13 +98,13 @@ class usersController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-  
+
       if ($validator->fails()) {
          return redirect()->back()
              ->withErrors($validator)
              ->withInput();
      }
-     
+
       $user_code = rand(100000, 999999);
         //save user
         $code = rand(100000, 999999);
@@ -235,7 +235,7 @@ class usersController extends Controller
 
         User::updateOrCreate(
             [
-                "id" => $user_code,
+                "user_code" => $user_code,
                 "business_code" => FacadesAuth::user()->business_code,
             ],
             [
