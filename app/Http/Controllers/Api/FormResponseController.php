@@ -14,6 +14,7 @@ class FormResponseController extends Controller
         $validator = Validator::make($request->all(), [
             'interested_in_new_order' => 'required|string|in:Yes,No',
             'stock_replenishment' => 'nullable|string',
+            'next_step_for_customer' => 'nullable|string',
             'expiry_date_update' => 'nullable|date_format:Y-m-d',
             'pricing_accuracy' => 'required|string|in:Yes,No',
             'incorrect_pricing_product_name' => 'nullable|string',
