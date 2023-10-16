@@ -30,9 +30,9 @@
                 <div class="card-body">
                     <form method="POST"
                         action="{{ route('user.update', [
-                            'id' => $user_code,
-                        ]) }}"
+                            'id' => $user_code,]) }}"
                         style="gap: 20px;">
+                       @method('PUT')
                         @csrf
                         <div class="row">
                             <div class="col-12">
