@@ -23,10 +23,10 @@ class FormResponseController extends Controller
             'progress_status' => 'required|string|in:Very poor,Average,Good,Very Good',
             'new_insights' => 'nullable|string',
             'product_visible' => 'required|string|in:Yes,No',
-            'stock_levels' => 'required|array', // Add this for stock levels
-            'stock_levels.*.product_id' => 'required|integer',
-            'stock_levels.*.stock_level' => 'required|integer',
-            'stock_levels.*.expiration_date' => 'required|date_format:Y-m-d',
+            'available_products' => 'required|array', // Add this for stock levels
+            'available_products.*.product_id' => 'required|integer',
+            'available_products.*.stock_level' => 'required|integer',
+            'available_products.*.expiration_date' => 'required|date_format:Y-m-d',
         ]);
 
         if ($validator->fails()) {
@@ -41,7 +41,7 @@ class FormResponseController extends Controller
             $imageName = null;
         }
 
-        $stockLevelsData = $request->input('stock_levels');
+        $stockLevelsData = $request->input('available_products');
 
         // Create a FormResponse instance
         $formResponse = FormResponse::create([
