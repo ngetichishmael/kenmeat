@@ -19,34 +19,31 @@ class Dashboard extends Component
       public $startDate;
       public $endDate;
 
-public function render()
-{
-    $search = '%' . $this->search . '%';
-
-    // Set default date range (e.g., today)
-    if (!$this->startDate) {
-        $this->startDate = now()->format('Y-m-d');
-    }
-    
-    if (!$this->endDate) {
-        $this->endDate = now()->format('Y-m-d');
-    }
-
-    $checkins = CheckIn::where(function ($query) use ($search) {
-        $query->where('name', 'like', $search)
-            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
-    });
-
-    // Add date range filter
-    if ($this->startDate && $this->endDate) {
-        $checkins->whereBetween('time', [$this->startDate, $this->endDate]);
-    }
-
-    $checkins = $checkins->paginate($this->perPage); // Paginate the result
-
-    return view('livewire.checkins.dashboard', compact('checkins'));
-}
-
+      public function render()
+      {
+          $search = '%' . $this->search . '%';
+      
+          $checkins = CheckIn::where(function ($query) use ($search) {
+              $query->where('name', 'like', $search);
+          });
+      
+          // Check if the date range filter is provided
+          if ($this->startDate && $this->endDate) {
+              $checkins->whereBetween('time', [$this->startDate, $this->endDate]);
+          } else {
+              // If no date range is provided, default to daily check-ins
+              $checkins->whereDate('time', now());
+          }
+      
+          // Order the check-ins by time in descending order (most recent first)
+          $checkins->orderBy('time', 'desc');
+      
+          $checkins = $checkins->paginate($this->perPage);
+      
+          return view('livewire.checkins.dashboard', compact('checkins'));
+      }
+      
+      
       
       
       
