@@ -118,6 +118,16 @@ Route::middleware(['auth'])->group(function () {
         'respond' => 'ChatSupport.respond',
     ]);
 
+    Route::resource('users/checkins', CheckinsController::class)->names([
+        'index' => 'Checkins',
+        'show' => 'Checkins.show',
+        'edit' => 'Checkins.edit',
+        'update' => 'Checkins.update',
+        'destroy' => 'Checkins.destroy',
+        'create' => 'Checkins.create',
+        'store' => 'Checkins.store',
+    ]);
+
     Route::resource('visits/user', UserVisitController::class)->names([
         'index' => 'UsersVisits',
         'show' => 'UsersVisits.show',

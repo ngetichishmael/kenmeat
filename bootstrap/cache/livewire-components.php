@@ -9,6 +9,7 @@
   'chats.dashboard' => 'App\\Http\\Livewire\\Chats\\Dashboard',
   'chats.index' => 'App\\Http\\Livewire\\Chats\\Index',
   'checkin.index' => 'App\\Http\\Livewire\\Checkin\\index',
+  'checkins.dashboard' => 'App\\Http\\Livewire\\Checkins\\Dashboard',
   'comment.dashboard' => 'App\\Http\\Livewire\\Comment\\Dashboard',
   'creditors.approve' => 'App\\Http\\Livewire\\Creditors\\Approve',
   'creditors.dashboard' => 'App\\Http\\Livewire\\Creditors\\Dashboard',

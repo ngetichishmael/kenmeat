@@ -12,7 +12,7 @@ class FormResponseController extends Controller
     public function store(Request $request, $customer_id, $checking_code)
     {
         $validator = Validator::make($request->all(), [
-            'interested_in_new_order' => 'required|string|in:Yes,No',
+            'interested_in_new_order' => 'required|string',
             'stock_replenishment' => 'nullable|string',
             'next_step_for_customer' => 'nullable|string',
             'expiry_date_update' => 'nullable|date_format:Y-m-d',
