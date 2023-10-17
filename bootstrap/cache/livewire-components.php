@@ -40,6 +40,7 @@
   'leads.targets' => 'App\\Http\\Livewire\\Leads\\Targets',
   'maps.agents.dashboard' => 'App\\Http\\Livewire\\Maps\\Agents\\Dashboard',
   'maps.dashboard' => 'App\\Http\\Livewire\\Maps\\Dashboard',
+  'merchandiser.dashboard' => 'App\\Http\\Livewire\\Merchandiser\\Dashboard',
   'notification.all.index' => 'App\\Http\\Livewire\\Notification\\All\\Index',
   'notification.customers.index' => 'App\\Http\\Livewire\\Notification\\Customers\\Index',
   'notification.users.index' => 'App\\Http\\Livewire\\Notification\\Users\\Index',

@@ -71,33 +71,38 @@
                 <table class="table table-striped table-bordered" style="font-size: small">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Employee</th>
-                            <th>User Type</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                          
+                        <th>ID</th>
+                        <th>User Name</th>
+                        <th>Customer</th>
+                        <th>Visit Date</th>
+                        <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($checkins as $key => $checkin)
+                        @foreach($reports as $key => $report)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $checkin->user->name ?? 'NA' }}</td>
-                                <td>{{ $checkin->user->account_type ?? 'N/A' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($checkin->time)->format('Y-m-d') }}</td> 
-                                <td>{{ \Carbon\Carbon::parse($checkin->time)->format('g:i A') }}</td>
-
-
+                                <td>{{ $report->user->name ?? 'N/A' }}</td>
+                                <td>{{ $report->user->customer->customer_name ?? 'N/A' }}</td>
+                                <td>{{ $report->created_at }}</td>
+                                <td>
+                                    <button wire:click="openDropdown({{ $report->id }})" class="btn btn-sm" style="background-color:  #089000; color: white; font-size: 14px; padding: 5px 10px;">  <i data-feather="eye"></i></button>
+                                
+                                </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" style="text-align: center;"> No Check-Ins Found </td>
-                            </tr>
-                        @endforelse
+                            @if ($selectedReportId === $report->id)
+                                <tr>
+                                    <td colspan="5">
+                                        <div>
+                                            <p>Estimated Value: {{ $report->estimated_value }}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
-                <div class="mt-1">{{ $checkins->links() }}</div>
+                <div class="mt-1">{{ $reports->links() }}</div>
             </div>
         </div>
 

@@ -149,18 +149,25 @@
                     </li>
                 </ul>
             </li>
-           <li class="nav-item {!! Nav::isResource('stocklift') !!}">
-              <a class="d-flex align-items-center" href="{!! route('stock.lifts') !!}">
-                 <i data-feather="layers"></i>
-                 <span class="menu-title text-truncate" data-i18n="Invo">Stock Lifts</span>
-              </a>
-           </li>
-           <li class="nav-item {!! Nav::isResource('reconcilition') !!}">
-              <a class="d-flex align-items-center" href="{{ route('stock.recon') }}">
-                 <i data-feather="book"></i>
-                 <span class="menu-title text-truncate" data-i18n="voice">Stock Reconciliation</span>
-              </a>
-           </li>
+    
+           <li class="nav-item {!! Nav::isResource('stock') !!}">
+                <a class="d-flex align-items-center" href="#"><i data-feather="layers"></i><span
+                        class="menu-title text-truncate" data-i18n="Invoice">Stocks</span></a>
+                <ul class="menu-content">
+                    <li style="padding-left: 30px"><a class="d-flex align-items-center"
+                            href=" {{ route('stock.lifts') }}">
+                            <i data-feather='map-pin'></i>
+                            <span class="menu-item text-truncate">Stock Lifts</span></a>
+                    </li>
+                    <li style="padding-left: 30px"><a class="d-flex align-items-center"
+                            href="{{ route('stock.recon') }}">
+                            <i data-feather='map-pin'></i>
+                            <span class="menu-item text-truncate">Stock Reconciliation</span></a>
+                    </li>
+              
+                </ul>
+            </li>
+
             <li class="nav-item {!! Nav::isResource('users') !!}">
                 <a class="d-flex align-items-center" href="{!! route('users.list') !!}">
                     <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Todo"> Users</span>
@@ -263,7 +270,7 @@
                         data-feather="message-circle"></i><span class="menu-title text-truncate"
                         data-i18n="Invoice">Chats</span></a>
             </li>
-            <li class="nav-item {!! Nav::isResource('survey') !!}">
+            <!-- <li class="nav-item {!! Nav::isResource('survey') !!}">
                 <a class="d-flex align-items-center" href="#">
                     <i data-feather="clipboard"></i><span class="menu-title text-truncate">Survey</span>
                 </a>
@@ -281,15 +288,14 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             <li class="nav-item {!! Nav::isResource('reports') !!}">
                 <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i
                         data-feather='book-open'></i><span class="menu-title text-truncate" data-i18n="Invoice">All
                         Reports</span></a>
             </li>
-            <li class="nav-item {!! Nav::isResource('reports') !!}">
-                <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i
-                        data-feather='book-open'></i><span class="menu-title text-truncate" data-i18n="Invoice">Merchandiser Reports</span></a>
+            <li class="nav-item {!! Nav::isResource('MerchandiserReport') !!}">
+                <a class="d-flex align-items-center" href="{!! route('MerchandiserReport') !!}"><i data-feather='tv'></i><span class="menu-title text-truncate" data-i18n="Invoice">Promo Reports</span></a>
             </li>
 
 

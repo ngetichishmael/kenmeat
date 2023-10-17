@@ -13,8 +13,14 @@ class MerchandiserReport extends Model
 
     protected $guarded= [];
 
-    public function stockLevels() {
+    public function stockLevels()
+    {
         return $this->hasMany(MerchandiserStockLevel::class, 'report_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
     
 }

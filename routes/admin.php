@@ -128,6 +128,16 @@ Route::middleware(['auth'])->group(function () {
         'store' => 'Checkins.store',
     ]);
 
+    Route::resource('users/merchandisers/reports',   MerchandiserController::class)->names([
+        'index' => 'MerchandiserReport',
+        'show' => 'MerchandiserReport.show',
+        'edit' => 'MerchandiserReport.edit',
+        'update' => 'MerchandiserReport.update',
+        'destroy' => 'MerchandiserReport.destroy',
+        'create' => 'MerchandiserReport.create',
+        'store' => 'MerchandiserReport.store',
+    ]);
+
     Route::resource('visits/user', UserVisitController::class)->names([
         'index' => 'UsersVisits',
         'show' => 'UsersVisits.show',
