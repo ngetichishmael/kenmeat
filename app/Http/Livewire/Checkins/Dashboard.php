@@ -14,7 +14,7 @@ class Dashboard extends Component
       protected $paginationTheme = 'bootstrap';
       public $perPage = 10;
       public $search;
-      public $orderBy = 'customer_checkin.id';
+      public $orderBy = 'id';
       public $orderAsc = false;
    
 
@@ -23,14 +23,14 @@ class Dashboard extends Component
           $search = '%' . $this->search . '%';
       
           $checkins = CheckIn::where(function ($query) use ($search) {
-                  $query->where('name', 'like', $search)
-                      ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
-                      ->paginate($this->perPage);
-              })
-              ->with('user') // Load the related user model
-              ->get(); // Retrieve the results
+              $query->where('name', 'like', $search)
+                  ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
+          })->paginate($this->perPage); 
+
+          
       
           return view('livewire.checkins.dashboard', compact('checkins'));
       }
+      
       
 }
