@@ -23,6 +23,10 @@ class FormResponseController extends Controller
             'progress_status' => 'required|string|in:Very poor,Average,Good,Very Good',
             'new_insights' => 'nullable|string',
             'product_visible' => 'required|string|in:Yes,No',
+            'available_products' => 'required|array', // Add this for stock levels
+            'available_products.*.product_id' => 'required|integer',
+            'available_products.*.stock_level' => 'required|integer',
+            'available_products.*.expiration_date' => 'required|date_format:Y-m-d',
         ]);
 
         if ($validator->fails()) {
@@ -34,22 +38,37 @@ class FormResponseController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('storage/images/responses'), $imageName);
         } else {
-            $imageName = null; 
+            $imageName = null;
         }
 
-        
-        $validatedData = array_merge($request->all(), [
+        $stockLevelsData = $request->input('available_products');
+
+        // Create a FormResponse instance
+        $formResponse = FormResponse::create([
             'user_id' => $request->user()->id,
             'checking_code' => $checking_code,
             'customer_id' => $customer_id,
-            'image' => $imageName, // Store the image name in the database
-
+            'image' => $imageName,
+            'interested_in_new_order' => $request->input('interested_in_new_order'),
+            'stock_replenishment' => $request->input('stock_replenishment'),
+            'next_step_for_customer' => $request->input('next_step_for_customer'),
+            'expiry_date_update' => $request->input('expiry_date_update'),
+            'pricing_accuracy' => $request->input('pricing_accuracy'),
+            'incorrect_pricing_product_name' => $request->input('incorrect_pricing_product_name'),
+            'incorrect_pricing_current_price' => $request->input('incorrect_pricing_current_price'),
+            'product_visible' => $request->input('product_visible'),
+            'progress_status' => $request->input('progress_status'),
+            'new_insights' => $request->input('new_insights'),
         ]);
 
-        
-    
-
-        $formResponse = FormResponse::create($validatedData);
+        // Create related stock levels
+        foreach ($stockLevelsData as $stockData) {
+            $formResponse->availableProducts()->create([
+                'product_id' => $stockData['product_id'],
+                'stock_level' => $stockData['stock_level'],
+                'expiration_date' => $stockData['expiration_date'],
+            ]);
+        }
 
         return response()->json([
             'message' => 'Form response submitted successfully.',
