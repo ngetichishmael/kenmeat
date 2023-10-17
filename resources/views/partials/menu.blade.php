@@ -74,6 +74,9 @@
                     <li style="padding-left: 30px"><a class="d-flex align-items-center" href="{!! route('CustomerVisits') !!}"><i
                                 data-feather="map-pin"></i><span class="menu-item text-truncate">Customers</span></a>
                     </li>
+                    <li style="padding-left: 30px"><a class="d-flex align-items-center" href="{!! route('CustomerVisits') !!}"><i
+                                data-feather="map-pin"></i><span class="menu-item text-truncate">Checkins</span></a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item {!! Nav::isResource('orders') !!}">
@@ -283,6 +286,10 @@
                 <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i
                         data-feather='book-open'></i><span class="menu-title text-truncate" data-i18n="Invoice">All
                         Reports</span></a>
+            </li>
+            <li class="nav-item {!! Nav::isResource('reports') !!}">
+                <a class="d-flex align-items-center" href="{!! route('users.reports') !!}"><i
+                        data-feather='book-open'></i><span class="menu-title text-truncate" data-i18n="Invoice">Merchandiser Reports</span></a>
             </li>
 
 
