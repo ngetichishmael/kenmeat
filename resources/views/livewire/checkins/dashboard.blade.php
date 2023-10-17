@@ -72,8 +72,8 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>User</th>
-                            <th>Check-in Name</th>
+                            <th>Employee</th>
+                            <th>User Type</th>
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Time</th>
@@ -84,9 +84,8 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $checkin->user->name ?? 'NA' }}</td>
-                                <td>{{ $checkin->name }}</td>
-                                <td>{{ $checkin->latitude }}</td>
-                                <td>{{ $checkin->longitude }}</td>
+                                <td>{{ $checkin->user->account_type ?? 'N/A' }}</td>
+                                <td>{{ $checkin->time }}</td>
                                 <td>{{ $checkin->time }}</td>
                             </tr>
                         @empty
