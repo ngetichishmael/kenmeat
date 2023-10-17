@@ -34,4 +34,8 @@ class FormResponse extends Model
         'products_available' => 'array', // Cast JSON fields to array
         'out_of_stock_prods' => 'array', // Cast JSON fields to array
     ];
+
+    public function availableProducts() {
+        return $this->hasMany(availableProducts::class, 'report_id');
+    }
 }
