@@ -62,12 +62,15 @@ class FormResponseController extends Controller
         ]);
 
         // Create related stock levels
-        foreach ($stockLevelsData as $stockData) {
-            $formResponse->availableProducts()->create([
-                'product_id' => $stockData['product_id'],
-                'stock_level' => $stockData['stock_level'],
-                'expiration_date' => $stockData['expiration_date'],
-            ]);
+        if ($stockLevelsData !== null) {
+            // Create related stock levels
+            foreach ($stockLevelsData as $stockData) {
+                $formResponse->availableProducts()->create([
+                    'product_id' => $stockData['product_id'],
+                    'stock_level' => $stockData['stock_level'],
+                    'expiration_date' => $stockData['expiration_date'],
+                ]);
+            }
         }
 
         return response()->json([

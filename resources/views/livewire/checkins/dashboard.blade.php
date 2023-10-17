@@ -25,32 +25,32 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-           <div class="form-group">
-               <label for="validationTooltip01">Start Date</label>
-               <input wire:model="startDate" name="startDate" type="date" class="form-control" id="validationTooltip01"
-                   placeholder="YYYY-MM-DD HH:MM" required />
-           </div>
-       </div>
-       <div class="col-md-2">
-           <div class="form-group">
-               <label for="validationTooltip01">End Date</label>
-               <input wire:model="endDate" name="startDate" type="date" class="form-control" id="validationTooltip01"
-                   placeholder="YYYY-MM-DD HH:MM" required />
-           </div>
-       </div>
+                    <div class="form-group">
+                        <label for="validationTooltip01">Start Date</label>
+                        <input wire:model="startDate" name="startDate" type="date" class="form-control" id="validationTooltip01"
+                            placeholder="YYYY-MM-DD HH:MM" required />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="validationTooltip01">End Date</label>
+                        <input wire:model="endDate" name="startDate" type="date" class="form-control" id="validationTooltip01"
+                            placeholder="YYYY-MM-DD HH:MM" required />
+                    </div>
+                </div>
 
 
-       <div class="col-md-2">
+       <!-- <div class="col-md-2">
             <button type="button" class="btn btn-icon btn-outline-success" wire:click="export"
                 wire:loading.attr="disabled" data-toggle="tooltip" data-placement="top" title="Export Excel">
                 <img src="{{ asset('assets/img/excel.png') }}"alt="Export Excel" width="25" height="15"
                     data-toggle="tooltip" data-placement="top" title="Export Excel">Export
             </button>
-        </div>
+        </div> -->
              
             </div>
         </div>
-
+<!-- 
       <div class="pt-0 pb-2 d-flex justify-content-end align-items-center mx-50 row">
          <div class="col-md-2">
             <div>
@@ -61,7 +61,7 @@
                </select>
             </div>
          </div>
-      </div>
+      </div> -->
 
       
 
@@ -74,9 +74,9 @@
                             <th>#</th>
                             <th>Employee</th>
                             <th>User Type</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>Date</th>
                             <th>Time</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -85,8 +85,9 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $checkin->user->name ?? 'NA' }}</td>
                                 <td>{{ $checkin->user->account_type ?? 'N/A' }}</td>
-                                <td>{{ $checkin->time }}</td>
-                                <td>{{ $checkin->time }}</td>
+                                <td>{{ \Carbon\Carbon::parse($checkin->time)->format('Y-m-d') }}</td> 
+                                <td>{{ \Carbon\Carbon::parse($checkin->time)->format('H:i:s') }}</td> 
+
                             </tr>
                         @empty
                             <tr>
