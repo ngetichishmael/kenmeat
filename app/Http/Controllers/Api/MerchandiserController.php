@@ -16,13 +16,14 @@ class MerchandiserController extends Controller
         // Validate the request data, including the image upload
         $validatedData = $request->validate([
             'today_est_customers' => 'required|integer',
+            'did_customer_make_order' => 'required|string|in:Yes,No',
             'estimated_value' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'stock_levels.*.product_id' => 'required|integer',
             'stock_levels.*.stock_level' => 'required|integer',
             'stock_levels.*.expiration_date' => 'required|date',
-            'available_competitors' => 'required|array',
-            'available_competitors.*' => 'string',
+            'available_competitors' => 'required',
+            // 'available_competitors.*' => 'string',
         ]);
     
         // Store the uploaded image in the "images" folder
@@ -33,6 +34,8 @@ class MerchandiserController extends Controller
             'user_id' => auth()->user()->id,
             'today_est_customers' => $validatedData['today_est_customers'],
             'estimated_value' => $validatedData['estimated_value'],
+            'did_customer_make_order' => $validatedData['did_customer_make_order'],
+            'available_competitors' => $validatedData['available_competitors'],
             'image' => $imagePath, // Store the image path in the database
         ]);
     
@@ -50,14 +53,14 @@ class MerchandiserController extends Controller
         }
     
         // Loop through competitors and create entries
-        foreach ($validatedData['available_competitors'] as $competitorName) {
-            $competitor = new MerchandiserCompetitor([
-                'report_id' => $report->id,
-                'name' => $competitorName,
-            ]);
+        // foreach ($validatedData['available_competitors'] as $competitorName) {
+        //     $competitor = new MerchandiserCompetitor([
+        //         'report_id' => $report->id,
+        //         'name' => $competitorName,
+        //     ]);
     
-            $competitor->save();
-        }
+        //     $competitor->save();
+        // }
     
         return response()->json([
             'success' => true,
