@@ -9,6 +9,12 @@
 
 {{-- content section --}}
 @section('content')
+   <div class="mb-2 row">
+        <div class="col-md-9">
+            <h2 class="page-header"> Check - Ins </h2>
+        </div>
+    
+    </div>
     <!-- Dashboard Ecommerce Starts -->
     @livewire('checkins.dashboard')
     <!-- Dashboard Ecommerce ends -->

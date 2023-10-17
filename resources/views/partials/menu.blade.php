@@ -74,7 +74,7 @@
                     <li style="padding-left: 30px"><a class="d-flex align-items-center" href="{!! route('CustomerVisits') !!}"><i
                                 data-feather="map-pin"></i><span class="menu-item text-truncate">Customers</span></a>
                     </li>
-                    <li style="padding-left: 30px"><a class="d-flex align-items-center" href="{!! route('CustomerVisits') !!}"><i
+                    <li style="padding-left: 30px"><a class="d-flex align-items-center" href="{!! route('Checkins') !!}"><i
                                 data-feather="map-pin"></i><span class="menu-item text-truncate">Checkins</span></a>
                     </li>
                 </ul>

@@ -16,21 +16,39 @@ class Dashboard extends Component
       public $search;
       public $orderBy = 'id';
       public $orderAsc = false;
-   
+      public $startDate;
+      public $endDate;
 
-      public function render()
-      {
-          $search = '%' . $this->search . '%';
-      
-          $checkins = CheckIn::where(function ($query) use ($search) {
-              $query->where('name', 'like', $search)
-                  ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
-          })->paginate($this->perPage); 
+public function render()
+{
+    $search = '%' . $this->search . '%';
 
-          
+    // Set default date range (e.g., today)
+    if (!$this->startDate) {
+        $this->startDate = now()->format('Y-m-d');
+    }
+    
+    if (!$this->endDate) {
+        $this->endDate = now()->format('Y-m-d');
+    }
+
+    $checkins = CheckIn::where(function ($query) use ($search) {
+        $query->where('name', 'like', $search)
+            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
+    });
+
+    // Add date range filter
+    if ($this->startDate && $this->endDate) {
+        $checkins->whereBetween('time', [$this->startDate, $this->endDate]);
+    }
+
+    $checkins = $checkins->paginate($this->perPage); // Paginate the result
+
+    return view('livewire.checkins.dashboard', compact('checkins'));
+}
+
       
-          return view('livewire.checkins.dashboard', compact('checkins'));
-      }
+      
       
       
 }
