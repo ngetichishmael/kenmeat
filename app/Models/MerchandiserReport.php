@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class MerchandiserReport extends Model
+{
+    use HasFactory;
+
+    protected $table ='merchandiser_report';
+
+    protected $guarded= [];
+
+    public function stockLevels() {
+        return $this->hasMany(MerchandiserStockLevel::class, 'report_id');
+    }
+    
+}
