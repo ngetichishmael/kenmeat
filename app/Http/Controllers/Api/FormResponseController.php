@@ -26,7 +26,7 @@ class FormResponseController extends Controller
             'available_products' => 'required|array', // Add this for stock levels
             'available_products.*.product_id' => 'required|integer',
             'available_products.*.stock_level' => 'required|integer',
-            'available_products.*.expiration_date' => 'required|date_format:Y-m-d',
+            'available_products.*.expiration_date' => 'required|date_format:Y-m-d H:i:s.u',
         ]);
 
         if ($validator->fails()) {
