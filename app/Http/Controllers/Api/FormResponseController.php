@@ -24,9 +24,9 @@ class FormResponseController extends Controller
             'new_insights' => 'nullable|string',
             'product_visible' => 'required|string|in:Yes,No',
             'available_products' => 'required|array', // Add this for stock levels
-            'available_products.*.product_id' => 'required|integer',
-            'available_products.*.stock_level' => 'required|integer',
-            'available_products.*.expiration_date' => 'required|date_format:Y-m-d H:i:s.u',
+            'available_products.*.product_id' => 'integer',
+            'available_products.*.stock_level' => 'integer',
+            'available_products.*.expiration_date' => 'date_format:Y-m-d H:i:s.u',
         ]);
 
         if ($validator->fails()) {
