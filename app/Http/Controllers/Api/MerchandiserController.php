@@ -31,6 +31,7 @@ class MerchandiserController extends Controller
         // Create a new MerchandiserReport entry
         $report = new MerchandiserReport([
             'user_id' => auth()->user()->id,
+            'customer_id' => $data['customer_id'],
             'today_est_customers' => $data['today_est_customers'],
             'estimated_value' => $data['estimated_value'],
             'available_competitors' => $data['available_competitors'],
