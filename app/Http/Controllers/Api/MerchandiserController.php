@@ -17,22 +17,23 @@ class MerchandiserController extends Controller
         $data = $request->all();
 
         // Validate and store the uploaded image
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagePath = $image->store('images', 'public'); // Store the image in the 'public' disk under the 'images' directory
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Image not provided'
-            ], 400);
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $imagePath = $image->store('images', 'public'); // Store the image in the 'public' disk under the 'images' directory
+        // } else {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Image not provided'
+        //     ], 400);
             
-        }
+        // }
 
         // Create a new MerchandiserReport entry
         $report = new MerchandiserReport([
             'user_id' => auth()->user()->id,
             'customer_id' => $data['customer_id'],
             'today_est_customers' => $data['today_est_customers'],
+            'image' => $data['image'],
             'estimated_value' => $data['estimated_value'],
             'available_competitors' => $data['available_competitors'],
             'image' => $imagePath, // Save the image path in the database
