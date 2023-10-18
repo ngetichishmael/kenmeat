@@ -36,7 +36,7 @@ class MerchandiserController extends Controller
             'image' => $data['image'],
             'estimated_value' => $data['estimated_value'],
             'available_competitors' => $data['available_competitors'],
-            'image' => $imagePath, // Save the image path in the database
+            // 'image' => $imagePath, // Save the image path in the database
         ]);
 
         $report->save();
