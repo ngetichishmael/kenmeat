@@ -138,6 +138,11 @@
                             <i data-feather='map-pin'></i>
                             <span class="menu-item text-truncate">Stock Reconciliation</span></a>
                     </li>
+                    <li style="padding-left: 30px"><a class="d-flex align-items-center"
+                            href="#">
+                            <i data-feather='map-pin'></i>
+                            <span class="menu-item text-truncate">Returns</span></a>
+                    </li>
                  
                                 <!-- <li style="padding-left: 30px"><a class="d-flex align-items-center"
                             href="{!! route('supplier') !!}">
