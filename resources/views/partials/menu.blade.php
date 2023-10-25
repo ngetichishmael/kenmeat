@@ -127,7 +127,19 @@
                             <i data-feather='map-pin'></i>
                             <span class="menu-item text-truncate">Approve
                                 Stock</span></a></li>
+                 
                     <li style="padding-left: 30px"><a class="d-flex align-items-center"
+                            href=" {{ route('stock.lifts') }}">
+                            <i data-feather='map-pin'></i>
+                            <span class="menu-item text-truncate">Stock Lifts</span></a>
+                    </li>
+                    <li style="padding-left: 30px"><a class="d-flex align-items-center"
+                            href="{{ route('stock.recon') }}">
+                            <i data-feather='map-pin'></i>
+                            <span class="menu-item text-truncate">Stock Reconciliation</span></a>
+                    </li>
+                 
+                                <!-- <li style="padding-left: 30px"><a class="d-flex align-items-center"
                             href="{!! route('supplier') !!}">
                             <i data-feather='map-pin'></i>
                             <span class="menu-item text-truncate">Suppliers</span></a>
@@ -146,11 +158,12 @@
                             href="{!! route('product.brand') !!}">
                             <i data-feather='map-pin'></i>
                             <span class="menu-item text-truncate">Brands</span></a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
-    
-           <li class="nav-item {!! Nav::isResource('stock') !!}">
+
+
+           <!-- <li class="nav-item {!! Nav::isResource('stock') !!}">
                 <a class="d-flex align-items-center" href="#"><i data-feather="layers"></i><span
                         class="menu-title text-truncate" data-i18n="Invoice">Stocks</span></a>
                 <ul class="menu-content">
@@ -166,7 +179,7 @@
                     </li>
               
                 </ul>
-            </li>
+            </li> -->
 
             <li class="nav-item {!! Nav::isResource('users') !!}">
                 <a class="d-flex align-items-center" href="{!! route('users.list') !!}">
