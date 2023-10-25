@@ -167,6 +167,9 @@
                 </ul>
             </li>
 
+            <li class="nav-item {!! Nav::isResource('StockLevel') !!}">
+                <a class="d-flex align-items-center" href="{!! route('StockLevel') !!}"><i data-feather='tv'></i><span class="menu-title text-truncate" data-i18n="Invoice">Stock Level</span></a>
+            </li>
 
            <!-- <li class="nav-item {!! Nav::isResource('stock') !!}">
                 <a class="d-flex align-items-center" href="#"><i data-feather="layers"></i><span
@@ -315,7 +318,6 @@
             <li class="nav-item {!! Nav::isResource('MerchandiserReport') !!}">
                 <a class="d-flex align-items-center" href="{!! route('MerchandiserReport') !!}"><i data-feather='tv'></i><span class="menu-title text-truncate" data-i18n="Invoice">Promo Reports</span></a>
             </li>
-
 
 
             <li class="nav-item {!! Nav::isResource('Activity') !!}">

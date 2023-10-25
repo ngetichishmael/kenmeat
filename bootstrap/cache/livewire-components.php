@@ -77,6 +77,7 @@
   'routes.index' => 'App\\Http\\Livewire\\Routes\\index',
   'sales.dashboard-view' => 'App\\Http\\Livewire\\Sales\\DashboardView',
   'sales.targets' => 'App\\Http\\Livewire\\Sales\\Targets',
+  'stock-level.dashboard' => 'App\\Http\\Livewire\\StockLevel\\Dashboard',
   'stocks.index' => 'App\\Http\\Livewire\\Stocks\\Index',
   'stocks.lifted-stock' => 'App\\Http\\Livewire\\Stocks\\LiftedStock',
   'stocks.lifted-stock.index' => 'App\\Http\\Livewire\\Stocks\\LiftedStock\\Index',

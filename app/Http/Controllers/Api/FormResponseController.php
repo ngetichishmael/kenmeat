@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\FormResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth; 
+
 
 class FormResponseController extends Controller
 {
@@ -66,6 +68,8 @@ class FormResponseController extends Controller
             // Create related stock levels
             foreach ($stockLevelsData as $stockData) {
                 $formResponse->availableProducts()->create([
+                    'user_id' => auth()->user()->id, 
+                    'customer_id' => $customer_id, 
                     'product_id' => $stockData['product_id'],
                     'stock_level' => $stockData['stock_level'],
                     'expiration_date' => $stockData['expiration_date'],

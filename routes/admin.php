@@ -152,6 +152,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customer/comment', CustomerCommentController::class)->names([
         'index' => 'CustomerComment',
     ]);
+
+    Route::resource('stocks/stock-level', StockLevelController::class)->names([
+        'index' => 'StockLevel',
+    ]);
+
     Route::group(['prefix' => 'maps'], function () {
         Route::get('/', [MapsController::class, 'index'])->name('maps');
     });
