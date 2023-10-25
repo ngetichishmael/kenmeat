@@ -46,6 +46,7 @@
             <tr>
                <th>#</th>
                <th>Customer</th>
+               <th>Sales Agent</th>
                <th>Quantity</th>
                <th>Date</th>
                <th>Action</th>
@@ -57,6 +58,7 @@
                   <td>{{ $key + 1 }}</td>
             
                   <td>{{ $lift->customer->customer_name ?? '' }}</td>
+                  <td>{{ $lift->user->name ?? '' }}</td>
                   <td>{{ $lift->stock_level ??'' }}</td>
 
                   <td>{{ $lift->created_at }}</td>
