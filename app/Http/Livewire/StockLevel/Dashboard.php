@@ -23,7 +23,7 @@ class Dashboard extends Component
 
         $stockLevels = SalesStockLevel::with('user','customer')
             ->where('stock_level', 'like', $searchTerm)
-            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
+            ->orderBy('created_at', 'desc')
             ->paginate($this->perPage);
 
         return view('livewire.stock-level.dashboard', ['stockLevels' => $stockLevels]);
