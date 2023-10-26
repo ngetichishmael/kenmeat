@@ -162,7 +162,7 @@
                                 <h4 class="ml-2 font-weight-bolder" style="font-weight: bolder">
                                     &nbsp;{{ number_format($vansales) }}</h4>
                                 <p class="mb-0 card-text font-small-3 font-medium-1"
-                                    style="color: rgba(71,75,79,0.76)">Van Sales</p>
+                                    style="color: rgba(71,75,79,0.76)">Returns</p>
                             </div>
                         </a>
                     </div>

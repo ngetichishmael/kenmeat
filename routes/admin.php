@@ -118,6 +118,26 @@ Route::middleware(['auth'])->group(function () {
         'respond' => 'ChatSupport.respond',
     ]);
 
+    Route::resource('users/checkins', CheckinsController::class)->names([
+        'index' => 'Checkins',
+        'show' => 'Checkins.show',
+        'edit' => 'Checkins.edit',
+        'update' => 'Checkins.update',
+        'destroy' => 'Checkins.destroy',
+        'create' => 'Checkins.create',
+        'store' => 'Checkins.store',
+    ]);
+
+    Route::resource('users/merchandisers/reports',   MerchandiserController::class)->names([
+        'index' => 'MerchandiserReport',
+        'show' => 'MerchandiserReport.show',
+        'edit' => 'MerchandiserReport.edit',
+        'update' => 'MerchandiserReport.update',
+        'destroy' => 'MerchandiserReport.destroy',
+        'create' => 'MerchandiserReport.create',
+        'store' => 'MerchandiserReport.store',
+    ]);
+
     Route::resource('visits/user', UserVisitController::class)->names([
         'index' => 'UsersVisits',
         'show' => 'UsersVisits.show',
@@ -132,6 +152,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customer/comment', CustomerCommentController::class)->names([
         'index' => 'CustomerComment',
     ]);
+
+    Route::resource('stocks/stock-level', StockLevelController::class)->names([
+        'index' => 'StockLevel',
+    ]);
+
     Route::group(['prefix' => 'maps'], function () {
         Route::get('/', [MapsController::class, 'index'])->name('maps');
     });

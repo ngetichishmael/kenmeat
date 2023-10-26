@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CheckIn extends Model
+class availableProducts extends Model
 {
     use HasFactory;
 
-    protected $table = "check_ins";
+    protected $table = 'sales_available_products';
 
     protected $guarded = [''];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
+    public function report() {
+        return $this->belongsTo(FormResponse::class, 'report_id');
     }
 }

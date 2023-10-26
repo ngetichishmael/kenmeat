@@ -24,7 +24,8 @@ class DashboardView extends Component
       $this->applyTimeFrameFilter($targetsQuery);
       $this->Period($targetsQuery, $this->start, $this->end);
       // Fetch targets
-      $targets = $targetsQuery->get();
+      $targets = $targetsQuery->orderBy('created_at', 'desc')->get();
+      
       return view('livewire.sales.dashboard-view', [
          'targets' => $targets,
          'today' => $today

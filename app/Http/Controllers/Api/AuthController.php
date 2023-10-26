@@ -32,27 +32,29 @@ class AuthController extends Controller
          "token_type": "Bearer"
       }
     **/
-   public function userLogin(Request $request)
-   {
-
-      //(!Auth::attempt(['email' => $request->email, 'password' => $request->password], true))
-      if (!FacadesAuth::attempt(['phone_number' => $request->email, 'password' => $request->password], true)) {
-         return response()
-            ->json(['message' => 'Unauthorized'], 401);
-      }
-
-      $user = User::where('phone_number', $request['email'])->firstOrFail();
-
-      $token = $user->createToken('auth_token')->plainTextToken;
-
-      return response()->json([
-         "success" => true,
-         "token_type" => 'Bearer',
-         "message" => "User Logged in",
-         "access_token" => $token,
-         "user" => $user
-      ]);
-   }
+    public function userLogin(Request $request)
+    {
+        if (!FacadesAuth::attempt(['phone_number' => $request->email, 'password' => $request->password], true)) {
+            return response()
+                ->json(['message' => 'Unauthorized'], 401);
+        }
+    
+        $user = User::where('phone_number', $request['email'])->firstOrFail();
+    
+        // Load the associated customer
+        $user->load('customer');
+    
+        $token = $user->createToken('auth_token')->plainTextToken;
+    
+        return response()->json([
+            "success" => true,
+            "token_type" => 'Bearer',
+            "message" => "User Logged in",
+            "access_token" => $token,
+            "user" => $user
+        ]);
+    }
+    
 
    /**
     * User details

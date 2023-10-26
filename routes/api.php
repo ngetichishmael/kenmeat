@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\TargetsController;
 use App\Http\Controllers\Api\WarehouseController;
 use App\Http\Controllers\Api\SystemController;
 use App\Http\Controllers\Chat\SocketsController;
+use App\Http\Controllers\Api\MerchandiserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -85,7 +86,7 @@ Route::group(['namespace' => 'Api'], function () {
     // Route::post('checkin/{checkinCode}/add-to-cart',['uses' => 'checkinController@add_to_cart','as' => 'add.to.cart']);
     //Route::post('checkin/{checkinCode}/add-to-cart','checkinController@add_to_cart')->middleware('auth:sanctum');
     //customer checking
-    // Route::post('customer/checkin/session', ['uses' => 'checkinController@create_checkin_session']);
+    // Route::get('customer/checkin/session', ['uses' => 'checkinController@create_checkin_session']);
     // Route::get('customer/{CustomerCode}/checkin', ['uses' => 'checkinController@checkin', 'as' => 'customer.checkin']);
     // Route::get('checkin/{checkinCode}/stock', ['uses' => 'checkinController@stock', 'as' => 'checkin.stock']);
     // Route::get('checkin/{checkinCode}/out', ['uses' => 'checkinController@checkout', 'as' => 'check.out']);
@@ -279,5 +280,8 @@ Route::group(['namespace' => 'Api'], function () {
      // App Version
     Route::get('/get/app/version', [SystemController::class, 'getAppVersion']);
     Route::get('/app/version/store', [SystemController::class, "getAppVersion"])->middleware('auth:sanctum');
+
+    Route::post('/merchandiser/report/create', [MerchandiserController::class, "storeData"])->middleware('auth:sanctum');
+
 
 });

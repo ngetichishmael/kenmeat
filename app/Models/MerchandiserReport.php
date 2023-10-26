@@ -5,16 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CheckIn extends Model
+class MerchandiserReport extends Model
 {
     use HasFactory;
 
-    protected $table = "check_ins";
+    protected $table ='merchandiser_report';
 
-    protected $guarded = [''];
+    protected $guarded= [];
+
+    public function stockLevels()
+    {
+        return $this->hasMany(MerchandiserStockLevel::class, 'report_id');
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    
 }
