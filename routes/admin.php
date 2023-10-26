@@ -138,6 +138,16 @@ Route::middleware(['auth'])->group(function () {
         'store' => 'MerchandiserReport.store',
     ]);
 
+    Route::resource('sales/returns',   ReturnsController::class)->names([
+        'index' => 'Returns',
+        'show' => 'Returns.show',
+        'edit' => 'Returns.edit',
+        'update' => 'Returns.update',
+        'destroy' => 'Returns.destroy',
+        'create' => 'Returns.create',
+        'store' => 'Returns.store',
+    ]);
+
     Route::resource('visits/user', UserVisitController::class)->names([
         'index' => 'UsersVisits',
         'show' => 'UsersVisits.show',

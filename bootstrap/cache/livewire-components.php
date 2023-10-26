@@ -72,6 +72,7 @@
   'reports.vansales' => 'App\\Http\\Livewire\\Reports\\Vansales',
   'reports.visits' => 'App\\Http\\Livewire\\Reports\\Visits',
   'reports.warehouse' => 'App\\Http\\Livewire\\Reports\\Warehouse',
+  'returns.dashboard' => 'App\\Http\\Livewire\\Returns\\Dashboard',
   'routes.customerselect' => 'App\\Http\\Livewire\\Routes\\Customerselect',
   'routes.individual' => 'App\\Http\\Livewire\\Routes\\Individual',
   'routes.index' => 'App\\Http\\Livewire\\Routes\\index',
