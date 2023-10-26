@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Returnable extends Model
 {
     use HasFactory;
-    protected $guarded = [''];
+    protected $guarded = ['returnables'];
 
     public function product()
     {
