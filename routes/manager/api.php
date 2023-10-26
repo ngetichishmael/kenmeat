@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Manager\AuthenticationController;
 use App\Http\Controllers\Api\Manager\CustomerController;
 use App\Http\Controllers\Api\Manager\DashboardAppController;
 use App\Http\Controllers\Api\Manager\OrdersController;
+use App\Http\Controllers\Api\Manager\ProductsController;
 use App\Http\Controllers\Api\Manager\SendNotificationController;
 use App\Http\Controllers\Api\Manager\TerritoryInformationsController;
 use App\Http\Controllers\Api\Manager\UsersController;

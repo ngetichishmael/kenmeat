@@ -261,7 +261,7 @@ Route::group(['middleware' => ['verified']], function () {
    Route::get('salesperson/reconciled/{warehouse_code}', ['uses' => 'app\products\inventoryController@salesperson', 'as' => 'stock.salesperson']);
    Route::get('products/reconciled/{warehouse_code}', ['uses' => 'app\products\inventoryController@reconciled', 'as' => 'stock.reconciled']);
 
-    /* === product category === */
+   /* === product category === */
     Route::get('warehousing/products/category', ['uses' => 'app\products\categoryController@index', 'as' => 'product.category']);
     Route::post('warehousing/products/category/store', ['uses' => 'app\products\categoryController@store', 'as' => 'product.category.store']);
     Route::get('warehousing/products/category/{id}/edit', ['uses' => 'app\products\categoryController@edit', 'as' => 'product.category.edit']);
@@ -460,36 +460,6 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/chats/index', [ChatController::class, 'index'])->name('chats.index');
     Route::post('chats/{chat}/messages', 'MessageController@store');
     Route::get('/messages/{receiverId}', [ChatController::class, 'messagesIndex'])->name('messages.index');
-
-    // Route::get('socket/index', function (AppProvider $appProvider) {
-    //    return view('app/chat/index', [
-    //       "port" => env("LARAVEL_WEBSOCKETS_PORT"),
-    //       "host" => env("LARAVEL_WEBSOCKETS_HOST"),
-    //       "authEndpoint" => "/api/socket/connect",
-    //       "logChannel" => DashboardLogger::LOG_CHANNEL_PREFIX,
-    //       "apps" => $appProvider->all()
-    //    ]);
-    // })->name('socket.index');
-
-    //   Route::get('/', function (AppProvider $appProvider) {
-    //      return view('chat-app-example', [
-    //         "port" => "6001",
-    //         "host" => "127.0.0.1",
-    //         "authEndpoint" => "/api/sockets/connect",
-    //         "logChannel" => DashboardLogger::LOG_CHANNEL_PREFIX,
-    //         "apps" => $appProvider->all()
-    //      ]);
-    //   });
-
-    // Route::post("/chat/send", function (Request $request) {
-    //    $message = $request->input("message", null);
-    //    $name = $request->input("name", "Anonymous");
-    //    $time = (new DateTime(now()))->format(DateTime::ATOM);
-    //    if ($name == null) {
-    //       $name = "Anonymous";
-    //    }
-    //    SendMessage::dispatch($name, $message, $time);
-    // });
 
     //support
     Route::get('support', ['uses' => 'SupportTicketController@index', 'as' => 'support.index'])->middleware('auth:sanctum');
