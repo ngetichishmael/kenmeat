@@ -35,5 +35,13 @@ Route::group(['namespace' => 'Api'], function () {
       Route::get('/manager/all/regions', [TerritoryInformationsController::class, 'getAllTerritories']);
       Route::get('/manager/all/orders', [OrdersController::class, 'allOrders']);
       Route::get('/manager/dashboard/data', [DashboardAppController::class, 'dashboard']);
+
+      //adding products
+      Route::get('managers/all/products', [ProductsController::class,'index']);
+      Route::get('managers/products/categories', [ProductsController::class,'categories']);
+      Route::post('managers/products/store', [ProductsController::class, 'store']);
+      Route::get('managers/products/{sku}/edit', [ProductsController::class, 'edit']);
+      Route::post('managers/products/{sku}/restock', [ProductsController::class, 'restock']);
+      Route::get('managers/products/{sku}/details', [ProductsController::class, 'details']);
    });
 });
