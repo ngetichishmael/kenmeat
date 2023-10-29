@@ -11,7 +11,7 @@
             <li class="nav-item me-auto">
                 <a class="" href="#">
                     <center>
-                        <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Kenmeat" class="img"
+                        <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Ken Beauty" class="img"
                             style="height: 70px; padding-left:15px;">
                     </center>
 
@@ -149,7 +149,7 @@
                     </li>
                 </ul>
             </li>
-    
+
            <li class="nav-item {!! Nav::isResource('stock') !!}">
                 <a class="d-flex align-items-center" href="#"><i data-feather="layers"></i><span
                         class="menu-title text-truncate" data-i18n="Invoice">Stocks</span></a>
@@ -164,7 +164,7 @@
                             <i data-feather='map-pin'></i>
                             <span class="menu-item text-truncate">Stock Reconciliation</span></a>
                     </li>
-              
+
                 </ul>
             </li>
 

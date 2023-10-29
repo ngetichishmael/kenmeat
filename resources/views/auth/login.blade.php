@@ -21,13 +21,13 @@
 
                     <div class="card-body">
                         <div style="display: flex; justify-content: center;">
-                            <img src="{{ asset('images/logo/logo.png') }}" class="logo" alt="kenMeat" />
+                            <img src="{{ asset('images/logo/logo.png') }}" class="logo" alt="Ken Beauty" />
                         </div>
 
 
                         <br><br><br>
 
-                        <h4 class="mb-1 card-title">Welcome to Ken Meat! 👋</h4>
+                        <h4 class="mb-1 card-title">Welcome to Ken Beauty! 👋</h4>
                         <p class="mb-2 card-text">Please sign-in to your account</p>
 
                         @if ($errors->has('email'))

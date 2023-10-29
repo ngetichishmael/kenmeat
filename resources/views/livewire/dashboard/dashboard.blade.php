@@ -30,7 +30,7 @@
                 <h3 class="mt-2 mb-75 pt-50">
                     <?php
                     // Calculate the sum total
-                    $sumTotal = $Cash + $Mpesa + $Cheque+ $total;
+                    $sumTotal = $Cash + $Mpesa + $Cheque + $total;
                     ?>
 
                     <a href="javascript:void(0);"> Ksh. {{ number_format($sumTotal) }} </a>
@@ -279,7 +279,7 @@
                             <h3 class="mb-0">{{ date_format(now(), 'd') }}</h3>
                         </div>
                         <div class="my-auto">
-                            <h4 class="card-title mb-25">Ken Meat Ltd</h4>
+                            <h4 class="card-title mb-25">Ken Beauty Ltd</h4>
                             <!-- <p class="mb-0 card-text">Tunza Mifugo Yako</p> -->
                         </div>
                     </div>

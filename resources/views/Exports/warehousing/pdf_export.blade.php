@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Warehouse PDF Export</title>
     <style>
@@ -8,7 +9,8 @@
         }
 
         td {
-            font-size: 10px; /* Adjust the font size as needed */
+            font-size: 10px;
+            /* Adjust the font size as needed */
         }
 
         /* Add custom styling for the table */
@@ -17,14 +19,16 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 6px;
             text-align: left;
         }
 
         th {
-            font-size: 11px; /* Adjust the font size as needed */
+            font-size: 11px;
+            /* Adjust the font size as needed */
             background-color: #f2f2f2;
         }
 
@@ -42,17 +46,19 @@
         .footer {
             text-align: center;
             margin-top: 20px;
-            font-size: 10px; /* Adjust the font size as needed */
+            font-size: 10px;
+            /* Adjust the font size as needed */
         }
 
         /* Add any other custom CSS styles here */
-
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="logo">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('app-assets/images/logo.png'))) }}" alt="Logo" width="100" height="40">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('app-assets/images/logo.png'))) }}"
+                alt="Logo" width="100" height="40">
         </div>
     </div>
     <div class="subheader">
@@ -100,7 +106,8 @@
     </div>
     <hr>
     <div class="footer">
-        &copy; {{ date('Y') }} Kenmeat. All rights reserved.
+        &copy; {{ date('Y') }} Ken Beauty. All rights reserved.
     </div>
 </body>
+
 </html>
