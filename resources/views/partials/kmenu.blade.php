@@ -1,15 +1,16 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header mb-1">
         <ul class="nav navbar-nav flex-row " style="padding-top:10px;">
-          <li class="nav-item me-auto">
-             <a class="" href="#" >
-             <center>
-                  <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Kenmeat" class="img" style="height: 80px; padding-left:15px;">
-               </center>
+            <li class="nav-item me-auto">
+                <a class="" href="#">
+                    <center>
+                        <img src="{!! asset('app-assets/images/logo.png') !!}" alt="Ken Beauty" class="img"
+                            style="height: 80px; padding-left:15px;">
+                    </center>
 
-             </a>
-          </li>
-       </ul>
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
