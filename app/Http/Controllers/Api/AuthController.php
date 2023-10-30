@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\SMS;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\UserCode;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @group Authentication Api's
@@ -21,164 +21,158 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 class AuthController extends Controller
 {
 
-   /**
-    * User Login
-    *
-    * @bodyParam email string required
-    * @bodyParam password string required user password.
-    * @response 200{
-         "message": "Hi User Name, welcome",
-         "access_token": "254|33icFsR8uIOF1KsOeaJ114ntrU8adIX7gitwAveK",
-         "token_type": "Bearer"
-      }
-    **/
+    /**
+     * User Login
+     *
+     * @bodyParam email string required
+     * @bodyParam password string required user password.
+     * @response 200{
+    "message": "Hi User Name, welcome",
+    "access_token": "254|33icFsR8uIOF1KsOeaJ114ntrU8adIX7gitwAveK",
+    "token_type": "Bearer"
+    }
+     **/
     public function userLogin(Request $request)
     {
         if (!FacadesAuth::attempt(['phone_number' => $request->email, 'password' => $request->password], true)) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
-    
+
         $user = User::where('phone_number', $request['email'])->firstOrFail();
-    
+
         // Load the associated customer
         $user->load('customer');
-    
+
         $token = $user->createToken('auth_token')->plainTextToken;
-    
+
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
             "message" => "User Logged in",
             "access_token" => $token,
-            "user" => $user
+            "user" => $user,
         ]);
     }
-    
 
-   /**
-    * User details
-    * @param  string $email
-    * @response 200{
-                  "success": true,
-                  "message": "Restaurants menu items",
-                  "data": {
-                        "id": .....,
-                        "name": "Albert Einstein",
-                        "email": "einstein@email.com",
-                  }
-      }
-    **/
-   public function user_details($email)
-   {
-      $user = User::where('email', $email)->first();
-      return response()->json([
-         "success" => true,
-         "message" => "User Details",
-         "data" => $user
-      ]);
-   }
+    /**
+     * User details
+     * @param  string $email
+     * @response 200{
+    "success": true,
+    "message": "Restaurants menu items",
+    "data": {
+    "id": .....,
+    "name": "Albert Einstein",
+    "email": "einstein@email.com",
+    }
+    }
+     **/
+    public function user_details($email)
+    {
+        $user = User::where('email', $email)->first();
+        return response()->json([
+            "success" => true,
+            "message" => "User Details",
+            "data" => $user,
+        ]);
+    }
 
+    /**
+     * Logout and delete token
+     *
+     *
+     **/
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
 
-   /**
-    * Logout and delete token
-    *
-    *
-    **/
-   public function logout(Request $request)
-   {
-      $request->user()->currentAccessToken()->delete();
+        return [
+            'message' => 'You have successfully logged out',
+        ];
+    }
 
-      return [
-         'message' => 'You have successfully logged out'
-      ];
-   }
+    /**
+     * send otp
+     *
+     * @return response()
+     */
 
+    public function sendOTP($number)
+    {
 
-   /**
-    * send otp
-    *
-    * @return response()
-    */
+        $user = FacadesDB::table('users')->where('phone_number', $number)->get();
 
-   public function sendOTP($number)
-   {
+        if ($user) {
+            try {
 
+                $code = rand(100000, 999999);
 
-      $user = FacadesDB::table('users')->where('phone_number', $number)->get();
+                UserCode::updateOrCreate([
+                    'user_id' => $user[0]->id,
+                    'code' => $code,
+                ]);
+                $message = "Your KenBeauty OTP is " . $code;
+                (new SMS)($number, $message);
 
-      if ($user) {
-         try {
+                return response()->json(['data' => $user, 'otp' => $code]);
+            } catch (ExceptionHandler $e) {
+                return response()->json(['message' => 'Error occured while trying to send OTP code']);
+            }
+        } else {
+            return response()->json(['message' => 'User is not registered!']);
+        }
+    }
 
-            $code = rand(100000, 999999);
+    /**
+     * verify otp
+     *
+     * @return response()
+     */
+    public function verifyOTP($number, $otp)
+    {
 
-            UserCode::updateOrCreate([
-               'user_id' => $user[0]->id,
-               'code' => $code
-            ]);
-            $message = "Your KenMeat OTP is " . $code;
-            (new SMS)($number, $message);
+        // $phone = $request->only('phone');
+        // $phone = substr($validated['phone'], 1);
+        // $phone = '+254'.$phone;
+        // $phone = str_replace(' ', '', $phone);
 
-            return response()->json(['data' => $user, 'otp' => $code]);
-         } catch (ExceptionHandler $e) {
-            return response()->json(['message' => 'Error occured while trying to send OTP code']);
-         }
-      } else {
-         return response()->json(['message' => 'User is not registered!']);
-      }
-   }
+        $user = DB::table('users')->where('phone_number', $number)->get();
 
-   /**
-    * verify otp
-    *
-    * @return response()
-    */
-   public function verifyOTP($number, $otp)
-   {
+        // return $user;
 
+        $exists = UserCode::where('user_id', $user[0]->id)
+            ->where('code', $otp)
+            ->where('updated_at', '>=', now()->subMinutes(5))
+            ->latest('updated_at')
+            ->exists();
 
-      // $phone = $request->only('phone');
-      // $phone = substr($validated['phone'], 1);
-      // $phone = '+254'.$phone;
-      // $phone = str_replace(' ', '', $phone);
+        if ($exists) {
+            // DB::table('users')
+            // ->where('id', $user->id)
+            // ->update(['status' => 'activated']);
+            //  Log::info('Valid OTP entered');
+            return response()->json(['message' => 'Valid OTP entered']);
+        }
+        // Log::error('Invalid OTP entered');
+        return response()->json(['message' => 'Invalid OTP entered']);
+    }
 
-      $user = DB::table('users')->where('phone_number', $number)->get();
+    public function updatePassword(Request $request)
+    {
 
-      // return $user;
+        $request->validate([
+            'phone_number' => 'required|string|exists:users',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required',
 
-      $exists = UserCode::where('user_id', $user[0]->id)
-         ->where('code', $otp)
-         ->where('updated_at', '>=', now()->subMinutes(5))
-         ->latest('updated_at')
-         ->exists();
+        ]);
 
-      if ($exists) {
-         // DB::table('users')
-         // ->where('id', $user->id)
-         // ->update(['status' => 'activated']);
-         //  Log::info('Valid OTP entered');
-         return response()->json(['message' => 'Valid OTP entered']);
-      }
-      // Log::error('Invalid OTP entered');
-      return response()->json(['message' => 'Invalid OTP entered']);
-   }
+        $user = User::where('phone_number', $request->phone_number)
+            ->update(['password' => Hash::make($request->password)]);
 
-   public function updatePassword(Request $request)
-   {
+        return response()->json(['message' => 'Password has been changed sucessfully']);
+        // DB::table('password_resets')->where(['email'=> $request->email])->delete();
 
-      $request->validate([
-         'phone_number' => 'required|string|exists:users',
-         'password' => 'required|string|min:6|confirmed',
-         'password_confirmation' => 'required',
-
-      ]);
-
-      $user = User::where('phone_number', $request->phone_number)
-         ->update(['password' => Hash::make($request->password)]);
-
-
-      return response()->json(['message' => 'Password has been changed sucessfully']);
-      // DB::table('password_resets')->where(['email'=> $request->email])->delete();
-
-   }
+    }
 }
