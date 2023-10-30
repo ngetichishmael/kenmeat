@@ -100,7 +100,7 @@ class CheckingSaleOrderController extends Controller
         );
     }
 
-    private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number)
+    private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number,$lpo_amount)
     {
         $result = Order::updateOrCreate(
             [
@@ -111,6 +111,7 @@ class CheckingSaleOrderController extends Controller
                 'lpo_number' => $lpo_number,
                 'customerID' => $checkinCode,
                 'price_total' => $total,
+                'lpo_amount' => $lpo_amount,
                 'balance' => $total,
                 'order_status' => 'Pending Delivery',
                 'payment_status' => 'Pending Payment',
