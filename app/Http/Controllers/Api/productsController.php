@@ -37,6 +37,8 @@ class productsController extends Controller
             'product_price.buying_price as retail_price',
             'product_information.product_name as product_name',
             'product_inventory.current_stock as stock',
+            'product_information.measure as measure',
+            'product_information.units as units',
             'product_information.created_at as date',
             'product_information.business_code as business_code',
             'sku_code',
