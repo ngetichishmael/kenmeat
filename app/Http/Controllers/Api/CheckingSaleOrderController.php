@@ -98,7 +98,9 @@ class CheckingSaleOrderController extends Controller
                 "userID" => $user_code,
             ]
         );
+        
     }
+
 
     private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number,$lpo_amount)
     {
