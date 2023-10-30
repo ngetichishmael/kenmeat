@@ -53,6 +53,8 @@ class productsController extends Controller
          "data" => $products
       ]);
    }
+
+   
    public function index3(Request $request, $businessCode)
    {
       $route_code = $request->user()->route_code;
