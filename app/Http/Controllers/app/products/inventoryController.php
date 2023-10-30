@@ -69,7 +69,7 @@ class inventoryController extends Controller{
    }
    public function reconciled($reconciliation_id)
    {
-      info("reconciled");
+//      info("reconciled");
       $reconciled = DB::table('reconciled_products')
          ->join('product_information', 'reconciled_products.productID', '=', 'product_information.id')
          ->join('users', 'reconciled_products.userCode', '=', 'users.user_code')
@@ -173,5 +173,4 @@ class inventoryController extends Controller{
          return redirect()->back();
       }
    }
-
 }

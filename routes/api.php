@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\CustomersProductsController;
 use App\Http\Controllers\Api\CustomerVisitsOrders;
 use App\Http\Controllers\Api\DeliveriesController;
 use App\Http\Controllers\Api\FormResponseController;
+use App\Http\Controllers\Api\MapsUIController;
+use App\Http\Controllers\Api\MerchandiserController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OutletTypesController;
 use App\Http\Controllers\Api\productCategoriesController;
@@ -19,11 +21,10 @@ use App\Http\Controllers\Api\ReturnableController;
 use App\Http\Controllers\Api\StockRequisitionController;
 use App\Http\Controllers\Api\SurveryAnswersController;
 use App\Http\Controllers\Api\surveyController;
+use App\Http\Controllers\Api\SystemController;
 use App\Http\Controllers\Api\TargetsController;
 use App\Http\Controllers\Api\WarehouseController;
-use App\Http\Controllers\Api\SystemController;
 use App\Http\Controllers\Chat\SocketsController;
-use App\Http\Controllers\Api\MerchandiserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,10 +64,10 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('customers/order/{orderCode}/details', 'customersController@order_details')->middleware('auth:sanctum');
     Route::get('customers/{customerID}/new-order/', 'customersController@new_order')->middleware('auth:sanctum');
 
-   //products
-   Route::get('products/{businessCode}', 'productsController@index')->middleware('auth:sanctum');
-   Route::get('products/warehouse/{warehouseCode}', 'productsController@index2')->middleware('auth:sanctum');
-   Route::get('products/regional', 'productsController@index3')->middleware('auth:sanctum');
+    //products
+    Route::get('products/{businessCode}', 'productsController@index')->middleware('auth:sanctum');
+    Route::get('products/warehouse/{warehouseCode}', 'productsController@index2')->middleware('auth:sanctum');
+    Route::get('products/regional', 'productsController@index3')->middleware('auth:sanctum');
     //product categories
     Route::get('products/categories/{businessCode}', 'productCategoriesController@index');
     Route::get('products/{categoryID}/category', 'productCategoriesController@products_by_category');
@@ -182,9 +183,9 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('/reconcile/products', [ReconciledProductsController::class, 'index'])->middleware('auth:sanctum');
     Route::get('/get/targets', [TargetsController::class, 'getSalespersonTarget'])->middleware('auth:sanctum');
 
-   Route::get('/get/warehouses', [WarehouseController::class, 'index'])->middleware('auth:sanctum');
+    Route::get('/get/warehouses', [WarehouseController::class, 'index'])->middleware('auth:sanctum');
 
-   /**
+    /**
      * Reports
      */
     Route::get('/get/reports', [ReportsController::class, 'getReports'])->middleware('auth:sanctum');
@@ -245,15 +246,15 @@ Route::group(['namespace' => 'Api'], function () {
      */
     Route::get('/get/company/routes', [CompanyRouteController::class, "getCompanyRoutes"])->middleware('auth:sanctum');
 
-   //stock requisition
-   Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
-   Route::post('/stock/create/request/{warehouse}', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
-   Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
-   Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
-   Route::get('stock/requisitions/approved', [StockRequisitionController::class, "approved"])->middleware('auth:sanctum');
-   Route::post('/stock/accept', [StockRequisitionController::class, "accept"])->middleware('auth:sanctum');
+    //stock requisition
+    Route::get('stock/requisitions', [StockRequisitionController::class, "show"])->middleware('auth:sanctum');
+    Route::post('/stock/create/request/{warehouse}', [StockRequisitionController::class, "store"])->middleware('auth:sanctum');
+    Route::post('/stock/cancel', [StockRequisitionController::class, "cancel"])->middleware('auth:sanctum');
+    Route::post('/stock/update', [StockRequisitionController::class, "update"])->middleware('auth:sanctum');
+    Route::get('stock/requisitions/approved', [StockRequisitionController::class, "approved"])->middleware('auth:sanctum');
+    Route::post('/stock/accept', [StockRequisitionController::class, "accept"])->middleware('auth:sanctum');
 
-   Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
     });
     Route::post('socket/connect', [SocketsController::class, 'connect']);
 
@@ -277,11 +278,16 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('/form/responses/{customer_id}/{checking_code}', [FormResponseController::class, 'store'])->middleware('auth:sanctum');
     Route::get('/get/targets/{type}', [TargetsController::class, "getTarget"])->name('getUITargets');
 
-     // App Version
+    //Maps
+    Route::get('/get/users/names', [MapsUIController::class, "getUserNames"])->name('getUIUserNames');
+    Route::get('/get/current/user/locations', [MapsUIController::class, "getCurrentCoordinates"])->name('getUICurrentCoordinates');
+    Route::get('/get/current/user/location/{id}', [MapsUIController::class, "getCurrentLocation"])->name('getUICurrentLocation');
+    Route::get('/get/current/user/locations/{user_code}', [MapsUIController::class, "getUserLocations"])->name('getUIUserLocations');
+
+    // App Version
     Route::get('/get/app/version', [SystemController::class, 'getAppVersion']);
     Route::get('/app/version/store', [SystemController::class, "getAppVersion"])->middleware('auth:sanctum');
 
     Route::post('/merchandiser/report/create', [MerchandiserController::class, "storeData"])->middleware('auth:sanctum');
-
 
 });

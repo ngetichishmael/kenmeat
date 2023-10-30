@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Manager\AuthenticationController;
 use App\Http\Controllers\Api\Manager\CustomerController;
 use App\Http\Controllers\Api\Manager\DashboardAppController;
 use App\Http\Controllers\Api\Manager\OrdersController;
+use App\Http\Controllers\Api\Manager\ProductsController;
 use App\Http\Controllers\Api\Manager\SendNotificationController;
 use App\Http\Controllers\Api\Manager\TerritoryInformationsController;
 use App\Http\Controllers\Api\Manager\UsersController;
@@ -35,5 +36,13 @@ Route::group(['namespace' => 'Api'], function () {
       Route::get('/manager/all/regions', [TerritoryInformationsController::class, 'getAllTerritories']);
       Route::get('/manager/all/orders', [OrdersController::class, 'allOrders']);
       Route::get('/manager/dashboard/data', [DashboardAppController::class, 'dashboard']);
+
+      //adding products
+      Route::get('managers/all/products', [ProductsController::class,'index']);
+      Route::get('managers/products/categories', [ProductsController::class,'categories']);
+      Route::post('managers/products/store', [ProductsController::class, 'store']);
+      Route::get('managers/products/{sku}/edit', [ProductsController::class, 'edit']);
+      Route::post('managers/products/{sku}/restock', [ProductsController::class, 'restock']);
+      Route::get('managers/products/{sku}/details', [ProductsController::class, 'details']);
    });
 });

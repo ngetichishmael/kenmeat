@@ -17,7 +17,7 @@ class AuthenticationController extends Controller
          [
             'email' => $request->email,
             'password' => $request->password,
-            'account_type' =>'Manager'
+            'account_type' =>'Account Manager'
          ],
          true
       )) {

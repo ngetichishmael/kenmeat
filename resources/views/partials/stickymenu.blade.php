@@ -40,7 +40,7 @@
                             <td><a href="{{ route('target.reports') }}" style="color: black">Targets </a></td>
                         </tr>
                         <tr>
-                            <td><a href="{{ route('sidai.reports') }}" style="color: black">KenMeat Users </a></td>
+                            <td><a href="{{ route('sidai.reports') }}" style="color: black">Ken Beauty Users </a></td>
                         </tr>
                         <tr>
                             <td><a href="{{ route('clients.reports') }}" style="color: black">Customers </a></td>

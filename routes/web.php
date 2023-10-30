@@ -185,7 +185,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('warehousing/products/upload', ['uses' => 'app\products\productController@upload', 'as' => 'products.upload']);
     Route::get('warehousing/products/{id}/edit', ['uses' => 'app\products\productController@edit', 'as' => 'products.edit']);
     Route::get('warehousing/products/{id}/restock', ['uses' => 'app\products\productController@restock', 'as' => 'products.restock']);
-   Route::get('warehousing/products/{id}/view', ['uses' => 'app\products\productController@singleview', 'as' => 'products.view']);
+    Route::get('warehousing/products/{id}/view', ['uses' => 'app\products\productController@singleview', 'as' => 'products.view']);
     Route::post('warehousing/products/{id}/update', ['uses' => 'app\products\productController@update', 'as' => 'products.update']);
     Route::post('warehousing/products/{id}/updatestock', ['uses' => 'app\products\productController@updatestock', 'as' => 'products.updatestock']);
     Route::get('warehousing/products/{id}/details', ['uses' => 'app\products\productController@details', 'as' => 'products.details']);
@@ -254,14 +254,14 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('stock/mail/send', ['middleware' => ['permission:update-stockcontrol'], 'uses' => 'app\products\stockcontrolController@send', 'as' => 'stock.mail.send']);
     Route::post('stock/attach/files', ['middleware' => ['permission:update-stockcontrol'], 'uses' => 'app\products\stockcontrolController@attachment_files', 'as' => 'stock.attach']);
 //stock lifts
-   Route::get('stock-lifts', ['uses' => 'app\products\StockLiftController@lifted', 'as' => 'stock.lifts']);
-   Route::get('lifted/items/{allocation_code}', ['uses' => 'app\products\StockLiftController@items', 'as' => 'lifted.items']);
-   //stock Reconciliations
-   Route::get('stock-Reconciliations', ['uses' => 'app\products\inventoryController@stockrecon', 'as' => 'stock.recon']);
-   Route::get('salesperson/reconciled/{warehouse_code}', ['uses' => 'app\products\inventoryController@salesperson', 'as' => 'stock.salesperson']);
-   Route::get('products/reconciled/{warehouse_code}', ['uses' => 'app\products\inventoryController@reconciled', 'as' => 'stock.reconciled']);
+    Route::get('stock-lifts', ['uses' => 'app\products\StockLiftController@lifted', 'as' => 'stock.lifts']);
+    Route::get('lifted/items/{allocation_code}', ['uses' => 'app\products\StockLiftController@items', 'as' => 'lifted.items']);
+    //stock Reconciliations
+    Route::get('stock-Reconciliations', ['uses' => 'app\products\inventoryController@stockrecon', 'as' => 'stock.recon']);
+    Route::get('salesperson/reconciled/{warehouse_code}', ['uses' => 'app\products\inventoryController@salesperson', 'as' => 'stock.salesperson']);
+    Route::get('products/reconciled/{warehouse_code}', ['uses' => 'app\products\inventoryController@reconciled', 'as' => 'stock.reconciled']);
 
-    /* === product category === */
+   /* === product category === */
     Route::get('warehousing/products/category', ['uses' => 'app\products\categoryController@index', 'as' => 'product.category']);
     Route::post('warehousing/products/category/store', ['uses' => 'app\products\categoryController@store', 'as' => 'product.category.store']);
     Route::get('warehousing/products/category/{id}/edit', ['uses' => 'app\products\categoryController@edit', 'as' => 'product.category.edit']);
@@ -274,7 +274,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('warehousing/products/brand/{id}/edit', ['uses' => 'app\products\brandController@edit', 'as' => 'product.brand.edit']);
     Route::post('warehousing/product/brand/{id}/update', ['uses' => 'app\products\brandController@update', 'as' => 'product.brand.update']);
     Route::get('warehousing/products/brand/{id}/destroy', ['uses' => 'app\products\brandController@destroy', 'as' => 'product.brand.destroy']);
-   Route::get('warehousing/products/restock_history/{id}/{warehousecode}', ['uses' => 'app\products\stockcontrolController@restockHistory', 'as' => 'product.restock.history']);
+    Route::get('warehousing/products/restock_history/{id}/{warehousecode}', ['uses' => 'app\products\stockcontrolController@restockHistory', 'as' => 'product.restock.history']);
 
     /* === users === */
     Route::get('user', ['uses' => 'app\usersController@index', 'as' => 'users.index']);
@@ -305,7 +305,7 @@ Route::group(['middleware' => ['verified']], function () {
         Route::get('reports/pre-oders', 'app\ReportsController@reports')->name('preorders.reports');
         Route::get('reports/Van-sales', 'app\ReportsController@reports')->name('vansales.reports');
         Route::get('reports/delivery', 'app\ReportsController@reports')->name('delivery.reports');
-        Route::get('reports/kenmeat-users', 'app\ReportsController@reports')->name('sidai.reports');
+        Route::get('reports/kenbeauty-users', 'app\ReportsController@reports')->name('sidai.reports');
         Route::get('reports/warehouse-Report', 'app\ReportsController@reports')->name('warehouse.reports');
         Route::get('reports/supplier-report', 'app\ReportsController@reports')->name('supplier.reports');
         Route::get('reports/visitation-report', 'app\ReportsController@reports')->name('visitation.reports');
@@ -460,36 +460,6 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/chats/index', [ChatController::class, 'index'])->name('chats.index');
     Route::post('chats/{chat}/messages', 'MessageController@store');
     Route::get('/messages/{receiverId}', [ChatController::class, 'messagesIndex'])->name('messages.index');
-
-    // Route::get('socket/index', function (AppProvider $appProvider) {
-    //    return view('app/chat/index', [
-    //       "port" => env("LARAVEL_WEBSOCKETS_PORT"),
-    //       "host" => env("LARAVEL_WEBSOCKETS_HOST"),
-    //       "authEndpoint" => "/api/socket/connect",
-    //       "logChannel" => DashboardLogger::LOG_CHANNEL_PREFIX,
-    //       "apps" => $appProvider->all()
-    //    ]);
-    // })->name('socket.index');
-
-    //   Route::get('/', function (AppProvider $appProvider) {
-    //      return view('chat-app-example', [
-    //         "port" => "6001",
-    //         "host" => "127.0.0.1",
-    //         "authEndpoint" => "/api/sockets/connect",
-    //         "logChannel" => DashboardLogger::LOG_CHANNEL_PREFIX,
-    //         "apps" => $appProvider->all()
-    //      ]);
-    //   });
-
-    // Route::post("/chat/send", function (Request $request) {
-    //    $message = $request->input("message", null);
-    //    $name = $request->input("name", "Anonymous");
-    //    $time = (new DateTime(now()))->format(DateTime::ATOM);
-    //    if ($name == null) {
-    //       $name = "Anonymous";
-    //    }
-    //    SendMessage::dispatch($name, $message, $time);
-    // });
 
     //support
     Route::get('support', ['uses' => 'SupportTicketController@index', 'as' => 'support.index'])->middleware('auth:sanctum');

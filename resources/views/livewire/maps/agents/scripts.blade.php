@@ -19,14 +19,6 @@
             numbers.push(i.toString());
         }
         const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
-
-        // Define the colors array
-        //   const colors = [];
-        //   for (let i = 0; i < 25; i++) {
-        //       colors.push(getRandomColor());
-        //   }
-
-        // Create an array of objects with number-label and color properties
         const data = [];
         for (let i = 0; i < 25; i++) {
             data.push({
@@ -34,12 +26,6 @@
                 color: colors[i],
             });
         }
-        // Define the numbers and colors arrays
-        //   const numbers = ['1', '2', '3', '4', '5']; // Add more numbers as needed
-        //   const colors = ['red', 'blue', 'green', 'yellow', 'purple']; // Add more colors as needed
-
-
-        // Set the default value of selectedDate to today's date
         document.addEventListener('DOMContentLoaded', function(event) {
             const today = new Date().toISOString().slice(0, 10);
             document.getElementById('datePicker').value = today;
@@ -193,7 +179,6 @@
                 });
             });
 
-            // Draw routes for markers if we have more than one marker
             if (markerPositions.length > 1) {
                 const directionsService = new google.maps.DirectionsService();
                 const directionsDisplay = new google.maps.DirectionsRenderer({
@@ -221,10 +206,7 @@
                 });
             }
         }
-        //   const userCode = item.getAttribute('data-userCode');
-        // JavaScript event listener to handle clicks on user list items
         document.addEventListener('livewire:load', function() {
-            // Handle clicks on user list items
             const customerItems = document.querySelectorAll('.customer-item');
             customerItems.forEach(item => {
                 item.addEventListener('click', function() {
@@ -235,8 +217,6 @@
                         lng: longitude
                     });
                     map.setZoom(10);
-
-                    // Fetch marker data for the selected userCode
                     const userCode = item.getAttribute('data-userCode');
                     fetch(
                             `${baseUrl}/api/getMarkers/${encodeURIComponent(userCode)}/${encodeURIComponent(selectedDate)}`
