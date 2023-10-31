@@ -1,6 +1,6 @@
 @extends('layouts.app3')
 {{-- page header --}}
-@section('title', 'Activity Logs')
+@section('title', 'Merchandiser Reports')
 {{-- page styles --}}
 @section('stylesheets')
 
