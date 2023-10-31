@@ -56,7 +56,7 @@ class CheckingSaleOrderController extends Controller
                         'updated_at' => now(),
                     ]);
 
-                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $requestData['lpo_number']);
+                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $requestData['lpo_number'],  $requestData['lpo_amount']);
 
                 $this->createOrderItem($random, $value, $product);
 
