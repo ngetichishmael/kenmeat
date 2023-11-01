@@ -66,11 +66,10 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
        $warehouse=$request->warehouse_code;
-       info($warehouse);
-       if (!empty($warehouse)){
+       if ($warehouse){
        $this->validate($request, [
           'product_name' =>'required',
-          'quantity' => 'required',
+          'quantity' => 'required|integer',
           'sku_code' => 'required',
           'warehouse_code' => 'required',
           'units' => 'required|integer',
