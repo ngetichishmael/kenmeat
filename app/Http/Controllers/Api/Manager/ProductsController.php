@@ -66,6 +66,7 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
        $warehouse=$request->warehouse_code;
+       info($warehouse);
        if (!empty($warehouse)){
        $this->validate($request, [
           'product_name' =>'required',
@@ -76,6 +77,7 @@ class ProductsController extends Controller
           'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
        ]);
           $products=product_information::where('warehouse_code','=', $warehouse)->get();
+          info($products);
           foreach ($products as $p) {
              if (($p->product_name == $request->product_name) && ($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse)) {
                 return response()->json([
@@ -98,8 +100,8 @@ class ProductsController extends Controller
        $product->url = Str::slug($request->product_name);
        $product->brand = $request->brandID;
        $product->supplierID = $request->supplierID;
-       $product->category = $request->units;
-       $product->units = $request->category;
+       $product->category = $request->category;
+       $product->units = $request->units;
        $product->warehouse_code = $warehouse;
        $product->image = $image_path;
        $product->active = "Active";
@@ -107,26 +109,7 @@ class ProductsController extends Controller
        $product->business_code = Auth::user()->business_code;
        $product->created_by = Auth::user()->user_code;
        $product->save();
-
-//       product_price::updateOrCreate(
-//          [
-//             'productID' => $product->id,
-//          ],
-//          [
-//             'product_code' => $product_code,
-//             'quan' => $request->buying_price,
-//             'selling_price' => $request->selling_price,
-//             'distributor_price' => $request->distributor_price,
-//             'offer_price' => $request->buying_price,
-//             'setup_fee' => $request->selling_price,
-//             'taxID' => "1",
-//             'tax_rate' => "0",
-//             'default_price' => $request->selling_price,
-//             'business_code' => Auth::user()->business_code,
-//             'created_by' => Auth::user()->user_code,
-//          ]
-//       );
-
+       info("saved");
        product_inventory::updateOrCreate(
           [
 
