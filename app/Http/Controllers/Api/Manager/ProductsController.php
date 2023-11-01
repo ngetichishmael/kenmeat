@@ -67,6 +67,7 @@ class ProductsController extends Controller
     {
        $warehouse=$request->warehouse_code;
        if ($warehouse){
+          info("inside if");
        $this->validate($request, [
           'product_name' =>'required',
           'quantity' => 'required|integer',
