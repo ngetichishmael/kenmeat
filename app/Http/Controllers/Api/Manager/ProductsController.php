@@ -73,7 +73,7 @@ class ProductsController extends Controller
           'quantity' => 'required|integer',
           'sku_code' => 'required',
           'warehouse_code' => 'required',
-          'units' => 'required|integer',
+          'units' => 'required',
           'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
        ]);
        } catch (\Illuminate\Validation\ValidationException $e) {
