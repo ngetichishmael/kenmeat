@@ -65,7 +65,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-       if (!empty($warehouse)){
+//       if (!empty($warehouse)){
        $this->validate($request, [
           'product_name' =>'required',
           'quantity' => 'required',
@@ -161,12 +161,12 @@ class ProductsController extends Controller
              "message" => "Product added successfully",
           ], 201);
        }
-       else
-          return response()->json([
-             "success" => false,
-             "message" => "You are not assigned a warehouse store yet!!!",
-          ], 404);
-    }
+//       else
+//          return response()->json([
+//             "success" => false,
+//             "message" => "You are not assigned a warehouse store yet!!!",
+//          ], 404);
+//    }
 
     /**
      * Display the specified resource.
