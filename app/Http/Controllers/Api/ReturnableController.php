@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\inventory\allocations;
 use App\Models\Returnable;
 use Illuminate\Http\Request;
 
@@ -73,4 +74,22 @@ class ReturnableController extends Controller
 
         return response()->json(['message' => 'Returnables reconciled successfully']);
     }
+   public function unreconciled(Request $request){
+      $usercode = $request->user()->user_code;
+      $unreconciled=allocations::where('sales_person', $usercode)->where('status', 'Accepted')->get();
+      return response()->json([
+         "success" => true,
+         "message" => "All unreconciled products",
+         "data" =>$unreconciled
+      ]);
+   }
+   public function returnables(Request $request){
+      $id = $request->user()->id;
+      $returnables=Returnable::where('user_id','=', $id)->where('status', 'Not Returned')->get();
+      return response()->json([
+         "success" => true,
+         "message" => "All unreconciled products",
+         "data" =>$returnables
+      ]);
+   }
 }

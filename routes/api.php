@@ -273,6 +273,8 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('/products/returns', [ReturnableController::class, 'returnProducts'])->middleware('auth:sanctum');
     Route::post('/reconcile/payments', [ReturnableController::class, 'reconcilePayment'])->middleware('auth:sanctum');
     Route::get('/reconcile/products/{customer_id}', [ReturnableController::class, 'reconcileProductWithPayment'])->middleware('auth:sanctum');
+    Route::get('/unreconciled', [ReturnableController::class, 'unreconciled'])->middleware('auth:sanctum');
+    Route::get('/returnables', [ReturnableController::class, 'returnables'])->middleware('auth:sanctum');
 
     // Forms validation
     Route::post('/form/responses/{customer_id}/{checking_code}', [FormResponseController::class, 'store'])->middleware('auth:sanctum');

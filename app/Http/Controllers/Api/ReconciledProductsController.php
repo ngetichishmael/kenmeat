@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\inventory\allocations;
+use App\Models\inventory\items;
 use App\Models\ReconciledProducts as ReconciledProducts;
 use App\Models\Returnable;
 use Illuminate\Http\Request;
@@ -59,4 +61,5 @@ class ReconciledProductsController extends Controller
             "Result" => "Successful",
         ]);
     }
+
 }

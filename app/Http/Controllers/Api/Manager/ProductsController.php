@@ -65,13 +65,16 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-       $warehouse=warehouse_assign::where('manager','=', Auth::user()->user_code)->first();
        if (!empty($warehouse)){
        $this->validate($request, [
           'product_name' =>'required',
           'quantity' => 'required',
+          'sku_code' => 'required',
+          'warehouse_code' => 'required',
+          'units' => 'required|integer',
           'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
        ]);
+          $warehouse=$request->warehouse_code;
           $products=product_information::where('warehouse_code','=', $warehouse->warehouse_code)->get();
           foreach ($products as $p) {
              if (($p->product_name == $request->product_name) && ($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse->warehouse_code)) {
@@ -89,13 +92,14 @@ class ProductsController extends Controller
           }
        $image_path = $request->file('image')->store('image', 'public');
        $product_code = Str::random(20);
-          $product = new product_information;
+       $product = new product_information;
        $product->product_name = $request->product_name;
        $product->sku_code =  $request->sku_code;
        $product->url = Str::slug($request->product_name);
        $product->brand = $request->brandID;
        $product->supplierID = $request->supplierID;
-       $product->category = $request->category;
+       $product->category = $request->units;
+       $product->units = $request->category;
        $product->warehouse_code = $warehouse->warehouse_code;
        $product->image = $image_path;
        $product->active = "Active";
@@ -130,7 +134,7 @@ class ProductsController extends Controller
           ],
           [
              'product_code' => $product_code,
-             'current_stock' => 0,
+             'current_stock' => $request->quantity,
              'reorder_point' => 0,
              'reorder_qty' => 0,
              'expiration_date' => "None",
@@ -211,17 +215,17 @@ class ProductsController extends Controller
    }
    public function restock(Request $request, $sku_code)
    {
-      $skuCodes = $request->input('sku_codes');
-      $quantities = $request->input('quantities');
+      $skuCodes = $request->sku_code;
+      $quantities = $request->quantity;
       $warehouse=warehouse_assign::where('manager','=', Auth::user()->user_code)->first();
       if (!empty($warehouse)){
       $information = product_information::where('sku_code',$skuCodes)->where('warehouse_code', $warehouse->warehouse_code)->first();
       $this->validate($request, [
-         'sku_codes' => 'required',
-         'quantities' => 'required',
+         'sku_code' => 'required',
+         'quantity' => 'required|integer',
       ]);
-      $skuCodes = $request->input('sku_codes');
-      $quantities = $request->input('quantities');
+         $skuCodes = $request->sku_code;
+         $quantities = $request->quantity;
 //      foreach ($skuCodes as $key => $skuCode) {
          $productInventory = product_inventory::where('productID', $information->id)->first();
          if ($productInventory) {
