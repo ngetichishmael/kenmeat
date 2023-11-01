@@ -65,7 +65,8 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-//       if (!empty($warehouse)){
+       $warehouse=$request->warehouse_code;
+       if (!empty($warehouse)){
        $this->validate($request, [
           'product_name' =>'required',
           'quantity' => 'required',
@@ -74,16 +75,15 @@ class ProductsController extends Controller
           'units' => 'required|integer',
           'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
        ]);
-          $warehouse=$request->warehouse_code;
-          $products=product_information::where('warehouse_code','=', $warehouse->warehouse_code)->get();
+          $products=product_information::where('warehouse_code','=', $warehouse)->get();
           foreach ($products as $p) {
-             if (($p->product_name == $request->product_name) && ($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse->warehouse_code)) {
+             if (($p->product_name == $request->product_name) && ($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse)) {
                 return response()->json([
                    "success" => false,
                    "message" => "duplicate entry of product name/sku code",
                 ], 409);
              }
-             if (($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse->warehouse_code)) {
+             if (($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse)) {
                 return response()->json([
                    "success" => false,
                    "message" => "duplicate entry of product sku code",
@@ -100,7 +100,7 @@ class ProductsController extends Controller
        $product->supplierID = $request->supplierID;
        $product->category = $request->units;
        $product->units = $request->category;
-       $product->warehouse_code = $warehouse->warehouse_code;
+       $product->warehouse_code = $warehouse;
        $product->image = $image_path;
        $product->active = "Active";
        $product->track_inventory = 'Yes';
@@ -151,7 +151,7 @@ class ProductsController extends Controller
        $activityLog->activity = 'Creating Product';
        $activityLog->user_code = auth()->user()->user_code;
        $activityLog->section = 'Mobile';
-       $activityLog->action = 'Product '.$product->product_name .'added in warehouse'.$warehouse->warehouse_code;
+       $activityLog->action = 'Product '.$product->product_name .'added in warehouse'.$warehouse;
        $activityLog->userID = auth()->user()->id;
        $activityLog->activityID = $random;
        $activityLog->ip_address ="";
@@ -161,12 +161,12 @@ class ProductsController extends Controller
              "message" => "Product added successfully",
           ], 201);
        }
-//       else
-//          return response()->json([
-//             "success" => false,
-//             "message" => "You are not assigned a warehouse store yet!!!",
-//          ], 404);
-//    }
+       else
+          return response()->json([
+             "success" => false,
+             "message" => "Ops!... Warehouse Selected Not Found!",
+          ], 404);
+    }
 
     /**
      * Display the specified resource.
