@@ -56,7 +56,7 @@ class CheckingSaleOrderController extends Controller
                         'updated_at' => now(),
                     ]);
 
-                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $requestData['lpo_number']);
+                $this->updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $requestData['lpo_number'],  $requestData['lpo_amount']);
 
                 $this->createOrderItem($random, $value, $product);
 
@@ -98,9 +98,11 @@ class CheckingSaleOrderController extends Controller
                 "userID" => $user_code,
             ]
         );
+        
     }
 
-    private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number)
+
+    private function updateOrCreateOrder($random, $value, $checkinCode, $total, $user_code, $orderType, $lpo_number,$lpo_amount)
     {
         $result = Order::updateOrCreate(
             [
@@ -111,6 +113,7 @@ class CheckingSaleOrderController extends Controller
                 'lpo_number' => $lpo_number,
                 'customerID' => $checkinCode,
                 'price_total' => $total,
+                'lpo_amount' => $lpo_amount,
                 'balance' => $total,
                 'order_status' => 'Pending Delivery',
                 'payment_status' => 'Pending Payment',

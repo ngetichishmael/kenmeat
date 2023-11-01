@@ -37,6 +37,8 @@ class productsController extends Controller
             'product_price.buying_price as retail_price',
             'product_information.product_name as product_name',
             'product_inventory.current_stock as stock',
+            'product_information.units as units',
+            'product_information.measure as measure',
             'product_information.created_at as date',
             'product_information.business_code as business_code',
             'sku_code',
@@ -51,6 +53,8 @@ class productsController extends Controller
          "data" => $products
       ]);
    }
+
+   
    public function index3(Request $request, $businessCode)
    {
       $route_code = $request->user()->route_code;
@@ -68,8 +72,11 @@ class productsController extends Controller
                'product_price.selling_price as retail_price',
                'product_price.distributor_price as distributor_price',
                'product_information.product_name as product_name',
+               'product_information.measure as measure',
+               'product_information.units as units',
                'product_inventory.current_stock as stock',
                'product_information.created_at as date',
+
                'product_information.business_code as business_code',
                'sku_code',
                'brand',
@@ -86,6 +93,8 @@ class productsController extends Controller
                'product_price.branch_id as region',
                'product_information.id as productID',
                'product_information.created_at as date',
+               'product_information.measure as measure',
+               'product_information.units as units',
                'product_price.buying_price as wholesale_price',
                'product_price.selling_price as retail_price',
                'product_price.distributor_price as distributor_price',
@@ -116,6 +125,8 @@ class productsController extends Controller
             'product_price.branch_id as region',
             'product_information.id as productID',
             'product_information.created_at as date',
+            'product_information.measure as measure',
+            'product_information.units as units',
 //            'product_price.buying_price as wholesale_price',
 //            'product_price.selling_price as retail_price',
             DB::raw('CAST(product_price.buying_price AS CHAR) as wholesale_price'),
@@ -138,4 +149,5 @@ class productsController extends Controller
          "data" => $products
       ]);
    }
+
 }
