@@ -67,6 +67,7 @@ class ProductsController extends Controller
     {
        $warehouse=$request->warehouse_code;
        if ($warehouse){
+     try {
        $this->validate($request, [
           'product_name' =>'required',
           'quantity' => 'required|integer',
@@ -75,6 +76,9 @@ class ProductsController extends Controller
           'units' => 'required|integer',
           'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
        ]);
+       } catch (\Illuminate\Validation\ValidationException $e) {
+       return response()->json(['errors' => $e->errors()], 422); // Return validation errors in the API response
+    }
        info('after validation');
           $products=product_information::where('warehouse_code', $warehouse)->get();
           info($products);
