@@ -67,7 +67,6 @@ class ProductsController extends Controller
     {
        $warehouse=$request->warehouse_code;
        if ($warehouse){
-          info("inside if");
        $this->validate($request, [
           'product_name' =>'required',
           'quantity' => 'required|integer',
@@ -76,7 +75,8 @@ class ProductsController extends Controller
           'units' => 'required|integer',
           'image' => 'required|mimes:png,jpg,bmp,gif,jpeg|max:5048',
        ]);
-          $products=product_information::where('warehouse_code','=', $warehouse)->get();
+       info('after validation');
+          $products=product_information::where('warehouse_code', $warehouse)->get();
           info($products);
           foreach ($products as $p) {
              if (($p->product_name == $request->product_name) && ($p->sku_code == $request->sku_code) && ($p->warehouse_code == $warehouse)) {
