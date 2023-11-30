@@ -35,6 +35,7 @@ class productsController extends Controller
             'product_information.created_at as date',
             'product_price.selling_price as wholesale_price',
             'product_price.buying_price as retail_price',
+            'product_price.distributor_price as distributor_price',
             'product_information.product_name as product_name',
             'product_inventory.current_stock as stock',
             'product_information.units as units',
@@ -54,7 +55,7 @@ class productsController extends Controller
       ]);
    }
 
-   
+
    public function index3(Request $request, $businessCode)
    {
       $route_code = $request->user()->route_code;

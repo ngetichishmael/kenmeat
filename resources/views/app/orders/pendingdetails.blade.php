@@ -187,6 +187,7 @@
                                         <th class="opacity-2">#</th>
                                         <th>Description</th>
                                         <th>Qty</th>
+                                        <th>Measurement (Kgs)</th>
                                         <th>Unit Price</th>
                                         <th width="140">Amount</th>
                                     </tr>

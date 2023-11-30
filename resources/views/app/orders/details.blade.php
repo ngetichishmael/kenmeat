@@ -118,6 +118,7 @@
                                     <th class="py-1">Description</th>
                                     <th class="py-1">Unit Price</th>
                                     <th class="py-1">Qty</th>
+                                      <th class="py-1">Measurement (Kg)</th>
                                     <th class="py-1">Total</th>
                                 </tr>
                             </thead>
@@ -136,6 +137,10 @@
                                         <td class="py-1">
                                             <span class="font-weight-bold">{!! $item->quantity !!}</span>
                                         </td>
+                                           <td class="py-1">
+                                               <span class="font-weight-bold"> </span>
+                                           </td>
+
                                         <td class="py-1">
                                             <span class="font-weight-bold"> ksh {!! $item->selling_price * $item->quantity !!} </span>
                                         </td>
