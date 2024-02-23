@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
         'create' => 'outlets.create',
         'store' => 'outlets.store',
     ]);
+    
     Route::resource('payment/paid', PaidPaymentController::class)->names([
         'index' => 'PaidPayment',
         'show' => 'PaidPayment.show',

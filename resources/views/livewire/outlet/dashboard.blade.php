@@ -68,10 +68,12 @@
                                 <i data-feather="edit" class="mr-50"></i>
                                 <span>Edit</span>
                             </a>
-                            <a class="dropdown-item" href="{{ route('outlets.destroy',$outlet->outlet_code) }}">
+                            <a class="dropdown-item" wire:click="deleteOutlet({{ $outlet->id }})" onclick="return confirm('Are you sure you want to delete this outlet?')">
                                 <i data-feather='trash' class="mr-50"></i>
                                 <span>Delete</span>
                             </a>
+
+                            
                         </div>
                     </div>
                 </td>

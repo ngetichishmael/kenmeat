@@ -9,6 +9,8 @@ use Livewire\WithPagination;
 use App\Exports\OutletExport;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use Illuminate\Http\RedirectResponse;
+
 
 class Dashboard extends Component
 {
@@ -62,5 +64,23 @@ class Dashboard extends Component
 
        return Excel::download(new OutletExport(), 'outlets.csv');
    }
+
+
+   public function deleteOutlet($outletId)
+   {
+       $outlet = OutletType::find($outletId);
+
+       if ($outlet) {
+           $outlet->delete();
+           session()->flash('success', 'Outlet deleted successfully.');
+
+       } else {
+           session()->flash('error', 'Failed to delete outlet.');
+
+       }
+       return redirect()->route('outlets');
+
+   }
+
 
 }
