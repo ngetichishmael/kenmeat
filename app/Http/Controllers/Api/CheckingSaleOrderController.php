@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\customers;
 use App\Models\Customer\Checkin;
 use App\Models\Orders as Order;
 use App\Models\Order_items;
@@ -41,7 +42,14 @@ class CheckingSaleOrderController extends Controller
         $user_id = $request->user()->id;
         $requestData = $request->json()->all();
         $total = 0;
-        info($requestData);
+        $check = customers::where('id',$checkinCode)->first();
+        if(!$check){
+            return response()->json([
+                "error" => false,
+                "message" => "Checkin code not found.",
+            ]);
+
+        }
         if (isset($requestData['cartItems']) && is_array($requestData['cartItems'])) {
             foreach ($requestData['cartItems'] as $value) {
                 $product = ProductInformation::where('id', $value["productID"])->first();
