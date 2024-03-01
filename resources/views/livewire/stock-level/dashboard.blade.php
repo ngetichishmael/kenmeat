@@ -49,7 +49,7 @@
                <th>Sales Agent</th>
                <th>Quantity</th>
                <th>Date</th>
-               <th>Action</th>
+               <!-- <th>Action</th> -->
             </tr>
             </thead>
             <tbody>
@@ -62,10 +62,10 @@
                   <td>{{ $lift->stock_level ??'' }}</td>
 
                   <td>{{ $lift->created_at }}</td>
-                  <td>
+                  <!-- <td>
                     <a href="#" class="btn btn-sm"
                          style="color:white;background-color:rgb(202, 50, 50)">View</a>
-                        </td>
+                        </td> -->
                </tr>
             @endforeach
             </tbody>
