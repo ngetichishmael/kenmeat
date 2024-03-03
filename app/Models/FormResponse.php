@@ -35,7 +35,31 @@ class FormResponse extends Model
         'out_of_stock_prods' => 'array', // Cast JSON fields to array
     ];
 
-    public function availableProducts() {
-        return $this->hasMany(availableProducts::class, 'report_id');
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id'); 
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(customers::class, 'customer_id'); 
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(ProductInformation::class, 'product_id');
+    }
+
+    public function availableProduct()
+    {
+        return $this->hasMany(SalesStockLevel::class, 'report_id');
+    }
+
+    public function availableProducts()
+    {
+        return $this->hasMany(SalesStockLevel::class, 'report_id');
+    }
+
 }

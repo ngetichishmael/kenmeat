@@ -47,11 +47,16 @@ class FormResponseController extends Controller
      * @param  \App\Models\FormResponse  $formResponse
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+
+    public function showProducts($id)
     {
-        $stockLevel = SalesStockLevel::with('producT')->findOrFail($id);
-        return view('livewire.stock-level.show', compact('stockLevel'));
+        $formResponse = FormResponse::with('availableProducts.product')->findOrFail($id);
+
+        return view('livewire.stock-level.show', compact('formResponse'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

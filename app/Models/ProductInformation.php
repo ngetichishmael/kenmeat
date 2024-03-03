@@ -41,4 +41,10 @@ class ProductInformation extends Model
     {
         return $this->belongsTo(warehousing::class, 'warehouse_code', 'warehouse_code');
     }
+
+    public function salesStockLevels()
+    {
+        return $this->hasMany(SalesStockLevel::class, 'product_id');
+    }
+    
 }

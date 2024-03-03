@@ -479,4 +479,7 @@ Route::group(['middleware' => ['verified']], function () {
 
     Route::get('/stock-level/{id}', [FormResponseController::class, 'show'])->name('stock-level.show');
 
+    Route::get('/stocks/stock-level/products/{id}', [FormResponseController::class, 'showProducts'])->name('stock-level.products');
+
+
 });

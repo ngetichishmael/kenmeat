@@ -28,5 +28,7 @@ class SalesStockLevel extends Model
         return $this->belongsTo(ProductInformation::class, 'product_id');
     }
 
+    
+
 
 }
