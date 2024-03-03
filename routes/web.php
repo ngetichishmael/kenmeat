@@ -5,6 +5,8 @@ use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Chat\SocketsController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\FormResponseController;
+use App\Http\Controllers\ReturnsController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -480,6 +482,8 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/stock-level/{id}', [FormResponseController::class, 'show'])->name('stock-level.show');
 
     Route::get('/stocks/stock-level/products/{id}', [FormResponseController::class, 'showProducts'])->name('stock-level.products');
+   
+    Route::get('/returns/customer/{customerId}', [ReturnsController::class, 'viewCustomerReturns'])->name('returns.customer');
 
 
 });

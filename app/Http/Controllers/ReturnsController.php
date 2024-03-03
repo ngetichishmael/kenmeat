@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Returnable;
+use App\Models\customers;
+
 
 class ReturnsController extends Controller
 {
@@ -14,10 +17,25 @@ class ReturnsController extends Controller
     public function show($customerId)
     {
         $customer = customers::find($customerId);
-        $returnedProducts = $customer->returnedProducts; // Assuming you have a relationship set up
+        $returnedProducts = $customer->returnedProducts; 
 
-        // Return a view to display the returned products
         return view('returned-products.index', compact('returnedProducts', 'customer'));
     }
+
+    // public function viewCustomerReturns($customerId)
+    // {
+    //     $customer = Returnable::with('product')->where('customer_id', $customerId)->get();
+
+    //     return view('livewire.returns.show', ['customer' => $customer]);
+    // }
+
+    public function viewCustomerReturns($customerId)
+    {
+        $customer = customers::find($customerId);
+        $returns = Returnable::with('product')->where('customer_id', $customerId)->get();
+
+        return view('livewire.returns.show', compact('customer', 'returns'));
+    }
+
 
 }

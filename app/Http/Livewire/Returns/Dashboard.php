@@ -20,14 +20,16 @@ class Dashboard extends Component
 
     public function render()
     {
-
         $searchTerm = '%' . $this->search . '%';
 
-        $returns = Returnable::with('product','customer')
+        // Retrieve the latest returnable for each customer
+        $latestReturns = Returnable::with('product','customer')
             ->where('status', 'like', $searchTerm)
             ->orderBy('created_at', 'desc')
+            ->groupBy('customer_id') // Group by customer_id
+            ->latest() // Get the latest returnable for each customer
             ->paginate($this->perPage);
 
-            return view('livewire.returns.dashboard', ['returns' => $returns]);
-        }
+        return view('livewire.returns.dashboard', ['returns' => $latestReturns]);
+    }
 }

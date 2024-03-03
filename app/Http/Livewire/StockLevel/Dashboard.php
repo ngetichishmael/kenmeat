@@ -31,7 +31,7 @@ class Dashboard extends Component
                     $subQuery->where('customer_name', 'like', $searchTerm);
                 });
             })
-            ->whereHas('availableProducts') // Ensure there are related items in sales_available_products
+            ->whereHas('availableProducts') 
             ->orderBy('created_at', 'desc')
             ->paginate($this->perPage);
 

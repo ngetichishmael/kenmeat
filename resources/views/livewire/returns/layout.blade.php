@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 {{-- page header --}}
 @section('title','Leads Target')
 
@@ -11,9 +11,7 @@
       </div>
    </div>
    <!-- end breadcrumb -->
-   <!-- begin page-header -->
 
-   <!-- end page-header -->
    @include('partials._messages')
 
    @livewire('returns.dashboard')
