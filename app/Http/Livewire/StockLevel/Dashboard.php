@@ -22,7 +22,7 @@ class Dashboard extends Component
     {
         $searchTerm = '%' . $this->search . '%';
 
-        $stockLevels = FormResponse::with('user', 'customer')
+        $stockLevels = FormResponse::with('user', 'customer', 'availableProducts')
             ->where(function ($query) use ($searchTerm) {
                 $query->whereHas('user', function ($subQuery) use ($searchTerm) {
                     $subQuery->where('name', 'like', $searchTerm);
@@ -31,6 +31,7 @@ class Dashboard extends Component
                     $subQuery->where('customer_name', 'like', $searchTerm);
                 });
             })
+            ->whereHas('availableProducts') // Ensure there are related items in sales_available_products
             ->orderBy('created_at', 'desc')
             ->paginate($this->perPage);
 
