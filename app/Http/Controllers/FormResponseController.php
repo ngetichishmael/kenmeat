@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\FormResponse;
 use App\Http\Requests\StoreFormResponseRequest;
 use App\Http\Requests\UpdateFormResponseRequest;
+use App\Models\SalesStockLevel;
+
 
 class FormResponseController extends Controller
 {
@@ -45,9 +47,10 @@ class FormResponseController extends Controller
      * @param  \App\Models\FormResponse  $formResponse
      * @return \Illuminate\Http\Response
      */
-    public function show(FormResponse $formResponse)
+    public function show($id)
     {
-        //
+        $stockLevel = SalesStockLevel::with('producT')->findOrFail($id);
+        return view('livewire.stock-level.show', compact('stockLevel'));
     }
 
     /**

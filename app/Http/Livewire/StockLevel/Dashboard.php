@@ -28,4 +28,17 @@ class Dashboard extends Component
 
         return view('livewire.stock-level.dashboard', ['stockLevels' => $stockLevels]);
     }
+
+    // Add this method to your Dashboard.php
+public function viewStockLevels($id)
+{
+    $stockLevels = SalesStockLevel::where('id', $id)->with('product')->get();
+
+    // Pass the stockLevels data to a view or emit an event to update the Livewire component state
+    // For simplicity, let's assume you want to pass the data to a separate view
+    return view('livewire.stock-level.view', ['stockLevels' => $stockLevels]);
+}
+
+
+
 }

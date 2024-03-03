@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\TestingController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Chat\SocketsController;
 use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\FormResponseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -474,4 +475,8 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
     Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    
+
+    Route::get('/stock-level/{id}', [FormResponseController::class, 'show'])->name('stock-level.show');
+
 });

@@ -62,10 +62,11 @@
                   <td>{{ $lift->stock_level ??'' }}</td>
 
                   <td>{{ $lift->created_at }}</td>
-                  <!-- <td>
-                    <a href="#" class="btn btn-sm"
-                         style="color:white;background-color:rgb(202, 50, 50)">View</a>
-                        </td> -->
+                  <td>
+                  <a href="{{ route('stock-level.show', $lift->id) }}" class="btn btn-sm"
+                      style="color:white;background-color:rgb(202, 50, 50)">View</a>
+
+                        </td>
                </tr>
             @endforeach
             </tbody>
